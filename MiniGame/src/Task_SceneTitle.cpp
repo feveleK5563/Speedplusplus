@@ -1,10 +1,10 @@
 #include "Task_SceneTitle.h"
 #include "DxLib.h"
 #include "InputState.h"
-#include "ImageLoader.h"
 #include "SystemDefine.h"
 #include "Task_Back.h"
 #include "Task_SceneGame.h"
+#include "Task_Card.h"
 
 namespace SceneTitle
 {
@@ -67,7 +67,11 @@ namespace SceneTitle
 	//----------------------------------------------
 	void Task::Initialize()
 	{
-		Back::Task::Create();
+		if (!TS::taskSystem.FindTask(Back::defGroupName))
+		{
+			Back::Task::Create();
+		}
+		Card::Task::Create();
 	}
 
 	//----------------------------------------------
@@ -76,7 +80,7 @@ namespace SceneTitle
 	void Task::Finalize()
 	{
 		SceneGame::Task::Create();
-		TS::taskSystem.KillTask("îwåi");
+		TS::taskSystem.KillTask("ÉJÅ[Éh");
 	}
 
 	//----------------------------------------------
@@ -84,7 +88,7 @@ namespace SceneTitle
 	//----------------------------------------------
 	void Task::Update()
 	{
-		if (Input::key[KEY_INPUT_RETURN] == DOWN)
+		if (Input::key[KEY_INPUT_SPACE] == DOWN)
 		{
 			KillMe();
 		}

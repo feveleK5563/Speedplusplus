@@ -1,6 +1,5 @@
 #pragma once
 #include "TaskSystem.h"
-#include "ImageDrawer.h"
 
 namespace SceneTitle
 {

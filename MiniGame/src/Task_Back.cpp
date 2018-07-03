@@ -1,6 +1,5 @@
 #include "Task_Back.h"
 #include "DxLib.h"
-#include "ImageLoader.h"
 #include "SystemDefine.h"
 
 namespace Back
@@ -10,20 +9,22 @@ namespace Back
 	//リソースのコンストラクタ
 	Resource::Resource()
 	{
-		imageBack = "Back";
-		Image::imageLoader.LoadOneImage(imageBack, "data/image/Back.png");
-		imageDataBack = Image::imageLoader.GetImageData(imageBack);
+		imageName[0] = "Back";
+		Image::imageLoader.LoadOneImage(imageName[0], "data/image/Back.png");
+		imageData[0] = Image::imageLoader.GetImageData(imageName[0]);
 
-		imageFrame = "CardFrame";
-		Image::imageLoader.LoadOneImage(imageFrame, "data/image/CardFrame.png");
-		imageDataFrame = Image::imageLoader.GetImageData(imageFrame);
+		imageName[1] = "CardFrame";
+		Image::imageLoader.LoadOneImage(imageName[1], "data/image/CardFrame.png");
+		imageData[1] = Image::imageLoader.GetImageData(imageName[1]);
 	}
 	//----------------------------------------------
 	//リソースのデストラクタ
 	Resource::~Resource()
 	{
-		Image::imageLoader.DeleteImageData(imageBack);
-		Image::imageLoader.DeleteImageData(imageFrame);
+		for (int i = 0; i < resourceNum; ++i)
+		{
+			Image::imageLoader.DeleteImageData(imageName[i]);
+		}
 	}
 	//----------------------------------------------
 	//リソースの生成
@@ -46,8 +47,8 @@ namespace Back
 	Task::Task():
 		TaskAbstract(defGroupName, defPriority),
 		res(Resource::Create()),
-		imageBack(res->imageDataBack, Math::Vec2(0, 0)),
-		imageFrame(res->imageDataFrame, Math::Vec2(res->imageDataFrame.rect.w / 2.f, res->imageDataFrame.rect.h / 2.f))
+		imageBack(res->imageData[0], false),
+		imageFrame(res->imageData[1], true)
 	{ 
 		Initialize();
 	}

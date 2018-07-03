@@ -2,12 +2,11 @@
 #include "TaskSystem.h"
 #include "ImageDrawer.h"
 
-namespace Back
+namespace Card
 {
-	const std::string	defGroupName("背景");	//グループ名
-	const float			defPriority(1.f);		//デフォルトの処理優先度
+	const std::string	defGroupName("カード");	//グループ名
+	const float			defPriority(1.2f);		//デフォルトの処理優先度
 
-	const int resourceNum = 2;
 	//----------------------------------------------
 	class Resource
 	{
@@ -15,8 +14,8 @@ namespace Back
 		static std::weak_ptr<Resource> instance;
 
 	public:
-		std::string	imageName[resourceNum];
-		ImageData	imageData[resourceNum];
+		std::string	imageName;
+		ImageData	imageData;
 
 		Resource();		//コンストラクタ
 		~Resource();	//デストラクタ
@@ -29,8 +28,7 @@ namespace Back
 	private:
 		std::shared_ptr<Resource> res;	//確保したリソース
 
-		ImageDrawer imageBack;
-		ImageDrawer imageFrame;
+		ImageDrawer	imageDrawer;
 
 	public:
 		Task();		//コンストラクタ

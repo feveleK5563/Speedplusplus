@@ -1,22 +1,23 @@
-#include "Task_SceneGame.h"
+#include "Task_Card.h"
 #include "DxLib.h"
-#include "InputState.h"
-#include "Task_SceneTitle.h"
+#include "SystemDefine.h"
 
-namespace SceneGame
+namespace Card
 {
 	std::weak_ptr<Resource> Resource::instance;
 	//----------------------------------------------
 	//リソースのコンストラクタ
 	Resource::Resource()
 	{
-		
+		imageName = "Card";
+		Image::imageLoader.LoadDivImage(imageName, "data/image/PlayingCards.png", 55, 13, 5, 32, 48);
+		imageData = Image::imageLoader.GetImageData(imageName);
 	}
 	//----------------------------------------------
 	//リソースのデストラクタ
 	Resource::~Resource()
 	{
-		
+		Image::imageLoader.DeleteImageData(imageName);
 	}
 	//----------------------------------------------
 	//リソースの生成
@@ -38,7 +39,8 @@ namespace SceneGame
 	//タスクのコンストラクタ
 	Task::Task():
 		TaskAbstract(defGroupName, defPriority),
-		res(Resource::Create())
+		res(Resource::Create()),
+		imageDrawer(res->imageData, true)
 	{ 
 		Initialize();
 	}
@@ -74,7 +76,7 @@ namespace SceneGame
 	//----------------------------------------------
 	void Task::Finalize()
 	{
-		SceneTitle::Task::Create();
+
 	}
 
 	//----------------------------------------------
@@ -82,10 +84,7 @@ namespace SceneGame
 	//----------------------------------------------
 	void Task::Update()
 	{
-		if (Input::key[KEY_INPUT_SPACE] == DOWN)
-		{
-			KillMe();
-		}
+
 	}
 
 	//----------------------------------------------
@@ -93,6 +92,13 @@ namespace SceneGame
 	//----------------------------------------------
 	void Task::Draw()
 	{
-		
+		imageDrawer.DrawOne(
+			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f),
+			8.f,
+			0.f,
+			false,
+			54,
+			Color(255, 255, 255, 255)
+		);
 	}
 }

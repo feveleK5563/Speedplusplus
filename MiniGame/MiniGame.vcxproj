@@ -33,6 +33,7 @@
     <ClCompile Include="src\Task_SceneTitle.cpp" />
     <ClCompile Include="src\Task_Back.cpp" />
     <ClCompile Include="src\Task_SceneGame.cpp" />
+    <ClCompile Include="src\Task_Card.cpp" />
     <ClCompile Include="src\TimeCounter.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +50,7 @@
     <ClInclude Include="src\Task_SceneTitle.h" />
     <ClInclude Include="src\Task_Back.h" />
     <ClInclude Include="src\Task_SceneGame.h" />
+    <ClInclude Include="src\Task_Card.h" />
     <ClInclude Include="src\TimeCounter.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
