@@ -14,14 +14,26 @@
     <Filter Include="ソース ファイル\Exe">
       <UniqueIdentifier>{1b1dd403-1bbf-41cb-aa54-5db5c0f85585}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Task">
-      <UniqueIdentifier>{269b6ff9-6fd9-4bf1-8afd-77d94eaeac39}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Task_Scene%28Test%29">
-      <UniqueIdentifier>{1644d8d5-b98e-4e7a-be91-545459ba8508}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Image">
       <UniqueIdentifier>{6efafe19-41e4-4454-b93c-354154564618}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\TaskSystem">
+      <UniqueIdentifier>{269b6ff9-6fd9-4bf1-8afd-77d94eaeac39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Task">
+      <UniqueIdentifier>{47f4c948-9aa7-4446-a7ff-32134d604104}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Task\Task_Back">
+      <UniqueIdentifier>{a302c28d-ff1c-44d6-b64e-811f80f20960}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Task\Scene">
+      <UniqueIdentifier>{e6bb2ec2-7b3e-4942-a92b-106b6935531a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Task\Scene\Game">
+      <UniqueIdentifier>{8d809eb8-995e-4157-8153-eae5b6afeff6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Task\Scene\Title">
+      <UniqueIdentifier>{1644d8d5-b98e-4e7a-be91-545459ba8508}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -46,23 +58,29 @@
     <ClCompile Include="src\TimeCounter.cpp">
       <Filter>ソース ファイル\Exe</Filter>
     </ClCompile>
-    <ClCompile Include="src\Task_Scene.cpp">
-      <Filter>ソース ファイル\Task_Scene%28Test%29</Filter>
-    </ClCompile>
     <ClCompile Include="src\TaskAbstract.cpp">
-      <Filter>ソース ファイル\Task</Filter>
+      <Filter>ソース ファイル\TaskSystem</Filter>
     </ClCompile>
     <ClCompile Include="src\Fps.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
     <ClCompile Include="src\TaskSystem.cpp">
-      <Filter>ソース ファイル\Task</Filter>
+      <Filter>ソース ファイル\TaskSystem</Filter>
     </ClCompile>
     <ClCompile Include="src\ImageLoader.cpp">
       <Filter>ソース ファイル\Image</Filter>
     </ClCompile>
     <ClCompile Include="src\ImageDrawer.cpp">
       <Filter>ソース ファイル\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Task_SceneTitle.cpp">
+      <Filter>ソース ファイル\Task\Scene\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Task_Back.cpp">
+      <Filter>ソース ファイル\Task\Task_Back</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Task_SceneGame.cpp">
+      <Filter>ソース ファイル\Task\Scene\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -84,23 +102,29 @@
     <ClInclude Include="src\TimeCounter.h">
       <Filter>ソース ファイル\Exe</Filter>
     </ClInclude>
-    <ClInclude Include="src\Task_Scene.h">
-      <Filter>ソース ファイル\Task_Scene%28Test%29</Filter>
-    </ClInclude>
     <ClInclude Include="src\TaskAbstract.h">
-      <Filter>ソース ファイル\Task</Filter>
+      <Filter>ソース ファイル\TaskSystem</Filter>
     </ClInclude>
     <ClInclude Include="src\Fps.h">
       <Filter>ソース ファイル\System</Filter>
     </ClInclude>
     <ClInclude Include="src\TaskSystem.h">
-      <Filter>ソース ファイル\Task</Filter>
+      <Filter>ソース ファイル\TaskSystem</Filter>
     </ClInclude>
     <ClInclude Include="src\ImageLoader.h">
       <Filter>ソース ファイル\Image</Filter>
     </ClInclude>
     <ClInclude Include="src\ImageDrawer.h">
       <Filter>ソース ファイル\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Task_SceneTitle.h">
+      <Filter>ソース ファイル\Task\Scene\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Task_Back.h">
+      <Filter>ソース ファイル\Task\Task_Back</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Task_SceneGame.h">
+      <Filter>ソース ファイル\Task\Scene\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

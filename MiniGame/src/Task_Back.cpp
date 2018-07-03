@@ -1,24 +1,29 @@
-#include "Task_Scene.h"
+#include "Task_Back.h"
 #include "DxLib.h"
 #include "ImageLoader.h"
 #include "SystemDefine.h"
 
-namespace Scene
+namespace Back
 {
 	std::weak_ptr<Resource> Resource::instance;
 	//----------------------------------------------
 	//リソースのコンストラクタ
 	Resource::Resource()
 	{
-		Image::imageLoader.LoadDivImage("Bomb", "data/image/bomb.png", 12, 12, 1, 64, 64);
-		Image::imageLoader.AddAnimationData("Bomb", 0, 11, 1.f, false);
-		//imgData = Image::imageLoader.GetImageData("Bomb");
+		imageBack = "Back";
+		Image::imageLoader.LoadOneImage(imageBack, "data/image/Back.png");
+		imageDataBack = Image::imageLoader.GetImageData(imageBack);
+
+		imageFrame = "CardFrame";
+		Image::imageLoader.LoadOneImage(imageFrame, "data/image/CardFrame.png");
+		imageDataFrame = Image::imageLoader.GetImageData(imageFrame);
 	}
 	//----------------------------------------------
 	//リソースのデストラクタ
 	Resource::~Resource()
 	{
-		Image::imageLoader.DeleteImageData("Bomb");
+		Image::imageLoader.DeleteImageData(imageBack);
+		Image::imageLoader.DeleteImageData(imageFrame);
 	}
 	//----------------------------------------------
 	//リソースの生成
@@ -40,8 +45,9 @@ namespace Scene
 	//タスクのコンストラクタ
 	Task::Task():
 		TaskAbstract(defGroupName, defPriority),
-		res(Resource::Create())/*,
-		imgDrawer(res->imgData, {0, 0})*/
+		res(Resource::Create()),
+		imageBack(res->imageDataBack, Math::Vec2(0, 0)),
+		imageFrame(res->imageDataFrame, Math::Vec2(res->imageDataFrame.rect.w / 2.f, res->imageDataFrame.rect.h / 2.f))
 	{ 
 		Initialize();
 	}
@@ -85,8 +91,7 @@ namespace Scene
 	//----------------------------------------------
 	void Task::Update()
 	{
-		//imgDrawer.Run();
-		int uc = res.use_count();
+		
 	}
 
 	//----------------------------------------------
@@ -94,11 +99,22 @@ namespace Scene
 	//----------------------------------------------
 	void Task::Draw()
 	{
-		//DrawString(100, 100, "hogehoge", GetColor(255, 255, 255));
-		/*imgDrawer.Draw(	Math::Vec2(100, 100),
-						1.f,
-						0.f,
-						false,
-						Color(255, 255, 255, 255));*/
+		imageBack.DrawOne(
+			Math::Vec2(0, 0),
+			1.f,
+			0.f,
+			false,
+			0,
+			Color(255, 255, 255, 255)
+		);
+
+		imageFrame.DrawOne(
+			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f),
+			8.f,
+			0.f,
+			false,
+			0,
+			Color(255, 255, 255, 255)
+		);
 	}
 }

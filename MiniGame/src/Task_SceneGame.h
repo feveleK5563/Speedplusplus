@@ -1,11 +1,10 @@
 #pragma once
 #include "TaskSystem.h"
-#include "ImageDrawer.h"
 
-namespace Scene
+namespace SceneGame
 {
-	const std::string	defGroupName("あいうえお");	//グループ名
-	const float			defPriority(0.f);			//デフォルトの処理優先度
+	const std::string	defGroupName("本編");	//グループ名
+	const float			defPriority(0.f);		//デフォルトの処理優先度
 
 	//----------------------------------------------
 	class Resource
@@ -14,7 +13,6 @@ namespace Scene
 		static std::weak_ptr<Resource> instance;
 
 	public:
-		ImageData imgData;
 
 		Resource();		//コンストラクタ
 		~Resource();	//デストラクタ
@@ -26,8 +24,6 @@ namespace Scene
 	{
 	private:
 		std::shared_ptr<Resource> res;	//確保したリソース
-
-		//ImageDrawer imgDrawer;
 
 	public:
 		Task();		//コンストラクタ

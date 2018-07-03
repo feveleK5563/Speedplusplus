@@ -5,7 +5,7 @@
 #include "InputState.h"
 #include "TaskSystem.h"
 
-#include "Task_Scene.h"
+#include "Task_SceneTitle.h"
 
 GameSystem::GameSystem(){}
 
@@ -42,7 +42,7 @@ void GameSystem::Initialize()
 		return;
 	}
 
-	auto it = Scene::Task::Create();
+	auto it = SceneTitle::Task::Create();
 }
 
 //フルスクリーンモードにするか否かをメッセージボックスで問う
@@ -85,7 +85,7 @@ void GameSystem::MainLoop()
 		fps.Update();
 		TS::taskSystem.Update();
 
-		fps.Draw();
+		//fps.Draw();
 		TS::taskSystem.Draw();
 	}
 	TS::taskSystem.AllDeleteTask();
