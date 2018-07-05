@@ -4,7 +4,7 @@
 #include "SystemDefine.h"
 #include "Task_Back.h"
 #include "Task_SceneGame.h"
-#include "Task_Card.h"
+#include "Task_TitleLogo.h"
 
 namespace SceneTitle
 {
@@ -71,7 +71,7 @@ namespace SceneTitle
 		{
 			Back::Task::Create();
 		}
-		Card::Task::Create();
+		TitleLogo::Task::Create();
 	}
 
 	//----------------------------------------------
@@ -80,7 +80,7 @@ namespace SceneTitle
 	void Task::Finalize()
 	{
 		SceneGame::Task::Create();
-		TS::taskSystem.KillTask("ÉJÅ[Éh");
+		TS::taskSystem.KillTask(TitleLogo::defGroupName);
 	}
 
 	//----------------------------------------------

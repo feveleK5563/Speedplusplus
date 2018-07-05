@@ -58,7 +58,7 @@ void TaskSystem::KillTask(const std::string& groupName)
 
 	for (auto it : taskData[groupName])
 	{
-		it->state = TaskState::Kill;
+		it->KillMe();
 	}
 }
 
@@ -69,7 +69,7 @@ void TaskSystem::AllKillTask()
 	{
 		for (auto it : map.second)
 		{
-			it->state = TaskState::Kill;
+			it->KillMe();
 		}
 	}
 }
@@ -92,6 +92,13 @@ void TaskSystem::AllDeleteTask()
 //全てのタスクのUpdateを呼ぶ
 void TaskSystem::AllUpdate()
 {
+	//先に登録予定タスクのUpdateを呼ぶ
+	for (auto& it : addTask)
+	{
+		it->Update();
+	}
+
+	//登録済みタスクのUpdateを呼ぶ
 	for (auto& it : task)
 	{
 		switch (it->state)
@@ -122,7 +129,7 @@ void TaskSystem::AddTask()
 //状態がDeleteのタスクを削除する
 void TaskSystem::StateDeleteTask()
 {
-	auto deleteCondition =		//削除する条件式(状態がDelete)
+	auto deleteCondition =		//削除する条件式(状態がDeleteの時に削除)
 		[](std::shared_ptr<TaskAbstract>& obj)
 	{
 		return (obj->state == TaskState::Delete);

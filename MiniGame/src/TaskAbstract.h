@@ -33,6 +33,5 @@ public:
 	virtual void Update() = 0;		//XV
 	virtual void Draw() = 0;		//•`‰æ
 
-protected:
-	void KillMe();	//©•ª‚ğE‚·
+	virtual void KillMe() final;	//©•ª‚ğE‚·
 };

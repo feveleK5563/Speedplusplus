@@ -1,47 +1,20 @@
-#include "Task_Card.h"
+#include "Task_TitleLogo.h"
 #include "DxLib.h"
 #include "SystemDefine.h"
+#include "InputState.h"
 
-namespace Card
+namespace TitleLogo
 {
-	std::weak_ptr<Resource> Resource::instance;
-	//----------------------------------------------
-	//リソースのコンストラクタ
-	Resource::Resource()
-	{
-		imageName = "Card";
-		Image::imageLoader.LoadDivImage(imageName, "data/image/PlayingCards.png", 55, 13, 5, 32, 48);
-		imageData = Image::imageLoader.GetImageData(imageName);
-	}
-	//----------------------------------------------
-	//リソースのデストラクタ
-	Resource::~Resource()
-	{
-		Image::imageLoader.DeleteImageData(imageName);
-	}
-	//----------------------------------------------
-	//リソースの生成
-	std::shared_ptr<Resource> Resource::Create()
-	{
-		auto sp = instance.lock();
-		if (!sp)
-		{
-			sp = std::make_shared<Resource>();
-			instance = sp;
-		}
-		return sp;
-	}
-
-	//☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
-	//★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆
-
 	//----------------------------------------------
 	//タスクのコンストラクタ
 	Task::Task():
 		TaskAbstract(defGroupName, defPriority),
-		res(Resource::Create()),
-		imageDrawer(res->imageData, true)
-	{ 
+		logoCard(	CardID(Suit::Etc, 0, Side::Front),
+					Math::Vec2(SystemDefine::windowSizeX - 230.f, SystemDefine::windowSizeY - 150.f),
+					Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f),
+					1.5f, 1.f,
+					0.f, 0.f)
+	{
 		Initialize();
 	}
 	//----------------------------------------------
@@ -68,7 +41,7 @@ namespace Card
 	//----------------------------------------------
 	void Task::Initialize()
 	{
-
+		logoCard.ChangeFrontBack();
 	}
 
 	//----------------------------------------------
@@ -84,7 +57,11 @@ namespace Card
 	//----------------------------------------------
 	void Task::Update()
 	{
-
+		logoCard.Update();
+		if (Input::key[KEY_INPUT_S] == DOWN)
+		{
+			logoCard.ChangeFrontBack();
+		}
 	}
 
 	//----------------------------------------------
@@ -92,13 +69,6 @@ namespace Card
 	//----------------------------------------------
 	void Task::Draw()
 	{
-		imageDrawer.DrawOne(
-			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f),
-			8.f,
-			0.f,
-			false,
-			54,
-			Color(255, 255, 255, 255)
-		);
+		logoCard.Draw();
 	}
 }

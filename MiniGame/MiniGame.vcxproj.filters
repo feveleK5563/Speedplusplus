@@ -23,9 +23,6 @@
     <Filter Include="システム">
       <UniqueIdentifier>{92d8ddd5-9234-41d4-98b5-fd4667384885}</UniqueIdentifier>
     </Filter>
-    <Filter Include="システム\Exe">
-      <UniqueIdentifier>{1b1dd403-1bbf-41cb-aa54-5db5c0f85585}</UniqueIdentifier>
-    </Filter>
     <Filter Include="システム\Image">
       <UniqueIdentifier>{6efafe19-41e4-4454-b93c-354154564618}</UniqueIdentifier>
     </Filter>
@@ -40,6 +37,12 @@
     </Filter>
     <Filter Include="ソース ファイル\Task\Task_Card">
       <UniqueIdentifier>{0d40e178-89f6-4c85-8690-88d16c884bf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="システム\Etc">
+      <UniqueIdentifier>{1b1dd403-1bbf-41cb-aa54-5db5c0f85585}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Class">
+      <UniqueIdentifier>{28b274d1-0442-4fbb-9cb2-358108c8defa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -56,10 +59,10 @@
       <Filter>システム\Input</Filter>
     </ClCompile>
     <ClCompile Include="src\Math.cpp">
-      <Filter>システム\Exe</Filter>
+      <Filter>システム\Etc</Filter>
     </ClCompile>
     <ClCompile Include="src\TimeCounter.cpp">
-      <Filter>システム\Exe</Filter>
+      <Filter>システム\Etc</Filter>
     </ClCompile>
     <ClCompile Include="src\TaskAbstract.cpp">
       <Filter>システム\TaskSystem</Filter>
@@ -88,8 +91,17 @@
     <ClCompile Include="src\main.cpp">
       <Filter>システム</Filter>
     </ClCompile>
-    <ClCompile Include="src\Task_Card.cpp">
+    <ClCompile Include="src\Resource_Card.cpp">
       <Filter>ソース ファイル\Task\Task_Card</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Task_TitleLogo.cpp">
+      <Filter>ソース ファイル\Task\Task_Card</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Card.cpp">
+      <Filter>ソース ファイル\Task\Task_Card</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EasingMover.cpp">
+      <Filter>ソース ファイル\Class</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,10 +118,10 @@
       <Filter>システム\Input</Filter>
     </ClInclude>
     <ClInclude Include="src\Math.h">
-      <Filter>システム\Exe</Filter>
+      <Filter>システム\Etc</Filter>
     </ClInclude>
     <ClInclude Include="src\TimeCounter.h">
-      <Filter>システム\Exe</Filter>
+      <Filter>システム\Etc</Filter>
     </ClInclude>
     <ClInclude Include="src\TaskAbstract.h">
       <Filter>システム\TaskSystem</Filter>
@@ -135,8 +147,20 @@
     <ClInclude Include="src\Task_SceneGame.h">
       <Filter>ソース ファイル\Task\Scene\Game</Filter>
     </ClInclude>
-    <ClInclude Include="src\Task_Card.h">
+    <ClInclude Include="src\Resource_Card.h">
       <Filter>ソース ファイル\Task\Task_Card</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Task_TitleLogo.h">
+      <Filter>ソース ファイル\Task\Task_Card</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Card.h">
+      <Filter>ソース ファイル\Task\Task_Card</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Easing.h">
+      <Filter>システム\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EasingMover.h">
+      <Filter>ソース ファイル\Class</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

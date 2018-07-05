@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ButtonInfo.cpp" />
+    <ClCompile Include="src\Card.cpp" />
+    <ClCompile Include="src\EasingMover.cpp" />
     <ClCompile Include="src\Fps.cpp" />
     <ClCompile Include="src\GameSystem.cpp" />
     <ClCompile Include="src\ImageDrawer.cpp" />
@@ -27,30 +29,35 @@
     <ClCompile Include="src\InputState.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Math.cpp" />
+    <ClCompile Include="src\Resource_Card.cpp" />
     <ClCompile Include="src\SystemDefine.cpp" />
     <ClCompile Include="src\TaskAbstract.cpp" />
     <ClCompile Include="src\TaskSystem.cpp" />
+    <ClCompile Include="src\Task_TitleLogo.cpp" />
     <ClCompile Include="src\Task_SceneTitle.cpp" />
     <ClCompile Include="src\Task_Back.cpp" />
     <ClCompile Include="src\Task_SceneGame.cpp" />
-    <ClCompile Include="src\Task_Card.cpp" />
     <ClCompile Include="src\TimeCounter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ButtonInfo.h" />
+    <ClInclude Include="src\Card.h" />
+    <ClInclude Include="src\Easing.h" />
+    <ClInclude Include="src\EasingMover.h" />
     <ClInclude Include="src\Fps.h" />
     <ClInclude Include="src\GameSystem.h" />
     <ClInclude Include="src\ImageDrawer.h" />
     <ClInclude Include="src\ImageLoader.h" />
     <ClInclude Include="src\InputState.h" />
     <ClInclude Include="src\Math.h" />
+    <ClInclude Include="src\Resource_Card.h" />
     <ClInclude Include="src\TaskAbstract.h" />
     <ClInclude Include="src\SystemDefine.h" />
     <ClInclude Include="src\TaskSystem.h" />
     <ClInclude Include="src\Task_SceneTitle.h" />
     <ClInclude Include="src\Task_Back.h" />
     <ClInclude Include="src\Task_SceneGame.h" />
-    <ClInclude Include="src\Task_Card.h" />
+    <ClInclude Include="src\Task_TitleLogo.h" />
     <ClInclude Include="src\TimeCounter.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -120,7 +127,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
@@ -150,7 +157,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
