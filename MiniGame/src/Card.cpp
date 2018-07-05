@@ -1,4 +1,5 @@
 #include "Card.h"
+#include "DxLib.h"
 
 CardID::CardID():
 	suit(Suit::Spade),
@@ -55,15 +56,17 @@ void Card::Draw()
 		showCard = static_cast<int>(id.suit) * 13 + id.number;
 	}
 
+	SetDrawMode(DX_DRAWMODE_BILINEAR);
 	imageDrawer.DrawOne(
 		emover.GetPos(),
-		emover.GetScale() * 8.f * scaleX,
-		emover.GetScale() * 8.f,
+		emover.GetScale() * 1.f * scaleX,
+		emover.GetScale() * 1.f,
 		emover.GetAngle(),
 		false,
 		showCard,
 		Color(255, 255, 255, 255)
 	);
+	SetDrawMode(DX_DRAWMODE_NEAREST);
 }
 
 //-----------------------------------------------------------------------------

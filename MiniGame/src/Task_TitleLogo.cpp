@@ -9,11 +9,11 @@ namespace TitleLogo
 	//タスクのコンストラクタ
 	Task::Task():
 		TaskAbstract(defGroupName, defPriority),
-		logoCard(	CardID(Suit::Etc, 0, Side::Front),
-					Math::Vec2(SystemDefine::windowSizeX - 230.f, SystemDefine::windowSizeY - 150.f),
+		logoCard(	CardID(Suit::Etc, 1, Side::Back),
+					Math::Vec2(SystemDefine::windowSizeX / 2.f, -150),
 					Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f),
-					1.5f, 1.f,
-					0.f, 0.f)
+					1.f, 1.f,
+					0.f, float(rand() % 10 - 5))
 	{
 		Initialize();
 	}
