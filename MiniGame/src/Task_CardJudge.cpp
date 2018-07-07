@@ -1,10 +1,7 @@
-#include "Task_SceneGame.h"
-#include "DxLib.h"
-#include "InputState.h"
-#include "Task_SceneTitle.h"
 #include "Task_CardJudge.h"
+#include "DxLib.h"
 
-namespace SceneGame
+namespace CardJudge
 {
 	//™š™š™š™š™š™š™š™š™š™š™š™š™š™š™š™š™š™š™š™š™š™š™š
 	//š™š™š™š™š™š™š™š™š™š™š™š™š™š™š™š™š™š™š™š™š™š™š™
@@ -24,7 +21,7 @@ namespace SceneGame
 	}
 	//----------------------------------------------
 	//ƒ^ƒXƒN‚Ì¶¬
-	const std::shared_ptr<const Task> Task::Create()
+	std::shared_ptr<const Task> Task::Create()
 	{
 		std::shared_ptr<Task> task = std::make_shared<Task>();
 		TS::taskSystem.RegistrationTask(task);
@@ -40,7 +37,7 @@ namespace SceneGame
 	//----------------------------------------------
 	void Task::Initialize()
 	{
-		CardJudge::Task::Create();
+
 	}
 
 	//----------------------------------------------
@@ -48,7 +45,7 @@ namespace SceneGame
 	//----------------------------------------------
 	void Task::Finalize()
 	{
-		SceneTitle::Task::Create();
+
 	}
 
 	//----------------------------------------------
@@ -56,11 +53,7 @@ namespace SceneGame
 	//----------------------------------------------
 	void Task::Update()
 	{
-		if (Input::key[KEY_INPUT_SPACE] == DOWN ||
-			Input::joypad1[PadInput::A] == DOWN)
-		{
-			KillMe();
-		}
+		
 	}
 
 	//----------------------------------------------

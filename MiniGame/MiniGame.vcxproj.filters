@@ -94,14 +94,20 @@
     <ClCompile Include="src\Resource_Card.cpp">
       <Filter>ソース ファイル\Task\Task_Card</Filter>
     </ClCompile>
-    <ClCompile Include="src\Task_TitleLogo.cpp">
-      <Filter>ソース ファイル\Task\Task_Card</Filter>
-    </ClCompile>
     <ClCompile Include="src\Card.cpp">
       <Filter>ソース ファイル\Task\Task_Card</Filter>
     </ClCompile>
     <ClCompile Include="src\EasingMover.cpp">
       <Filter>ソース ファイル\Class</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Task_CardJudge.cpp">
+      <Filter>ソース ファイル\Task\Task_Card</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Task_GameCard.cpp">
+      <Filter>ソース ファイル\Task\Task_Card</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CardBehavior.cpp">
+      <Filter>ソース ファイル\Task\Task_Card</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -150,9 +156,6 @@
     <ClInclude Include="src\Resource_Card.h">
       <Filter>ソース ファイル\Task\Task_Card</Filter>
     </ClInclude>
-    <ClInclude Include="src\Task_TitleLogo.h">
-      <Filter>ソース ファイル\Task\Task_Card</Filter>
-    </ClInclude>
     <ClInclude Include="src\Card.h">
       <Filter>ソース ファイル\Task\Task_Card</Filter>
     </ClInclude>
@@ -161,6 +164,15 @@
     </ClInclude>
     <ClInclude Include="src\EasingMover.h">
       <Filter>ソース ファイル\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Task_CardJudge.h">
+      <Filter>ソース ファイル\Task\Task_Card</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Task_GameCard.h">
+      <Filter>ソース ファイル\Task\Task_Card</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CardBehavior.h">
+      <Filter>ソース ファイル\Task\Task_Card</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

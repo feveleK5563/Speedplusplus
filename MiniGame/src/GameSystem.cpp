@@ -4,7 +4,6 @@
 #include "SystemDefine.h"
 #include "InputState.h"
 #include "TaskSystem.h"
-
 #include "Task_SceneTitle.h"
 
 GameSystem::GameSystem(){}
@@ -69,8 +68,7 @@ bool GameSystem::Run()
 	return	ScreenFlip() == 0 &&					//裏画面を表画面に反映
 		ProcessMessage() == 0 &&					//メッセージ処理
 		ClearDrawScreen() == 0 &&					//画面をクリア
-		Input::key.GetInputStateAll() == 0 &&		//キーボード入力状態を保存
-		Input::joypad1.GetInputStateAll() == 0 &&	//ゲームパッド入力状態を保存
+		Input::GetInputStateAll() &&				//入力情報を取得
 		Input::key[KEY_INPUT_ESCAPE] == OFF;		//ESCが押されていない
 }
 

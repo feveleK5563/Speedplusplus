@@ -4,42 +4,16 @@
 #include "SystemDefine.h"
 #include "Task_Back.h"
 #include "Task_SceneGame.h"
-#include "Task_TitleLogo.h"
 
 namespace SceneTitle
 {
-	std::weak_ptr<Resource> Resource::instance;
-	//----------------------------------------------
-	//リソースのコンストラクタ
-	Resource::Resource()
-	{
-	}
-	//----------------------------------------------
-	//リソースのデストラクタ
-	Resource::~Resource()
-	{
-	}
-	//----------------------------------------------
-	//リソースの生成
-	std::shared_ptr<Resource> Resource::Create()
-	{
-		auto sp = instance.lock();
-		if (!sp)
-		{
-			sp = std::make_shared<Resource>();
-			instance = sp;
-		}
-		return sp;
-	}
-
 	//☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
 	//★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆
 
 	//----------------------------------------------
 	//タスクのコンストラクタ
 	Task::Task():
-		TaskAbstract(defGroupName, defPriority),
-		res(Resource::Create())
+		TaskAbstract(defGroupName, defPriority)
 	{ 
 		Initialize();
 	}
@@ -71,7 +45,7 @@ namespace SceneTitle
 		{
 			Back::Task::Create();
 		}
-		TitleLogo::Task::Create();
+		logoCardRef = GameCard::Task::Create(CardType::LogoCard);
 	}
 
 	//----------------------------------------------
@@ -80,7 +54,6 @@ namespace SceneTitle
 	void Task::Finalize()
 	{
 		SceneGame::Task::Create();
-		TS::taskSystem.KillTask(TitleLogo::defGroupName);
 	}
 
 	//----------------------------------------------
@@ -88,7 +61,7 @@ namespace SceneTitle
 	//----------------------------------------------
 	void Task::Update()
 	{
-		if (Input::key[KEY_INPUT_SPACE] == DOWN)
+		if (logoCardRef->state == TaskState::Kill)
 		{
 			KillMe();
 		}

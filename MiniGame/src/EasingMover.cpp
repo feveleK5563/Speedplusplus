@@ -13,7 +13,7 @@ EasingMover::EasingMover(	const Math::Vec2& startPos, const Math::Vec2& endPos,
 	degAngle(startDegAngle),	startDegAngle(startDegAngle),	diffDegAngle(endDegAngle - startDegAngle) {}
 
 
-void EasingMover::Update()
+bool EasingMover::Update()
 {
 	float nEase = easing.cubic.Out(easing.Time(30), 0.f, 1.f);
 
@@ -21,6 +21,8 @@ void EasingMover::Update()
 	pos.y		= startPos.y + (diffPos.y * nEase);
 	scale		= startScale + (diffScale * nEase);
 	degAngle	= startDegAngle + (diffDegAngle * nEase);
+
+	return easing.IsEaseEnd();
 }
 
 const Math::Vec2& EasingMover::GetPos()
@@ -36,4 +38,18 @@ float EasingMover::GetScale()
 float EasingMover::GetAngle()
 {
 	return Math::ToRadian(degAngle);
+}
+
+void EasingMover::SetEndMove(const Math::Vec2& endPos, float endScale, float endDegAngle)
+{
+	startPos = pos;
+	diffPos = endPos - pos;
+
+	startScale = scale;
+	diffScale = endScale - scale;
+
+	startDegAngle = degAngle;
+	diffDegAngle = endDegAngle - degAngle;
+
+	easing.Reset();
 }

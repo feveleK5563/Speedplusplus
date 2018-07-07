@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\ButtonInfo.cpp" />
     <ClCompile Include="src\Card.cpp" />
+    <ClCompile Include="src\CardBehavior.cpp" />
     <ClCompile Include="src\EasingMover.cpp" />
     <ClCompile Include="src\Fps.cpp" />
     <ClCompile Include="src\GameSystem.cpp" />
@@ -33,15 +34,17 @@
     <ClCompile Include="src\SystemDefine.cpp" />
     <ClCompile Include="src\TaskAbstract.cpp" />
     <ClCompile Include="src\TaskSystem.cpp" />
-    <ClCompile Include="src\Task_TitleLogo.cpp" />
     <ClCompile Include="src\Task_SceneTitle.cpp" />
     <ClCompile Include="src\Task_Back.cpp" />
     <ClCompile Include="src\Task_SceneGame.cpp" />
+    <ClCompile Include="src\Task_CardJudge.cpp" />
+    <ClCompile Include="src\Task_GameCard.cpp" />
     <ClCompile Include="src\TimeCounter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ButtonInfo.h" />
     <ClInclude Include="src\Card.h" />
+    <ClInclude Include="src\CardBehavior.h" />
     <ClInclude Include="src\Easing.h" />
     <ClInclude Include="src\EasingMover.h" />
     <ClInclude Include="src\Fps.h" />
@@ -57,7 +60,8 @@
     <ClInclude Include="src\Task_SceneTitle.h" />
     <ClInclude Include="src\Task_Back.h" />
     <ClInclude Include="src\Task_SceneGame.h" />
-    <ClInclude Include="src\Task_TitleLogo.h" />
+    <ClInclude Include="src\Task_CardJudge.h" />
+    <ClInclude Include="src\Task_GameCard.h" />
     <ClInclude Include="src\TimeCounter.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

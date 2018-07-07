@@ -28,7 +28,7 @@ namespace Template
 	public:
 		Task();		//コンストラクタ
 		~Task();	//デストラクタ
-		static const std::shared_ptr<const Task> Create();	//タスクの生成
+		static std::shared_ptr<const Task> Create();	//タスクの生成
 
 		void Initialize() override;	//初期化処理
 		void Finalize() override;	//終了処理

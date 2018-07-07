@@ -62,14 +62,8 @@ public:
 	//カードの裏表を変更する
 	void ChangeFrontBack();
 
-	//カードの移動先を設定する
-	void SetEndPos(const Math::Vec2& endPos);
-
-	//カードの目標サイズを設定する
-	void SetEndSize(float endSize);
-
-	//カードの目標角度を設定する
-	void SetEndDegAngle(float endDegAngle);
+	//カードの動作目標を変更する
+	void SetEndMove(const Math::Vec2& endPos, float endScale, float endDegAngle);
 
 private:
 	//カードの裏表情報に応じたカードめくり処理(終了したらtrueを返す)

@@ -1,5 +1,6 @@
 #pragma once
 #include "TaskSystem.h"
+#include "Task_GameCard.h"
 
 namespace SceneTitle
 {
@@ -7,23 +8,10 @@ namespace SceneTitle
 	const float			defPriority(0.f);			//デフォルトの処理優先度
 
 	//----------------------------------------------
-	class Resource
-	{
-	private:
-		static std::weak_ptr<Resource> instance;
-
-	public:
-
-		Resource();		//コンストラクタ
-		~Resource();	//デストラクタ
-		static std::shared_ptr<Resource> Create();	//リソースの生成
-	};
-
-	//----------------------------------------------
 	class Task : public TaskAbstract
 	{
 	private:
-		std::shared_ptr<Resource> res;	//確保したリソース
+		std::shared_ptr<const GameCard::Task> logoCardRef;
 
 	public:
 		Task();		//コンストラクタ

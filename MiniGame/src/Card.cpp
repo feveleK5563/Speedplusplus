@@ -37,8 +37,9 @@ Card::Card(	const CardID& id,
 //更新
 bool Card::Update()
 {
-	emover.Update();
-	return TurnCard();
+	bool endMove = emover.Update();
+	bool endTurn = TurnCard();
+	return endMove && endTurn;
 }
 
 //-----------------------------------------------------------------------------
@@ -87,21 +88,11 @@ void Card::ChangeFrontBack()
 }
 
 //-----------------------------------------------------------------------------
-//カードの移動先を設定する
-void Card::SetEndPos(const Math::Vec2& endPos)
+//カードの動作目標を変更する
+void Card::SetEndMove(const Math::Vec2& endPos, float endScale, float endDegAngle)
 {
-	/*startPos = pos;
-	diffPos = endPos - pos;*/
+	emover.SetEndMove(endPos, endScale, endDegAngle);
 }
-
-//-----------------------------------------------------------------------------
-//カードの最大サイズを設定する
-void Card::SetEndSize(float endSize)
-{
-	/*startScale = scale;
-	diffScale = endSize - scale;*/
-}
-
 
 //-----------------------------------------------------------------------------
 //カードの裏表情報に応じたカードめくり処理(終了したらtrueを返す)

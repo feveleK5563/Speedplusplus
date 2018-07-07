@@ -1,20 +1,17 @@
-#include "Task_TitleLogo.h"
+#include "Task_GameCard.h"
 #include "DxLib.h"
-#include "SystemDefine.h"
-#include "InputState.h"
 
-namespace TitleLogo
+namespace GameCard
 {
+	//☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
+	//★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆
+
 	//----------------------------------------------
 	//タスクのコンストラクタ
-	Task::Task():
+	Task::Task(CardType cardType):
 		TaskAbstract(defGroupName, defPriority),
-		logoCard(	CardID(Suit::Etc, 1, Side::Back),
-					Math::Vec2(SystemDefine::windowSizeX / 2.f, -150),
-					Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f),
-					1.f, 1.f,
-					0.f, float(rand() % 10 - 5))
-	{
+		cardType(cardType)
+	{ 
 		Initialize();
 	}
 	//----------------------------------------------
@@ -25,9 +22,10 @@ namespace TitleLogo
 	}
 	//----------------------------------------------
 	//タスクの生成
-	const std::shared_ptr<const Task> Task::Create()
+	std::shared_ptr<const Task> Task::Create(CardType cardType)
 	{
-		std::shared_ptr<Task> task = std::make_shared<Task>();
+		std::shared_ptr<Task> task =
+			std::make_shared<Task>(cardType);
 		TS::taskSystem.RegistrationTask(task);
 
 		return task;
@@ -41,7 +39,12 @@ namespace TitleLogo
 	//----------------------------------------------
 	void Task::Initialize()
 	{
-		logoCard.ChangeFrontBack();
+		switch (cardType)
+		{
+		case CardType::LogoCard:	//ロゴカード
+			cardBehavior = std::make_unique<CB_LogoCard>();
+			break;
+		}
 	}
 
 	//----------------------------------------------
@@ -57,10 +60,9 @@ namespace TitleLogo
 	//----------------------------------------------
 	void Task::Update()
 	{
-		logoCard.Update();
-		if (Input::key[KEY_INPUT_S] == DOWN)
+		if (cardBehavior->Update())
 		{
-			logoCard.ChangeFrontBack();
+			KillMe();
 		}
 	}
 
@@ -69,6 +71,6 @@ namespace TitleLogo
 	//----------------------------------------------
 	void Task::Draw()
 	{
-		logoCard.Draw();
+		cardBehavior->Draw();
 	}
 }

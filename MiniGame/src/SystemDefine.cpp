@@ -17,7 +17,7 @@ bool SystemDefine::WindowInBox(const Math::Box2D& hitBase)
 	return windowBox.In(hitBase);
 }
 
-//安全にdeleteする
+//生ポインタを安全にdeleteする
 template<class T>void SystemDefine::SafeDelete(T& t)
 {
 	if (t != nullptr)
@@ -27,7 +27,7 @@ template<class T>void SystemDefine::SafeDelete(T& t)
 	}
 }
 
-//安全にdeleteする(配列版)
+//生ポインタを安全にdeleteする(配列版)
 template<class T>void SystemDefine::SafeDeleteArr(T& t)
 {
 	if (t != nullptr)
@@ -35,4 +35,23 @@ template<class T>void SystemDefine::SafeDeleteArr(T& t)
 		delete[] t;
 		t = nullptr;
 	}
+}
+
+std::random_device SystemDefine::rd;
+std::mt19937 SystemDefine::mtrand(rd());
+
+//範囲内でランダムな値を指定個数分取得する
+std::shared_ptr<int[]>  SystemDefine::OutputRandomRange(int upperLimit, int lowerLimit, int size)
+{
+	if (size <= 0) size = 1;
+
+	std::shared_ptr<int[]> arr(new int[size] {});
+	std::uniform_int_distribution<> randRange(upperLimit, lowerLimit);
+
+	for (int i = 0; i < size; ++i)
+	{
+		arr[i] = randRange(mtrand);
+	}
+
+	return arr;
 }
