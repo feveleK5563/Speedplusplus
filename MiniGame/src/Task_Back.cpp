@@ -60,7 +60,7 @@ namespace Back
 	}
 	//----------------------------------------------
 	//ƒ^ƒXƒN‚Ì¶¬
-	const std::shared_ptr<const Task> Task::Create()
+	std::shared_ptr<Task> Task::Create()
 	{
 		std::shared_ptr<Task> task = std::make_shared<Task>();
 		TS::taskSystem.RegistrationTask(task);

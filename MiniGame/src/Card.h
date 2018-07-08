@@ -38,13 +38,13 @@ class Card
 private:
 	std::shared_ptr<CardR::Resource> res;	//確保したリソース
 
+public:
 	CardID		id;				//カードの識別
 
 	EasingMover	emover;			//イージングを利用した動作
 	float		scaleX;			//横幅(めくる処理に使用する)
 	ImageDrawer	imageDrawer;	//描画処理くん
 
-public:
 	//コンストラクタ(カードの識別、座標、描画サイズ、角度を指定)
 	Card(const CardID& id, const Math::Vec2& pos, float scale, float degAngle);
 	//コンストラクタ(カードの識別、座標の移動情報、描画サイズの変更情報、角度の変更情報を指定)
@@ -54,7 +54,7 @@ public:
 			float startDegAngle,		float endDegAngle);
 
 	//更新(カードがめくり終わったらtrueを返す)
-	bool Update();
+	bool Update(float speed);
 
 	//描画
 	void Draw();
@@ -64,6 +64,12 @@ public:
 
 	//カードの動作目標を変更する
 	void SetEndMove(const Math::Vec2& endPos, float endScale, float endDegAngle);
+
+	//座標を取得する
+	const Math::Vec2& GetPos() const;
+
+	//カード情報を得る
+	const CardID& GetID() const;
 
 private:
 	//カードの裏表情報に応じたカードめくり処理(終了したらtrueを返す)

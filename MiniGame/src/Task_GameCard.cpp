@@ -8,11 +8,10 @@ namespace GameCard
 
 	//----------------------------------------------
 	//タスクのコンストラクタ
-	Task::Task(CardType cardType):
-		TaskAbstract(defGroupName, defPriority),
-		cardType(cardType)
-	{ 
-		Initialize();
+	Task::Task(CardType cardType, const CardID& id, const Math::Vec2& pos, float priority):
+		TaskAbstract(defGroupName, priority)
+	{
+		Initialize(cardType, id, pos);
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
@@ -22,10 +21,10 @@ namespace GameCard
 	}
 	//----------------------------------------------
 	//タスクの生成
-	std::shared_ptr<const Task> Task::Create(CardType cardType)
+	std::shared_ptr<Task> Task::Create(CardType cardType, const CardID& id, const Math::Vec2& pos, float priority)
 	{
 		std::shared_ptr<Task> task =
-			std::make_shared<Task>(cardType);
+			std::make_shared<Task>(cardType, id, pos, priority);
 		TS::taskSystem.RegistrationTask(task);
 
 		return task;
@@ -37,14 +36,23 @@ namespace GameCard
 	//----------------------------------------------
 	//初期化処理
 	//----------------------------------------------
-	void Task::Initialize()
+	void Task::Initialize(CardType cardType, const CardID& id, const Math::Vec2& pos)
 	{
 		switch (cardType)
 		{
-		case CardType::LogoCard:	//ロゴカード
-			cardBehavior = std::make_unique<CB_LogoCard>();
+		case CardType::LogoCard:		//ロゴカード
+			cardBehavior = std::make_unique<CB_LogoCard>(id, pos);
+			break;
+
+		case CardType::HandCardLeft:	//プレイヤー操作用カード左
+			cardBehavior = std::make_unique<CB_HandCard>(id, pos, true);
+			break;
+
+		case CardType::HandCardRight:	//プレイヤー操作用カード右
+			cardBehavior = std::make_unique<CB_HandCard>(id, pos, false);
 			break;
 		}
+
 	}
 
 	//----------------------------------------------

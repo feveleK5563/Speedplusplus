@@ -28,7 +28,6 @@ public:
 	//デストラクタ
 	virtual ~TaskAbstract() {};
 	
-	virtual void Initialize() = 0;	//初期化処理
 	virtual void Finalize() = 0;	//終了処理
 	virtual void Update() = 0;		//更新
 	virtual void Draw() = 0;		//描画

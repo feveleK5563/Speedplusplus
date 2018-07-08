@@ -35,9 +35,9 @@ Card::Card(	const CardID& id,
 
 //-----------------------------------------------------------------------------
 //更新
-bool Card::Update()
+bool Card::Update(float speed)
 {
-	bool endMove = emover.Update();
+	bool endMove = emover.Update(speed);
 	bool endTurn = TurnCard();
 	return endMove && endTurn;
 }
@@ -92,6 +92,20 @@ void Card::ChangeFrontBack()
 void Card::SetEndMove(const Math::Vec2& endPos, float endScale, float endDegAngle)
 {
 	emover.SetEndMove(endPos, endScale, endDegAngle);
+}
+
+//-----------------------------------------------------------------------------
+//座標を取得する
+const Math::Vec2& Card::GetPos() const
+{
+	return emover.GetPos();
+}
+
+//---------------------------------------------------------------------------- -
+//カード情報を得る
+const CardID& Card::GetID() const
+{
+	return id;
 }
 
 //-----------------------------------------------------------------------------

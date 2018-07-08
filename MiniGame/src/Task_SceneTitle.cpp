@@ -25,7 +25,7 @@ namespace SceneTitle
 	}
 	//----------------------------------------------
 	//É^ÉXÉNÇÃê∂ê¨
-	const std::shared_ptr<const Task> Task::Create()
+	std::shared_ptr<Task> Task::Create()
 	{
 		std::shared_ptr<Task> task = std::make_shared<Task>();
 		TS::taskSystem.RegistrationTask(task);
@@ -45,7 +45,12 @@ namespace SceneTitle
 		{
 			Back::Task::Create();
 		}
-		logoCardRef = GameCard::Task::Create(CardType::LogoCard);
+
+		logoCardRef = GameCard::Task::Create(
+			CardType::LogoCard,
+			CardID(Suit::Etc, 1, Side::Back),
+			Math::Vec2(SystemDefine::windowSizeX / 2.f, -200),
+			GameCard::defPriority);
 	}
 
 	//----------------------------------------------
