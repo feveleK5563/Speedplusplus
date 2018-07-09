@@ -52,10 +52,11 @@ public:
 class CB_CenterCard : public CardBehaviorAbstract
 {
 private:
-
+	Card	card;		//カード情報
+	int		progress;	//進行度
 
 public:
-	CB_CenterCard(const Card& card);
+	CB_CenterCard(const CardID& id, const Math::Vec2& pos);
 
 	bool Update() override;
 	void Draw() override;

@@ -1,5 +1,7 @@
 #include "Task_CardJudge.h"
 #include "DxLib.h"
+#include "Task_GameCard.h"
+#include "SystemDefine.h"
 
 namespace CardJudge
 {
@@ -37,7 +39,18 @@ namespace CardJudge
 	//----------------------------------------------
 	void Task::Initialize()
 	{
-
+		GameCard::Task::Create(
+			CardType::HandCardLeft,
+			CardID(Suit::Spade, 2, Side::Front),
+			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY + 200.f),
+			GameCard::defPriority
+		);
+		GameCard::Task::Create(
+			CardType::HandCardRight,
+			CardID(Suit::Heart, 2, Side::Front),
+			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY + 200.f),
+			GameCard::defPriority
+		);
 	}
 
 	//----------------------------------------------

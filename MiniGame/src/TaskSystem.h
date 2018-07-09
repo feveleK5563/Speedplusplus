@@ -29,22 +29,25 @@ public:
 	template<class T>
 	std::shared_ptr<const T> GetTaskOne(const std::string& groupName)
 	{
+		std::shared_ptr<const T> cpyTask;
+
 		if (taskData.count(groupName))
 		{
-			return std::static_pointer_cast<const T>(taskData[groupName].front());
+			cpyTask = std::static_pointer_cast<const T>(taskData[groupName].front());
 		}
 
-		return nullptr;
+		return cpyTask;
 	}
 
 	//指定したグループ名のタスクをまとめて渡す
 	template<class T>
 	std::shared_ptr<std::vector<std::shared_ptr<const T>>> GetTaskGroup(const std::string& groupName)
 	{
+		std::shared_ptr<std::vector<std::shared_ptr<const T>>> gd;
+
 		if (taskData.count(groupName))
 		{
-			std::shared_ptr<std::vector<std::shared_ptr<const T>>> gd =
-				std::make_shared<std::vector<std::shared_ptr<const T>>>();
+			gd = std::make_shared<std::vector<std::shared_ptr<const T>>>();
 
 			gd->reserve(taskData[groupName].size() * sizeof(gd));
 
@@ -52,11 +55,9 @@ public:
 			{
 				gd->emplace_back(std::static_pointer_cast<const T>(it));
 			}
-
-			return gd;
 		}
 
-		return nullptr;
+		return gd;
 	}
 
 	//インスタンスを得る

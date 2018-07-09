@@ -44,12 +44,16 @@ namespace GameCard
 			cardBehavior = std::make_unique<CB_LogoCard>(id, pos);
 			break;
 
-		case CardType::HandCardLeft:	//プレイヤー操作用カード左
+		case CardType::HandCardLeft:	//手札用カード左
 			cardBehavior = std::make_unique<CB_HandCard>(id, pos, true);
 			break;
 
-		case CardType::HandCardRight:	//プレイヤー操作用カード右
+		case CardType::HandCardRight:	//手札用カード右
 			cardBehavior = std::make_unique<CB_HandCard>(id, pos, false);
+			break;
+
+		case CardType::CenterCard:		//中央に移動するカード
+			cardBehavior = std::make_unique<CB_CenterCard>(id, pos);
 			break;
 		}
 

@@ -49,6 +49,7 @@ namespace SceneGame
 	void Task::Finalize()
 	{
 		SceneTitle::Task::Create();
+		TS::taskSystem.KillTask("ƒJ[ƒh”»’èt");
 	}
 
 	//----------------------------------------------
