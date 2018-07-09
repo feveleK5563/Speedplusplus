@@ -38,6 +38,7 @@ class CB_HandCard : public CardBehaviorAbstract
 {
 private:
 	Card	card;		//カード情報
+	int		progress;	//進行度
 	bool	LorR;		//初期カード位置(右か左か)
 
 public:
@@ -52,8 +53,9 @@ public:
 class CB_CenterCard : public CardBehaviorAbstract
 {
 private:
-	Card	card;		//カード情報
-	int		progress;	//進行度
+	Card	card;			//カード情報
+	int		progress;		//進行度
+	int		cardOrder;		//このカードの順番
 
 public:
 	CB_CenterCard(const CardID& id, const Math::Vec2& pos);

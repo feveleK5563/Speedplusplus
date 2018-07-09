@@ -1,7 +1,5 @@
 #include "Task_SceneGame.h"
 #include "DxLib.h"
-#include "InputState.h"
-#include "Task_SceneTitle.h"
 #include "Task_CardJudge.h"
 
 namespace SceneGame
@@ -48,7 +46,7 @@ namespace SceneGame
 	//----------------------------------------------
 	void Task::Finalize()
 	{
-		SceneTitle::Task::Create();
+		//SceneTitle::Task::Create();
 		TS::taskSystem.KillTask("ÉJÅ[ÉhîªíËét");
 	}
 
@@ -57,11 +55,7 @@ namespace SceneGame
 	//----------------------------------------------
 	void Task::Update()
 	{
-		if (Input::key[KEY_INPUT_SPACE] == DOWN ||
-			Input::joypad1[PadInput::A] == DOWN)
-		{
-			KillMe();
-		}
+		
 	}
 
 	//----------------------------------------------

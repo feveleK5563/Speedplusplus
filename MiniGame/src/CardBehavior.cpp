@@ -2,6 +2,7 @@
 #include "SystemDefine.h"
 #include "InputState.h"
 #include "Task_GameCard.h"
+#include "Task_CardJudge.h"
 
 //-----------------------------------------------------------------------------
 //ロゴカード(タイトル画面)
@@ -58,30 +59,65 @@ void CB_LogoCard::Draw()
 //-----------------------------------------------------------------------------
 //手札(ゲーム本編)
 CB_HandCard::CB_HandCard(const CardID& id, const Math::Vec2& pos, bool LorR) :
-	card(id, pos, 1.4f, 0.f),
+	card(id, pos, 1.3f, 0.f),
+	progress(0),
 	LorR(LorR)
 {
 	if (LorR)
 	{
-		card.SetEndMove(Math::Vec2(240.f, SystemDefine::windowSizeY - 200.f),
-						1.4f,
-						0.f);
+		card.SetEndMove(Math::Vec2(200.f, SystemDefine::windowSizeY - 200.f),
+						1.3f,
+						-1.f);
 	}
 	else
 	{
-		card.SetEndMove(Math::Vec2(SystemDefine::windowSizeX - 240.f, SystemDefine::windowSizeY - 200.f),
-						1.4f,
-						0.f);
+		card.SetEndMove(Math::Vec2(SystemDefine::windowSizeX - 200.f, SystemDefine::windowSizeY - 200.f),
+						1.3f,
+						1.f);
 	}
 }
 bool CB_HandCard::Update()
 {
-	card.Update(20.f);
-	if ((LorR && (Input::key[KEY_INPUT_A] == DOWN || Input::joypad1[PadInput::LEFT] == DOWN)) ||
-		(!LorR && (Input::key[KEY_INPUT_D] == DOWN || Input::joypad1[PadInput::B] == DOWN)))
+	bool endUpdate = card.Update(20.f);
+
+	switch (progress)
 	{
-		GameCard::Task::Create(CardType::CenterCard, card.GetID(), card.GetPos(), 1.4f);
-		return true;
+	case 0:
+		if ((Input::key[KEY_INPUT_A] == DOWN || Input::joypad1[PadInput::LEFT] == DOWN) &&
+			(Input::key[KEY_INPUT_D] == DOWN || Input::joypad1[PadInput::B] == DOWN))
+			break;
+
+		//対応した左右ボタンを押したら中心に移動
+		if ((LorR && (Input::key[KEY_INPUT_A] == DOWN || Input::joypad1[PadInput::LEFT] == DOWN)) ||
+			(!LorR && (Input::key[KEY_INPUT_D] == DOWN || Input::joypad1[PadInput::B] == DOWN)))
+		{
+			GameCard::Task::Create(CardType::CenterCard, card.GetID(), card.GetPos(), 1.3f);
+			return true;
+		}
+		//逆方向ボタンを押したら画面外に移動
+		if ((!LorR && (Input::key[KEY_INPUT_A] == DOWN || Input::joypad1[PadInput::LEFT] == DOWN)) ||
+			(LorR && (Input::key[KEY_INPUT_D] == DOWN || Input::joypad1[PadInput::B] == DOWN)))
+		{
+			if (LorR)
+			{
+				card.SetEndMove(Math::Vec2(-300.f, SystemDefine::windowSizeY - 200.f),
+								1.3f, -90.f);
+			}
+			else
+			{
+				card.SetEndMove(Math::Vec2(SystemDefine::windowSizeX + 300.f, SystemDefine::windowSizeY - 200.f),
+								1.3f, 90.f);
+			}
+			++progress;
+		}
+		break;
+
+	case 1:
+		if (endUpdate)
+		{
+			return true;
+		}
+		break;
 	}
 
 	return false;
@@ -96,11 +132,14 @@ void CB_HandCard::Draw()
 CB_CenterCard::CB_CenterCard(const CardID& id, const Math::Vec2& pos):
 	card(	id,
 			pos, Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f),
-			1.4f, 1.f,
+			1.3f, 1.f,
 			0.f, (float)SystemDefine::OutputRandomRange(-5, 5, 1)[0]),
 	progress(0)
 {
-
+	if (auto ts = TS::taskSystem.GetTaskOne<CardJudge::Task>("カード判定師"))
+	{
+		cardOrder = ts->GetCardNum();
+	}
 }
 bool CB_CenterCard::Update()
 {
@@ -114,6 +153,12 @@ bool CB_CenterCard::Update()
 		break;
 
 	case 1:
+		if (auto ts = TS::taskSystem.GetTaskOne<CardJudge::Task>("カード判定師"))
+		{
+			//中心に20枚重なったら削除
+			if (ts->GetCardNum() - cardOrder > 20)
+				return true;
+		}
 		break;
 	}
 

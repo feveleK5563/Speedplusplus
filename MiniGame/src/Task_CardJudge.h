@@ -1,5 +1,6 @@
 #pragma once
 #include "TaskSystem.h"
+#include "Task_GameCard.h"
 
 namespace CardJudge
 {
@@ -10,7 +11,9 @@ namespace CardJudge
 	class Task : public TaskAbstract
 	{
 	private:
-
+		int progress;	//進行度
+		std::shared_ptr<CardID> handCard[2];					//手札
+		std::vector<std::shared_ptr<CardID>> centerCardBundle;	//中心のカード束
 
 	public:
 		Task();		//コンストラクタ
@@ -21,5 +24,12 @@ namespace CardJudge
 		void Finalize() override;	//終了処理
 		void Update() override;		//更新
 		void Draw() override;		//描画
+
+	private:
+		void CreateHandCard();		//手札を作成する
+		void SetHandCard();			//選択した手札を登録する
+
+	public:
+		int GetCardNum() const;		//中心カードの枚数を取得
 	};
 }
