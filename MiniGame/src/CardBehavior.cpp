@@ -83,20 +83,21 @@ bool CB_HandCard::Update()
 	switch (progress)
 	{
 	case 0:
-		if ((Input::key[KEY_INPUT_A] == DOWN || Input::joypad1[PadInput::LEFT] == DOWN) &&
-			(Input::key[KEY_INPUT_D] == DOWN || Input::joypad1[PadInput::B] == DOWN))
+		//同時押しは無効
+		if (CardJudge::SelectLeftCard() && CardJudge::SelectRightCard())
 			break;
 
 		//対応した左右ボタンを押したら中心に移動
-		if ((LorR && (Input::key[KEY_INPUT_A] == DOWN || Input::joypad1[PadInput::LEFT] == DOWN)) ||
-			(!LorR && (Input::key[KEY_INPUT_D] == DOWN || Input::joypad1[PadInput::B] == DOWN)))
+		if ((LorR && CardJudge::SelectLeftCard()) ||
+			(!LorR && CardJudge::SelectRightCard()))
 		{
-			GameCard::Task::Create(CardType::CenterCard, card.GetID(), card.GetPos(), 1.3f);
+			GameCard::Task::Create(CardType::CenterCard, card.GetID(), card.GetPos(), GameCard::defPriority - 0.1f);
 			return true;
 		}
-		//逆方向ボタンを押したら画面外に移動
-		if ((!LorR && (Input::key[KEY_INPUT_A] == DOWN || Input::joypad1[PadInput::LEFT] == DOWN)) ||
-			(LorR && (Input::key[KEY_INPUT_D] == DOWN || Input::joypad1[PadInput::B] == DOWN)))
+		//上ボタンか逆方向ボタンを押したら画面外に移動
+		if ((!LorR && CardJudge::SelectLeftCard()) ||
+			(LorR && CardJudge::SelectRightCard()) ||
+			CardJudge::SelectThrowCard())
 		{
 			if (LorR)
 			{

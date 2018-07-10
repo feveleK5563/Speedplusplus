@@ -29,7 +29,16 @@ namespace CardJudge
 		void CreateHandCard();		//手札を作成する
 		void SetHandCard();			//選択した手札を登録する
 
+		//ランダムにカードを追加する
+		std::shared_ptr<CardID> RandomNextCard();
+		//手札を設定する
+		std::shared_ptr<CardID> ChoiceNextCard(bool isAnswerCard);
+
 	public:
 		int GetCardNum() const;		//中心カードの枚数を取得
 	};
+
+	bool SelectLeftCard();
+	bool SelectRightCard();
+	bool SelectThrowCard();
 }

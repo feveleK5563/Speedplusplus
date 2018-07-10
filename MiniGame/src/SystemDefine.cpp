@@ -41,12 +41,12 @@ std::random_device SystemDefine::rd;
 std::mt19937 SystemDefine::mtrand(rd());
 
 //”ÍˆÍ“à‚Åƒ‰ƒ“ƒ_ƒ€‚È’l‚ğw’èŒÂ”•ªæ“¾‚·‚é
-std::shared_ptr<int[]>  SystemDefine::OutputRandomRange(int upperLimit, int lowerLimit, int size)
+std::shared_ptr<int[]>  SystemDefine::OutputRandomRange(int lowerLimit, int upperLimit, int size)
 {
 	if (size <= 0) size = 1;
 
 	std::shared_ptr<int[]> arr(new int[size] {});
-	std::uniform_int_distribution<> randRange(upperLimit, lowerLimit);
+	std::uniform_int_distribution<> randRange(lowerLimit, upperLimit);
 
 	for (int i = 0; i < size; ++i)
 	{
