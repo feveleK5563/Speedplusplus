@@ -111,7 +111,7 @@ namespace Back
 
 		imageFrame.DrawOne(
 			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f),
-			8.f,
+			1.f,
 			0.f,
 			false,
 			0,
