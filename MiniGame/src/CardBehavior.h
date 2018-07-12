@@ -53,9 +53,10 @@ public:
 class CB_CenterCard : public CardBehaviorAbstract
 {
 private:
-	Card	card;			//カード情報
-	int		progress;		//進行度
-	int		cardOrder;		//このカードの順番
+	Card	card;				//カード情報
+	int		progress;			//進行度
+	int		cardOrder;			//このカードの順番
+	const int*	centerCardNum;	//中央のカード枚数
 
 public:
 	CB_CenterCard(const CardID& id, const Math::Vec2& pos);

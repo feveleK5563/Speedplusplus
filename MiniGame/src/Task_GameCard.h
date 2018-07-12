@@ -16,7 +16,7 @@ namespace GameCard
 
 	public:
 		//コンストラクタ
-		Task(CardType cardType, const CardID& id, const Math::Vec2& pos, float priority);
+		Task(float priority);
 
 		//デストラクタ
 		~Task();

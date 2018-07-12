@@ -12,7 +12,6 @@ namespace SceneGame
 	Task::Task():
 		TaskAbstract(defGroupName, defPriority)
 	{ 
-		Initialize();
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
@@ -27,6 +26,7 @@ namespace SceneGame
 		std::shared_ptr<Task> task = std::make_shared<Task>();
 		TS::taskSystem.RegistrationTask(task);
 
+		task->Initialize();
 		return task;
 	}
 

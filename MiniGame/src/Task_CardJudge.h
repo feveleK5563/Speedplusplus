@@ -11,8 +11,9 @@ namespace CardJudge
 	class Task : public TaskAbstract
 	{
 	private:
-		int progress;	//進行度
-		std::shared_ptr<CardID> handCard[2];					//手札
+		int progress;		//進行度
+		int centerCardNum;	//中央のカード枚数
+		std::pair<bool, std::shared_ptr<CardID>> handCard[2];	//手札
 		std::vector<std::shared_ptr<CardID>> centerCardBundle;	//中心のカード束
 
 	public:
@@ -27,15 +28,16 @@ namespace CardJudge
 
 	private:
 		void CreateHandCard();		//手札を作成する
-		void SetHandCard();			//選択した手札を登録する
+		void Judge();				//選択した手札によって、スコアの変化とエフェクトの生成を行う
+		void SetHandCard();			//選択した手札を中央に登録する
 
-		//ランダムにカードを追加する
-		std::shared_ptr<CardID> RandomNextCard();
+		//ランダムにカードを作成、追加する
+		void CreateRandomCard();
 		//手札を設定する
-		std::shared_ptr<CardID> ChoiceNextCard(bool isAnswerCard);
+		void SetNextHandCard();
 
 	public:
-		int GetCardNum() const;		//中心カードの枚数を取得
+		const int* GetCenterCardNum() const;		//中央カードの枚数を取得
 	};
 
 	bool SelectLeftCard();

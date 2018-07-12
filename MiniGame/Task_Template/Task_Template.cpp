@@ -38,7 +38,6 @@ namespace Template
 		TaskAbstract(defGroupName, defPriority),
 		res(Resource::Create())
 	{ 
-		Initialize();
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
@@ -53,6 +52,7 @@ namespace Template
 		std::shared_ptr<Task> task = std::make_shared<Task>();
 		TS::taskSystem.RegistrationTask(task);
 
+		task->Initialize();
 		return task;
 	}
 

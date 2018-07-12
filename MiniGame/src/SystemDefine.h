@@ -25,5 +25,5 @@ public:
 	template<class T> static void SafeDeleteArr(T& t);
 
 	//”ÍˆÍ“à‚Åƒ‰ƒ“ƒ_ƒ€‚È’l‚ğw’èŒÂ”•ªæ“¾‚·‚é
-	static std::shared_ptr<int[]> OutputRandomRange(int lowerLimit, int upperLimit, int size);
+	static int GetRand(int lowerLimit, int upperLimit);
 };

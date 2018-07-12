@@ -11,7 +11,7 @@ CB_LogoCard::CB_LogoCard(const CardID& id, const Math::Vec2& pos):
 			pos,
 			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f),
 			1.f, 1.f,
-			0.f, (float)SystemDefine::OutputRandomRange(-5, 5, 1)[0]),
+			0.f, (float)SystemDefine::GetRand(-5, 5)),
 	progress(0)
 {
 	card.ChangeFrontBack();
@@ -134,12 +134,13 @@ CB_CenterCard::CB_CenterCard(const CardID& id, const Math::Vec2& pos):
 	card(	id,
 			pos, Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f),
 			1.3f, 1.f,
-			0.f, (float)SystemDefine::OutputRandomRange(-5, 5, 1)[0]),
+			0.f, (float)SystemDefine::GetRand(-5, 5)),
 	progress(0)
 {
 	if (auto ts = TS::taskSystem.GetTaskOne<CardJudge::Task>("カード判定師"))
 	{
-		cardOrder = ts->GetCardNum();
+		centerCardNum = ts->GetCenterCardNum();
+		cardOrder = *centerCardNum;
 	}
 }
 bool CB_CenterCard::Update()
@@ -154,12 +155,9 @@ bool CB_CenterCard::Update()
 		break;
 
 	case 1:
-		if (auto ts = TS::taskSystem.GetTaskOne<CardJudge::Task>("カード判定師"))
-		{
-			//中心に20枚重なったら削除
-			if (ts->GetCardNum() - cardOrder > 20)
-				return true;
-		}
+		//中心に20枚重なったら削除
+		if (*centerCardNum - cardOrder > 20)
+			return true;
 		break;
 	}
 

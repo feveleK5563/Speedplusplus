@@ -8,10 +8,9 @@ namespace GameCard
 
 	//----------------------------------------------
 	//タスクのコンストラクタ
-	Task::Task(CardType cardType, const CardID& id, const Math::Vec2& pos, float priority):
+	Task::Task(float priority):
 		TaskAbstract(defGroupName, priority)
 	{
-		Initialize(cardType, id, pos);
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
@@ -24,9 +23,10 @@ namespace GameCard
 	std::shared_ptr<Task> Task::Create(CardType cardType, const CardID& id, const Math::Vec2& pos, float priority)
 	{
 		std::shared_ptr<Task> task =
-			std::make_shared<Task>(cardType, id, pos, priority);
+			std::make_shared<Task>(priority);
 		TS::taskSystem.RegistrationTask(task);
 
+		task->Initialize(cardType, id, pos);
 		return task;
 	}
 

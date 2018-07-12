@@ -50,7 +50,6 @@ namespace Back
 		imageBack(res->imageData[0], false),
 		imageFrame(res->imageData[1], true)
 	{ 
-		Initialize();
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
@@ -65,6 +64,7 @@ namespace Back
 		std::shared_ptr<Task> task = std::make_shared<Task>();
 		TS::taskSystem.RegistrationTask(task);
 
+		task->Initialize();
 		return task;
 	}
 
