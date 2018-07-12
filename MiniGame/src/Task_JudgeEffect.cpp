@@ -1,19 +1,49 @@
-#include "Task_SceneTitle.h"
+#include "Task_JudgeEffect.h"
 #include "DxLib.h"
-#include "InputState.h"
 #include "SystemDefine.h"
-#include "Task_Back.h"
-#include "Task_SceneGame.h"
 
-namespace SceneTitle
+namespace JudgeEffect
 {
+	std::weak_ptr<Resource> Resource::instance;
+	//----------------------------------------------
+	//リソースのコンストラクタ
+	Resource::Resource()
+	{
+		Image::imageLoader.LoadDivImage("JudgeEffect", "data/image/judge.png", 2, 2, 1, 336, 336);
+		imageData = Image::imageLoader.GetImageData("JudgeEffect");
+	}
+	//----------------------------------------------
+	//リソースのデストラクタ
+	Resource::~Resource()
+	{
+		Image::imageLoader.DeleteImageData("JudgeEffect");
+	}
+	//----------------------------------------------
+	//リソースの生成
+	std::shared_ptr<Resource> Resource::Create()
+	{
+		auto sp = instance.lock();
+		if (!sp)
+		{
+			sp = std::make_shared<Resource>();
+			instance = sp;
+		}
+		return sp;
+	}
+
 	//☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
 	//★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆
 
 	//----------------------------------------------
 	//タスクのコンストラクタ
 	Task::Task():
-		TaskAbstract(defGroupName, defPriority)
+		TaskAbstract(defGroupName, defPriority),
+		res(Resource::Create()),
+		imageDrawer(res->imageData, true),
+		easingMover(Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f),
+					Math::Vec2(0, 0),
+					1.f, 1.f,
+					0.f, 0.f)
 	{ 
 	}
 	//----------------------------------------------
@@ -41,15 +71,7 @@ namespace SceneTitle
 	//----------------------------------------------
 	void Task::Initialize()
 	{
-		if (!TS::taskSystem.FindTask(Back::defGroupName))
-		{
-			Back::Task::Create();
-		}
 
-		logoCardRef = GameCard::Task::Create(
-			CardType::LogoCard,
-			CardID(Suit::Etc, 1, Side::Back),
-			Math::Vec2(SystemDefine::windowSizeX / 2.f, -200));
 	}
 
 	//----------------------------------------------
@@ -57,7 +79,7 @@ namespace SceneTitle
 	//----------------------------------------------
 	void Task::Finalize()
 	{
-		SceneGame::Task::Create();
+
 	}
 
 	//----------------------------------------------
@@ -65,7 +87,7 @@ namespace SceneTitle
 	//----------------------------------------------
 	void Task::Update()
 	{
-		if (logoCardRef->state == TaskState::Kill)
+		if (easingMover.Update(30.f))
 		{
 			KillMe();
 		}
@@ -76,6 +98,11 @@ namespace SceneTitle
 	//----------------------------------------------
 	void Task::Draw()
 	{
-
+		imageDrawer.DrawOne(easingMover.GetPos(),
+			easingMover.GetScale(),
+			easingMover.GetAngle(),
+			false,
+			rw,
+			Color(0, 0, 0, 0));
 	}
 }

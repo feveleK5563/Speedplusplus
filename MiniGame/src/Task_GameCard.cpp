@@ -8,8 +8,8 @@ namespace GameCard
 
 	//----------------------------------------------
 	//タスクのコンストラクタ
-	Task::Task(float priority):
-		TaskAbstract(defGroupName, priority)
+	Task::Task():
+		TaskAbstract(defGroupName, defPriority)
 	{
 	}
 	//----------------------------------------------
@@ -20,10 +20,10 @@ namespace GameCard
 	}
 	//----------------------------------------------
 	//タスクの生成
-	std::shared_ptr<Task> Task::Create(CardType cardType, const CardID& id, const Math::Vec2& pos, float priority)
+	std::shared_ptr<Task> Task::Create(CardType cardType, const CardID& id, const Math::Vec2& pos)
 	{
 		std::shared_ptr<Task> task =
-			std::make_shared<Task>(priority);
+			std::make_shared<Task>();
 		TS::taskSystem.RegistrationTask(task);
 
 		task->Initialize(cardType, id, pos);
@@ -41,6 +41,7 @@ namespace GameCard
 		switch (cardType)
 		{
 		case CardType::LogoCard:		//ロゴカード
+			priority = centerPriority;
 			cardBehavior = std::make_unique<CB_LogoCard>(id, pos);
 			break;
 
@@ -53,6 +54,7 @@ namespace GameCard
 			break;
 
 		case CardType::CenterCard:		//中央に移動するカード
+			priority = centerPriority;
 			cardBehavior = std::make_unique<CB_CenterCard>(id, pos);
 			break;
 		}

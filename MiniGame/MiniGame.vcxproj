@@ -34,6 +34,7 @@
     <ClCompile Include="src\SystemDefine.cpp" />
     <ClCompile Include="src\TaskAbstract.cpp" />
     <ClCompile Include="src\TaskSystem.cpp" />
+    <ClCompile Include="src\Task_JudgeEffect.cpp" />
     <ClCompile Include="src\Task_SceneTitle.cpp" />
     <ClCompile Include="src\Task_Back.cpp" />
     <ClCompile Include="src\Task_SceneGame.cpp" />
@@ -57,6 +58,7 @@
     <ClInclude Include="src\TaskAbstract.h" />
     <ClInclude Include="src\SystemDefine.h" />
     <ClInclude Include="src\TaskSystem.h" />
+    <ClInclude Include="src\Task_JudgeEffect.h" />
     <ClInclude Include="src\Task_SceneTitle.h" />
     <ClInclude Include="src\Task_Back.h" />
     <ClInclude Include="src\Task_SceneGame.h" />

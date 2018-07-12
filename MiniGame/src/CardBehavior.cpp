@@ -91,7 +91,7 @@ bool CB_HandCard::Update()
 		if ((LorR && CardJudge::SelectLeftCard()) ||
 			(!LorR && CardJudge::SelectRightCard()))
 		{
-			GameCard::Task::Create(CardType::CenterCard, card.GetID(), card.GetPos(), GameCard::defPriority - 0.1f);
+			GameCard::Task::Create(CardType::CenterCard, card.GetID(), card.GetPos());
 			return true;
 		}
 		//上ボタンか逆方向ボタンを押したら画面外に移動

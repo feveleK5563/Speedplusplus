@@ -44,6 +44,9 @@
     <Filter Include="ソース ファイル\Class">
       <UniqueIdentifier>{28b274d1-0442-4fbb-9cb2-358108c8defa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Task\Task_Effect">
+      <UniqueIdentifier>{4f0cfd69-806b-4068-985c-1c207ee194a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\SystemDefine.cpp">
@@ -109,6 +112,9 @@
     <ClCompile Include="src\CardBehavior.cpp">
       <Filter>ソース ファイル\Task\Task_Card</Filter>
     </ClCompile>
+    <ClCompile Include="src\Task_JudgeEffect.cpp">
+      <Filter>ソース ファイル\Task\Task_Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\SystemDefine.h">
@@ -173,6 +179,9 @@
     </ClInclude>
     <ClInclude Include="src\CardBehavior.h">
       <Filter>ソース ファイル\Task\Task_Card</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Task_JudgeEffect.h">
+      <Filter>ソース ファイル\Task\Task_Effect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

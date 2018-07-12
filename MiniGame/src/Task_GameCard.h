@@ -7,6 +7,7 @@ namespace GameCard
 {
 	const std::string	defGroupName("ゲームカード");	//グループ名
 	const float			defPriority(1.5f);			//デフォルトの処理優先度
+	const float			centerPriority(1.3f);		//中心のカードの処理優先度
 
 	//----------------------------------------------
 	class Task : public TaskAbstract
@@ -16,13 +17,13 @@ namespace GameCard
 
 	public:
 		//コンストラクタ
-		Task(float priority);
+		Task();
 
 		//デストラクタ
 		~Task();
 		
 		//タスクの生成
-		static std::shared_ptr<Task> Create(CardType cardType, const CardID& id, const Math::Vec2& pos, float priority);
+		static std::shared_ptr<Task> Create(CardType cardType, const CardID& id, const Math::Vec2& pos);
 
 		void Initialize(CardType cardType, const CardID& id, const Math::Vec2& pos);	//初期化処理
 		void Finalize() override;	//終了処理

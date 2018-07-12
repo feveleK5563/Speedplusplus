@@ -92,17 +92,13 @@ namespace CardJudge
 		GameCard::Task::Create(
 			CardType::HandCardLeft,
 			*(handCard[0].second),
-			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY + 200.f),
-			GameCard::defPriority
-		);
+			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY + 200.f));
 
 		//カード右
 		GameCard::Task::Create(
 			CardType::HandCardRight,
 			*(handCard[1].second),
-			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY + 200.f),
-			GameCard::defPriority
-		);
+			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY + 200.f));
 
 		progress = 1;
 	}
@@ -177,9 +173,8 @@ namespace CardJudge
 		GameCard::Task::Create(
 			CardType::CenterCard,
 			*cardID,
-			Math::Vec2(SystemDefine::windowSizeX / 2.f, -200.f),
-			GameCard::defPriority - 0.1f
-		);
+			Math::Vec2(SystemDefine::windowSizeX / 2.f, -200.f));
+
 		centerCardBundle.emplace_back(cardID);
 	}
 
