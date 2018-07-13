@@ -5,6 +5,7 @@
 #include "InputState.h"
 #include "Task_SceneTitle.h"
 #include "SystemDefine.h"
+#include "Task_JudgeEffect.h"
 
 namespace CardJudge
 {
@@ -115,13 +116,17 @@ namespace CardJudge
 		if (SelectThrowCard())
 		{
 			CreateRandomCard();
+			float ang = 90.f + SystemDefine::GetRand(-20, 20);
+			float length = 200.f;
 			if (handCard[0].first == false && handCard[1].first == false)
 			{
-				
+				JudgeEffect::Task::Create(
+					JEffect::Right, ang, length);
 			}
 			else
 			{
-				KillMe();
+				JudgeEffect::Task::Create(
+					JEffect::Wrong, ang, length);
 			}
 			progress = 0;
 			return;
@@ -131,13 +136,17 @@ namespace CardJudge
 		if (SelectLeftCard())
 		{
 			centerCardBundle.emplace_back(handCard[0].second);
+			float ang = -30.f + SystemDefine::GetRand(-20, 20);
+			float length = 400.f;
 			if (handCard[0].first == true)
 			{
-				
+				JudgeEffect::Task::Create(
+					JEffect::Right, ang, length);
 			}
 			else
 			{
-				KillMe();
+				JudgeEffect::Task::Create(
+					JEffect::Wrong, ang, length);
 			}
 			progress = 0;
 			return;
@@ -147,13 +156,17 @@ namespace CardJudge
 		if (SelectRightCard())
 		{
 			centerCardBundle.emplace_back(handCard[1].second);
+			float ang = 210.f + SystemDefine::GetRand(-20, 20);
+			float length = 400.f;
 			if (handCard[1].first == true)
 			{
-				
+				JudgeEffect::Task::Create(
+					JEffect::Right, ang, length);
 			}
 			else
 			{
-				KillMe();
+				JudgeEffect::Task::Create(
+					JEffect::Wrong, ang, length);
 			}
 			progress = 0;
 			return;

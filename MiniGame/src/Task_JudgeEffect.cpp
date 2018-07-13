@@ -9,14 +9,15 @@ namespace JudgeEffect
 	//リソースのコンストラクタ
 	Resource::Resource()
 	{
-		Image::imageLoader.LoadDivImage("JudgeEffect", "data/image/judge.png", 2, 2, 1, 336, 336);
-		imageData = Image::imageLoader.GetImageData("JudgeEffect");
+		imageName = "JudgeEffect";
+		Image::imageLoader.LoadDivImage(imageName, "data/image/Judge.png", 2, 2, 1, 336, 336);
+		imageData = Image::imageLoader.GetImageData(imageName);
 	}
 	//----------------------------------------------
 	//リソースのデストラクタ
 	Resource::~Resource()
 	{
-		Image::imageLoader.DeleteImageData("JudgeEffect");
+		Image::imageLoader.DeleteImageData(imageName);
 	}
 	//----------------------------------------------
 	//リソースの生成
@@ -36,14 +37,16 @@ namespace JudgeEffect
 
 	//----------------------------------------------
 	//タスクのコンストラクタ
-	Task::Task():
+	Task::Task(JEffect je, float degAngle, float moveLength):
 		TaskAbstract(defGroupName, defPriority),
 		res(Resource::Create()),
 		imageDrawer(res->imageData, true),
 		easingMover(Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f),
-					Math::Vec2(0, 0),
+					Math::Vec2(	SystemDefine::windowSizeX / 2.f + cos(Math::ToRadian(degAngle)) * moveLength,
+								SystemDefine::windowSizeY / 2.f + sin(Math::ToRadian(degAngle)) * moveLength),
 					1.f, 1.f,
-					0.f, 0.f)
+					0.f, (float)SystemDefine::GetRand(-5, 5)),
+		je(int(je))
 	{ 
 	}
 	//----------------------------------------------
@@ -54,9 +57,9 @@ namespace JudgeEffect
 	}
 	//----------------------------------------------
 	//タスクの生成
-	std::shared_ptr<Task> Task::Create()
+	std::shared_ptr<Task> Task::Create(JEffect je, float degAngle, float moveLength)
 	{
-		std::shared_ptr<Task> task = std::make_shared<Task>();
+		std::shared_ptr<Task> task = std::make_shared<Task>(je, degAngle, moveLength);
 		TS::taskSystem.RegistrationTask(task);
 
 		task->Initialize();
@@ -98,11 +101,12 @@ namespace JudgeEffect
 	//----------------------------------------------
 	void Task::Draw()
 	{
-		imageDrawer.DrawOne(easingMover.GetPos(),
+		imageDrawer.DrawOne(
+			easingMover.GetPos(),
 			easingMover.GetScale(),
 			easingMover.GetAngle(),
 			false,
-			rw,
-			Color(0, 0, 0, 0));
+			je,
+			Color(255, 255, 255, 180));
 	}
 }

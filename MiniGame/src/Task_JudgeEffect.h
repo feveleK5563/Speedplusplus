@@ -3,6 +3,13 @@
 #include "EasingMover.h"
 #include "ImageDrawer.h"
 
+enum struct JEffect
+{
+	Right = 0,
+	Wrong = 1,
+	//Fever = 2,
+};
+
 namespace JudgeEffect
 {
 	const std::string	defGroupName("結果エフェクト");	//グループ名
@@ -16,6 +23,7 @@ namespace JudgeEffect
 
 	public:
 		ImageData imageData;
+		std::string imageName;
 
 		Resource();		//コンストラクタ
 		~Resource();	//デストラクタ
@@ -28,14 +36,14 @@ namespace JudgeEffect
 	private:
 		std::shared_ptr<Resource> res;	//確保したリソース
 
-		int rw; //正解か間違いか
+		int je; //表示するエフェクトの種類
 		ImageDrawer imageDrawer;
 		EasingMover easingMover;
 
 	public:
-		Task();		//コンストラクタ
-		~Task();	//デストラクタ
-		static std::shared_ptr<Task> Create();	//タスクの生成
+		Task(JEffect je, float degAngle, float moveLength);		//コンストラクタ
+		~Task();				//デストラクタ
+		static std::shared_ptr<Task> Create(JEffect je, float degAngle, float moveLength);	//タスクの生成
 
 		void Initialize();			//初期化処理
 		void Finalize() override;	//終了処理
