@@ -5,7 +5,6 @@
 namespace Back
 {
 	const std::string	defGroupName("背景");	//グループ名
-	const float			defPriority(1.f);		//デフォルトの処理優先度
 
 	const int resourceNum = 2;
 	//----------------------------------------------

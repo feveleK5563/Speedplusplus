@@ -29,12 +29,13 @@ namespace CardJudge
 	private:
 		void CreateHandCard();		//手札を作成する
 		void Judge();				//選択した手札によって、スコアの変化とエフェクトの生成を行う
-		void SetHandCard();			//選択した手札を中央に登録する
 
 		//ランダムにカードを作成、追加する
-		void CreateRandomCard();
+		void CreateRandomCard(Side side);
 		//手札を設定する
 		void SetNextHandCard();
+		//エフェクトを発生させる
+		void CreateEffect(float angle, float length, bool rw);
 
 	public:
 		const int* GetCenterCardNum() const;		//中央カードの枚数を取得

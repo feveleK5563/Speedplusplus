@@ -47,6 +47,18 @@
     <Filter Include="ソース ファイル\Task\Task_Effect">
       <UniqueIdentifier>{4f0cfd69-806b-4068-985c-1c207ee194a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Class\Card">
+      <UniqueIdentifier>{483a6934-313a-424c-8374-b4883557d324}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Class\Move">
+      <UniqueIdentifier>{42d627e5-e9b1-4fa3-97af-d59a7dbf0417}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Task\Task_GameTimer">
+      <UniqueIdentifier>{54e46b2e-ccda-4d4b-bc20-6c3a031a3be4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Task\Etc">
+      <UniqueIdentifier>{bfad7b67-b371-45d5-a812-cdbb89c072b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\SystemDefine.cpp">
@@ -94,26 +106,29 @@
     <ClCompile Include="src\main.cpp">
       <Filter>システム</Filter>
     </ClCompile>
-    <ClCompile Include="src\Resource_Card.cpp">
-      <Filter>ソース ファイル\Task\Task_Card</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Card.cpp">
-      <Filter>ソース ファイル\Task\Task_Card</Filter>
-    </ClCompile>
-    <ClCompile Include="src\EasingMover.cpp">
-      <Filter>ソース ファイル\Class</Filter>
-    </ClCompile>
     <ClCompile Include="src\Task_CardJudge.cpp">
       <Filter>ソース ファイル\Task\Task_Card</Filter>
     </ClCompile>
     <ClCompile Include="src\Task_GameCard.cpp">
       <Filter>ソース ファイル\Task\Task_Card</Filter>
     </ClCompile>
-    <ClCompile Include="src\CardBehavior.cpp">
-      <Filter>ソース ファイル\Task\Task_Card</Filter>
-    </ClCompile>
     <ClCompile Include="src\Task_JudgeEffect.cpp">
       <Filter>ソース ファイル\Task\Task_Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Card.cpp">
+      <Filter>ソース ファイル\Class\Card</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CardBehavior.cpp">
+      <Filter>ソース ファイル\Class\Card</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EasingMover.cpp">
+      <Filter>ソース ファイル\Class\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resource_Card.cpp">
+      <Filter>ソース ファイル\Task\Task_Card</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Task_GameTimer.cpp">
+      <Filter>ソース ファイル\Task\Task_GameTimer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -159,17 +174,8 @@
     <ClInclude Include="src\Task_SceneGame.h">
       <Filter>ソース ファイル\Task\Scene\Game</Filter>
     </ClInclude>
-    <ClInclude Include="src\Resource_Card.h">
-      <Filter>ソース ファイル\Task\Task_Card</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Card.h">
-      <Filter>ソース ファイル\Task\Task_Card</Filter>
-    </ClInclude>
     <ClInclude Include="src\Easing.h">
       <Filter>システム\Etc</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EasingMover.h">
-      <Filter>ソース ファイル\Class</Filter>
     </ClInclude>
     <ClInclude Include="src\Task_CardJudge.h">
       <Filter>ソース ファイル\Task\Task_Card</Filter>
@@ -177,11 +183,26 @@
     <ClInclude Include="src\Task_GameCard.h">
       <Filter>ソース ファイル\Task\Task_Card</Filter>
     </ClInclude>
-    <ClInclude Include="src\CardBehavior.h">
-      <Filter>ソース ファイル\Task\Task_Card</Filter>
-    </ClInclude>
     <ClInclude Include="src\Task_JudgeEffect.h">
       <Filter>ソース ファイル\Task\Task_Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Card.h">
+      <Filter>ソース ファイル\Class\Card</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CardBehavior.h">
+      <Filter>ソース ファイル\Class\Card</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EasingMover.h">
+      <Filter>ソース ファイル\Class\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resource_Card.h">
+      <Filter>ソース ファイル\Task\Task_Card</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Task_GameTimer.h">
+      <Filter>ソース ファイル\Task\Task_GameTimer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Priority.h">
+      <Filter>ソース ファイル\Task\Etc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

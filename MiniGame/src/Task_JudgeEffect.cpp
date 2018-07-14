@@ -1,6 +1,7 @@
 #include "Task_JudgeEffect.h"
 #include "DxLib.h"
 #include "SystemDefine.h"
+#include "Priority.h"
 
 namespace JudgeEffect
 {
@@ -38,7 +39,7 @@ namespace JudgeEffect
 	//----------------------------------------------
 	//タスクのコンストラクタ
 	Task::Task(JEffect je, float degAngle, float moveLength):
-		TaskAbstract(defGroupName, defPriority),
+		TaskAbstract(defGroupName, Priority::judgeEffect),
 		res(Resource::Create()),
 		imageDrawer(res->imageData, true),
 		easingMover(Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f),
@@ -46,7 +47,9 @@ namespace JudgeEffect
 								SystemDefine::windowSizeY / 2.f + sin(Math::ToRadian(degAngle)) * moveLength),
 					1.f, 1.f,
 					0.f, (float)SystemDefine::GetRand(-5, 5)),
-		je(int(je))
+		je(int(je)),
+		progress(0),
+		alpha(0.6f)
 	{ 
 	}
 	//----------------------------------------------
@@ -90,9 +93,25 @@ namespace JudgeEffect
 	//----------------------------------------------
 	void Task::Update()
 	{
-		if (easingMover.Update(30.f))
+		switch (progress)
 		{
-			KillMe();
+		case 0:
+			if (easingMover.Update(30.f))
+			{
+				++progress;
+			}
+			break;
+
+		case 1:
+			if (alpha <= 0.f)
+			{
+				KillMe();
+			}
+			else
+			{
+				alpha -= 0.1f;
+			}
+			break;
 		}
 	}
 
@@ -107,6 +126,6 @@ namespace JudgeEffect
 			easingMover.GetAngle(),
 			false,
 			je,
-			Color(255, 255, 255, 180));
+			Color(255, 255, 255, int(255 * alpha)));
 	}
 }

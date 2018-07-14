@@ -6,8 +6,6 @@
 namespace GameCard
 {
 	const std::string	defGroupName("ゲームカード");	//グループ名
-	const float			defPriority(1.5f);			//デフォルトの処理優先度
-	const float			centerPriority(1.3f);		//中心のカードの処理優先度
 
 	//----------------------------------------------
 	class Task : public TaskAbstract

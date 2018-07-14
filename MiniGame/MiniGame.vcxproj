@@ -40,6 +40,7 @@
     <ClCompile Include="src\Task_SceneGame.cpp" />
     <ClCompile Include="src\Task_CardJudge.cpp" />
     <ClCompile Include="src\Task_GameCard.cpp" />
+    <ClCompile Include="src\Task_GameTimer.cpp" />
     <ClCompile Include="src\TimeCounter.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +55,7 @@
     <ClInclude Include="src\ImageLoader.h" />
     <ClInclude Include="src\InputState.h" />
     <ClInclude Include="src\Math.h" />
+    <ClInclude Include="src\Priority.h" />
     <ClInclude Include="src\Resource_Card.h" />
     <ClInclude Include="src\TaskAbstract.h" />
     <ClInclude Include="src\SystemDefine.h" />
@@ -64,6 +66,7 @@
     <ClInclude Include="src\Task_SceneGame.h" />
     <ClInclude Include="src\Task_CardJudge.h" />
     <ClInclude Include="src\Task_GameCard.h" />
+    <ClInclude Include="src\Task_GameTimer.h" />
     <ClInclude Include="src\TimeCounter.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

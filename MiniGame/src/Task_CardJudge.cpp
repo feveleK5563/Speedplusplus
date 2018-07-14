@@ -45,7 +45,7 @@ namespace CardJudge
 	//----------------------------------------------
 	void Task::Initialize()
 	{
-		CreateRandomCard();
+		CreateRandomCard(Side::Front);
 	}
 
 	//----------------------------------------------
@@ -115,20 +115,9 @@ namespace CardJudge
 		//パス
 		if (SelectThrowCard())
 		{
-			CreateRandomCard();
-			float ang = 90.f + SystemDefine::GetRand(-20, 20);
-			float length = 200.f;
-			if (handCard[0].first == false && handCard[1].first == false)
-			{
-				JudgeEffect::Task::Create(
-					JEffect::Right, ang, length);
-			}
-			else
-			{
-				JudgeEffect::Task::Create(
-					JEffect::Wrong, ang, length);
-			}
-			progress = 0;
+			CreateRandomCard(Side::Front);
+			CreateEffect(90.f, 200.f,
+				handCard[0].first == false && handCard[1].first == false);
 			return;
 		}
 
@@ -136,19 +125,7 @@ namespace CardJudge
 		if (SelectLeftCard())
 		{
 			centerCardBundle.emplace_back(handCard[0].second);
-			float ang = -30.f + SystemDefine::GetRand(-20, 20);
-			float length = 400.f;
-			if (handCard[0].first == true)
-			{
-				JudgeEffect::Task::Create(
-					JEffect::Right, ang, length);
-			}
-			else
-			{
-				JudgeEffect::Task::Create(
-					JEffect::Wrong, ang, length);
-			}
-			progress = 0;
+			CreateEffect(-30.f, 400.f, handCard[0].first == true);
 			return;
 		}
 
@@ -156,32 +133,20 @@ namespace CardJudge
 		if (SelectRightCard())
 		{
 			centerCardBundle.emplace_back(handCard[1].second);
-			float ang = 210.f + SystemDefine::GetRand(-20, 20);
-			float length = 400.f;
-			if (handCard[1].first == true)
-			{
-				JudgeEffect::Task::Create(
-					JEffect::Right, ang, length);
-			}
-			else
-			{
-				JudgeEffect::Task::Create(
-					JEffect::Wrong, ang, length);
-			}
-			progress = 0;
+			CreateEffect(210.f, 400.f, handCard[1].first == true);
 			return;
 		}
 	}
 
 	//----------------------------------------------
 	//ランダムにカードを作成、追加する
-	void Task::CreateRandomCard()
+	void Task::CreateRandomCard(Side side)
 	{
 		std::shared_ptr<CardID> cardID = 
 			std::make_shared<CardID>(
 			Suit(SystemDefine::GetRand(0, 3)),
 			SystemDefine::GetRand(0, 12),
-			Side::Front);
+			side);
 
 		GameCard::Task::Create(
 			CardType::CenterCard,
@@ -212,17 +177,19 @@ namespace CardJudge
 			for (int n = 0; n < 13; ++n)
 			{
 				//先頭カードと同じカードだった場合はやり直し
-				if (centerTop->suit != Suit(s) && centerTop->number != n)
+				if (centerTop->suit == Suit(s) && centerTop->number == n)
 					continue;
 
 				//差が1か12のカードは正解
 				if (abs(centerTop->number - n) % 11 == 1)
 				{
-					right.emplace_back(std::make_shared<CardID>(Suit(s), n, Side::Front));
+					//正解のカードを格納
+					right.emplace_back(std::make_shared<CardID>(Suit(s), n, Side::Back));
 				}
 				else
 				{
-					wrong.emplace_back(std::make_shared<CardID>(Suit(s), n, Side::Front));
+					//間違いのカードを格納
+					wrong.emplace_back(std::make_shared<CardID>(Suit(s), n, Side::Back));
 				}
 			}
 		}
@@ -246,6 +213,24 @@ namespace CardJudge
 			handCard[!isRight].second = wrong[SystemDefine::GetRand(0, (int)wrong.size() - 1)];
 		}
 	}
+	//----------------------------------------------
+	//エフェクトを発生させる
+	void Task::CreateEffect(float angle, float length, bool rw)
+	{
+		float ang = angle + SystemDefine::GetRand(-20, 20);
+
+		if (rw)
+		{
+			JudgeEffect::Task::Create(
+				JEffect::Right, ang, length);
+		}
+		else
+		{
+			JudgeEffect::Task::Create(
+				JEffect::Wrong, ang, length);
+		}
+		progress = 0;
+	}
 
 	//----------------------------------------------
 	//中央カードの枚数を取得
@@ -268,7 +253,7 @@ namespace CardJudge
 	bool SelectThrowCard()
 	{
 		return	Input::key[KEY_INPUT_W]			== DOWN ||
-				Input::joypad1[PadInput::Y]		== DOWN ||
-				Input::joypad1[PadInput::UP]	== DOWN;
+				Input::joypad1[PadInput::L1]	== DOWN ||
+				Input::joypad1[PadInput::R1]	== DOWN;
 	}
 }

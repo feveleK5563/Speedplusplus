@@ -12,7 +12,9 @@ enum struct Suit
 	Diamond	= 3,	//ダイヤ
 	Etc		= 4,	//その他
 
-	Back	= 54,	//裏
+	Etc_Joker	= 10,	//ジョーカー
+	Etc_Logo	= 11,	//タイトルロゴ
+	Etc_Back	= 12,	//裏
 };
 
 enum struct Side
@@ -57,7 +59,7 @@ public:
 	bool Update(float speed);
 
 	//描画
-	void Draw();
+	void Draw(float size);
 
 	//カードの裏表を変更する
 	void ChangeFrontBack();

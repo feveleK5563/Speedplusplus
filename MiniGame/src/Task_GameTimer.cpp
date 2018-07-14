@@ -1,11 +1,7 @@
-#include "Task_SceneTitle.h"
+#include "Task_GameTimer.h"
 #include "DxLib.h"
-#include "InputState.h"
-#include "SystemDefine.h"
-#include "Task_Back.h"
-#include "Task_SceneGame.h"
 
-namespace SceneTitle
+namespace GameTimer
 {
 	//☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
 	//★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆
@@ -13,7 +9,8 @@ namespace SceneTitle
 	//----------------------------------------------
 	//タスクのコンストラクタ
 	Task::Task():
-		TaskAbstract(defGroupName, defPriority)
+		TaskAbstract(defGroupName, defPriority),
+		timeCnt(180)
 	{ 
 	}
 	//----------------------------------------------
@@ -41,15 +38,7 @@ namespace SceneTitle
 	//----------------------------------------------
 	void Task::Initialize()
 	{
-		if (!TS::taskSystem.FindTask(Back::defGroupName))
-		{
-			Back::Task::Create();
-		}
 
-		logoCardRef = GameCard::Task::Create(
-			CardType::LogoCard,
-			CardID(Suit::Etc, (int)Suit::Etc_Logo, Side::Back),
-			Math::Vec2(SystemDefine::windowSizeX / 2.f, -200));
 	}
 
 	//----------------------------------------------
@@ -57,7 +46,7 @@ namespace SceneTitle
 	//----------------------------------------------
 	void Task::Finalize()
 	{
-		SceneGame::Task::Create();
+
 	}
 
 	//----------------------------------------------
@@ -65,10 +54,7 @@ namespace SceneTitle
 	//----------------------------------------------
 	void Task::Update()
 	{
-		if (logoCardRef->state == TaskState::Kill)
-		{
-			KillMe();
-		}
+		
 	}
 
 	//----------------------------------------------
@@ -76,6 +62,6 @@ namespace SceneTitle
 	//----------------------------------------------
 	void Task::Draw()
 	{
-
+		
 	}
 }

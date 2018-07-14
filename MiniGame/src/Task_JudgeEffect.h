@@ -13,7 +13,6 @@ enum struct JEffect
 namespace JudgeEffect
 {
 	const std::string	defGroupName("結果エフェクト");	//グループ名
-	const float			defPriority(1.4f);				//デフォルトの処理優先度
 
 	//----------------------------------------------
 	class Resource
@@ -39,6 +38,9 @@ namespace JudgeEffect
 		int je; //表示するエフェクトの種類
 		ImageDrawer imageDrawer;
 		EasingMover easingMover;
+
+		int progress;	//進行度
+		float alpha;	//アルファ値
 
 	public:
 		Task(JEffect je, float degAngle, float moveLength);		//コンストラクタ

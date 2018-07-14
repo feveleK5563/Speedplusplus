@@ -52,6 +52,12 @@ const int& TimeCounter::GetNowCntTime() const
 	return cntTime;
 }
 
+//残り時間(終了時間-経過時間)を返す
+int TimeCounter::GetRemainingTime() const
+{
+	return endTime - cntTime;
+}
+
 //終了時間を返す
 const int& TimeCounter::GetEndTime() const
 {
@@ -117,6 +123,12 @@ void TimeCounterF::Run()
 const float& TimeCounterF::GetNowCntTime() const
 {
 	return cntTime;
+}
+
+//残り時間(終了時間-経過時間)を返す
+float TimeCounterF::GetRemainingTime() const
+{
+	return endTime - cntTime;
 }
 
 //終了時間を返す

@@ -30,6 +30,9 @@ public:
 	//現在の経過時間を返す
 	const int& GetNowCntTime() const;
 
+	//残り時間(終了時間-経過時間)を返す
+	int GetRemainingTime() const;
+
 	//終了時間を返す
 	const int& GetEndTime() const;
 
@@ -68,6 +71,9 @@ public:
 
 	//現在の経過時間を返す
 	const float& GetNowCntTime() const;
+
+	//残り時間(終了時間-経過時間)を返す
+	float GetRemainingTime() const;
 
 	//終了時間を返す
 	const float& GetEndTime() const;

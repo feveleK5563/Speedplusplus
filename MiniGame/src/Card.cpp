@@ -44,24 +44,25 @@ bool Card::Update(float speed)
 
 //-----------------------------------------------------------------------------
 //ï`âÊ
-void Card::Draw()
+void Card::Draw(float size)
 {
 	int showCard;
 	if (id.side == Side::Back ||
 		id.side == Side::NextFront)
 	{
-		showCard = static_cast<int>(Suit::Back);
+		//ÉJÅ[Éhó†
+		showCard = (int)Suit::Etc * 13 + (int)Suit::Etc_Back;
 	}
 	else
 	{
-		showCard = static_cast<int>(id.suit) * 13 + id.number;
+		showCard = (int)id.suit * 13 + id.number;
 	}
 
 	SetDrawMode(DX_DRAWMODE_BILINEAR);
 	imageDrawer.DrawOne(
 		emover.GetPos(),
-		emover.GetScale() * 1.f * scaleX,
-		emover.GetScale() * 1.f,
+		emover.GetScale() * size * scaleX,
+		emover.GetScale() * size,
 		emover.GetAngle(),
 		false,
 		showCard,

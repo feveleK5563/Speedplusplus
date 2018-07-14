@@ -1,5 +1,6 @@
 #include "Task_GameCard.h"
 #include "DxLib.h"
+#include "Priority.h"
 
 namespace GameCard
 {
@@ -9,7 +10,7 @@ namespace GameCard
 	//----------------------------------------------
 	//タスクのコンストラクタ
 	Task::Task():
-		TaskAbstract(defGroupName, defPriority)
+		TaskAbstract(defGroupName, Priority::handCard)
 	{
 	}
 	//----------------------------------------------
@@ -41,7 +42,7 @@ namespace GameCard
 		switch (cardType)
 		{
 		case CardType::LogoCard:		//ロゴカード
-			priority = centerPriority;
+			priority = Priority::logoCard;
 			cardBehavior = std::make_unique<CB_LogoCard>(id, pos);
 			break;
 
@@ -54,7 +55,7 @@ namespace GameCard
 			break;
 
 		case CardType::CenterCard:		//中央に移動するカード
-			priority = centerPriority;
+			priority = Priority::centerCard;
 			cardBehavior = std::make_unique<CB_CenterCard>(id, pos);
 			break;
 		}

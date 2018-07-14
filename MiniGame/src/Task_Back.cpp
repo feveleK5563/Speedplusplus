@@ -1,6 +1,7 @@
 #include "Task_Back.h"
 #include "DxLib.h"
 #include "SystemDefine.h"
+#include "Priority.h"
 
 namespace Back
 {
@@ -45,7 +46,7 @@ namespace Back
 	//----------------------------------------------
 	//タスクのコンストラクタ
 	Task::Task():
-		TaskAbstract(defGroupName, defPriority),
+		TaskAbstract(defGroupName, Priority::backGround),
 		res(Resource::Create()),
 		imageBack(res->imageData[0], false),
 		imageFrame(res->imageData[1], true)

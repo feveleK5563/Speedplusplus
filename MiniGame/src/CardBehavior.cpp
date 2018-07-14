@@ -52,7 +52,7 @@ bool CB_LogoCard::Update()
 }
 void CB_LogoCard::Draw()
 {
-	card.Draw();
+	card.Draw(1.f);
 }
 
 
@@ -65,16 +65,17 @@ CB_HandCard::CB_HandCard(const CardID& id, const Math::Vec2& pos, bool LorR) :
 {
 	if (LorR)
 	{
-		card.SetEndMove(Math::Vec2(200.f, SystemDefine::windowSizeY - 200.f),
+		card.SetEndMove(Math::Vec2(250.f, SystemDefine::windowSizeY - 200.f),
 						1.3f,
 						-1.f);
 	}
 	else
 	{
-		card.SetEndMove(Math::Vec2(SystemDefine::windowSizeX - 200.f, SystemDefine::windowSizeY - 200.f),
+		card.SetEndMove(Math::Vec2(SystemDefine::windowSizeX - 250.f, SystemDefine::windowSizeY - 200.f),
 						1.3f,
 						1.f);
 	}
+	card.ChangeFrontBack();
 }
 bool CB_HandCard::Update()
 {
@@ -87,17 +88,10 @@ bool CB_HandCard::Update()
 		if (CardJudge::SelectLeftCard() && CardJudge::SelectRightCard())
 			break;
 
-		//対応した左右ボタンを押したら中心に移動
-		if ((LorR && CardJudge::SelectLeftCard()) ||
-			(!LorR && CardJudge::SelectRightCard()))
-		{
-			GameCard::Task::Create(CardType::CenterCard, card.GetID(), card.GetPos());
-			return true;
-		}
 		//上ボタンか逆方向ボタンを押したら画面外に移動
-		if ((!LorR && CardJudge::SelectLeftCard()) ||
-			(LorR && CardJudge::SelectRightCard()) ||
-			CardJudge::SelectThrowCard())
+		if (CardJudge::SelectThrowCard() ||
+			(!LorR && CardJudge::SelectLeftCard()) ||
+			(LorR && CardJudge::SelectRightCard()))
 		{
 			if (LorR)
 			{
@@ -110,6 +104,14 @@ bool CB_HandCard::Update()
 								1.3f, 90.f);
 			}
 			++progress;
+			return false;
+		}
+		//対応した左右ボタンを押したら中心に移動
+		if ((LorR && CardJudge::SelectLeftCard()) ||
+			(!LorR && CardJudge::SelectRightCard()))
+		{
+			GameCard::Task::Create(CardType::CenterCard, card.GetID(), card.GetPos());
+			return true;
 		}
 		break;
 
@@ -125,7 +127,7 @@ bool CB_HandCard::Update()
 }
 void CB_HandCard::Draw()
 {
-	card.Draw();
+	card.Draw(1.f);
 }
 
 //-----------------------------------------------------------------------------
@@ -165,5 +167,5 @@ bool CB_CenterCard::Update()
 }
 void CB_CenterCard::Draw()
 {
-	card.Draw();
+	card.Draw(1.f);
 }
