@@ -1,6 +1,9 @@
 #pragma once
 #include "TaskSystem.h"
-#include "Task_GameCard.h"
+#include "Task_GameTimer.h"
+#include "Task_LogoCard.h"
+#include "Task_HandCard.h"
+#include "Task_CenterCard.h"
 
 namespace CardJudge
 {
@@ -11,10 +14,12 @@ namespace CardJudge
 	class Task : public TaskAbstract
 	{
 	private:
-		int progress;		//進行度
-		int centerCardNum;	//中央のカード枚数
+		bool isHaveHandCard;	//手札を持っているかどうか
+		int centerCardNum;		//中央のカード枚数
 		std::pair<bool, std::shared_ptr<CardID>> handCard[2];	//手札
 		std::vector<std::shared_ptr<CardID>> centerCardBundle;	//中心のカード束
+
+		std::shared_ptr<GameTimer::Task> gameTimer;	//ゲーム進行を管理するタイマー
 
 	public:
 		Task();		//コンストラクタ
@@ -40,8 +45,4 @@ namespace CardJudge
 	public:
 		const int* GetCenterCardNum() const;		//中央カードの枚数を取得
 	};
-
-	bool SelectLeftCard();
-	bool SelectRightCard();
-	bool SelectThrowCard();
 }

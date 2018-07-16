@@ -1,7 +1,7 @@
 #include "Task_Back.h"
 #include "DxLib.h"
 #include "SystemDefine.h"
-#include "Priority.h"
+#include "GameDefine.h"
 
 namespace Back
 {

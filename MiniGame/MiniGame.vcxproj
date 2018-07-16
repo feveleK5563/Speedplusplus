@@ -21,9 +21,10 @@
   <ItemGroup>
     <ClCompile Include="src\ButtonInfo.cpp" />
     <ClCompile Include="src\Card.cpp" />
-    <ClCompile Include="src\CardBehavior.cpp" />
+    <ClCompile Include="src\CardCounter.cpp" />
     <ClCompile Include="src\EasingMover.cpp" />
     <ClCompile Include="src\Fps.cpp" />
+    <ClCompile Include="src\GameDefine.cpp" />
     <ClCompile Include="src\GameSystem.cpp" />
     <ClCompile Include="src\ImageDrawer.cpp" />
     <ClCompile Include="src\ImageLoader.cpp" />
@@ -39,14 +40,16 @@
     <ClCompile Include="src\Task_Back.cpp" />
     <ClCompile Include="src\Task_SceneGame.cpp" />
     <ClCompile Include="src\Task_CardJudge.cpp" />
-    <ClCompile Include="src\Task_GameCard.cpp" />
+    <ClCompile Include="src\Task_HandCard.cpp" />
     <ClCompile Include="src\Task_GameTimer.cpp" />
+    <ClCompile Include="src\Task_LogoCard.cpp" />
+    <ClCompile Include="src\Task_CenterCard.cpp" />
     <ClCompile Include="src\TimeCounter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ButtonInfo.h" />
     <ClInclude Include="src\Card.h" />
-    <ClInclude Include="src\CardBehavior.h" />
+    <ClInclude Include="src\CardCounter.h" />
     <ClInclude Include="src\Easing.h" />
     <ClInclude Include="src\EasingMover.h" />
     <ClInclude Include="src\Fps.h" />
@@ -55,7 +58,7 @@
     <ClInclude Include="src\ImageLoader.h" />
     <ClInclude Include="src\InputState.h" />
     <ClInclude Include="src\Math.h" />
-    <ClInclude Include="src\Priority.h" />
+    <ClInclude Include="src\GameDefine.h" />
     <ClInclude Include="src\Resource_Card.h" />
     <ClInclude Include="src\TaskAbstract.h" />
     <ClInclude Include="src\SystemDefine.h" />
@@ -65,8 +68,10 @@
     <ClInclude Include="src\Task_Back.h" />
     <ClInclude Include="src\Task_SceneGame.h" />
     <ClInclude Include="src\Task_CardJudge.h" />
-    <ClInclude Include="src\Task_GameCard.h" />
+    <ClInclude Include="src\Task_HandCard.h" />
     <ClInclude Include="src\Task_GameTimer.h" />
+    <ClInclude Include="src\Task_LogoCard.h" />
+    <ClInclude Include="src\Task_CenterCard.h" />
     <ClInclude Include="src\TimeCounter.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

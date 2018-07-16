@@ -1,7 +1,7 @@
 #include "Task_JudgeEffect.h"
 #include "DxLib.h"
 #include "SystemDefine.h"
-#include "Priority.h"
+#include "GameDefine.h"
 
 namespace JudgeEffect
 {

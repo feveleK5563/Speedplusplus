@@ -49,7 +49,8 @@ namespace Template
 	//ƒ^ƒXƒN‚Ì¶¬
 	std::shared_ptr<Task> Task::Create()
 	{
-		std::shared_ptr<Task> task = std::make_shared<Task>();
+		std::shared_ptr<Task> task = 
+			std::make_shared<Task>();
 		TS::taskSystem.RegistrationTask(task);
 
 		task->Initialize();

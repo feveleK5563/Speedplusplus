@@ -40,12 +40,12 @@ class Card
 private:
 	std::shared_ptr<CardR::Resource> res;	//確保したリソース
 
-public:
 	CardID		id;				//カードの識別
-
 	EasingMover	emover;			//イージングを利用した動作
 	float		scaleX;			//横幅(めくる処理に使用する)
 	ImageDrawer	imageDrawer;	//描画処理くん
+
+public:
 
 	//コンストラクタ(カードの識別、座標、描画サイズ、角度を指定)
 	Card(const CardID& id, const Math::Vec2& pos, float scale, float degAngle);
@@ -59,13 +59,16 @@ public:
 	bool Update(float speed);
 
 	//描画
-	void Draw(float size);
+	void Draw();
 
 	//カードの裏表を変更する
 	void ChangeFrontBack();
 
-	//カードの動作目標を変更する
+	//カードの動作目標を設定する
 	void SetEndMove(const Math::Vec2& endPos, float endScale, float endDegAngle);
+
+	//カードのスート、数字を設定する
+	void SetSuitAndNumber(Suit suit, int number);
 
 	//座標を取得する
 	const Math::Vec2& GetPos() const;

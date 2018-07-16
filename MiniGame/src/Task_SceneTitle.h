@@ -1,6 +1,6 @@
 #pragma once
 #include "TaskSystem.h"
-#include "Task_GameCard.h"
+#include "Task_LogoCard.h"
 
 namespace SceneTitle
 {
@@ -11,7 +11,7 @@ namespace SceneTitle
 	class Task : public TaskAbstract
 	{
 	private:
-		std::shared_ptr<const GameCard::Task> logoCardRef;
+		std::shared_ptr<const LogoCard::Task> logoCardRef;
 
 	public:
 		Task();		//コンストラクタ

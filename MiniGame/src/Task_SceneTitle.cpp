@@ -46,8 +46,7 @@ namespace SceneTitle
 			Back::Task::Create();
 		}
 
-		logoCardRef = GameCard::Task::Create(
-			CardType::LogoCard,
+		logoCardRef = LogoCard::Task::Create(
 			CardID(Suit::Etc, (int)Suit::Etc_Logo, Side::Back),
 			Math::Vec2(SystemDefine::windowSizeX / 2.f, -200));
 	}

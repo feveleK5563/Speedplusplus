@@ -26,9 +26,14 @@ namespace Template
 		std::shared_ptr<Resource> res;	//確保したリソース
 
 	public:
-		Task();		//コンストラクタ
-		~Task();	//デストラクタ
-		static std::shared_ptr<Task> Create();	//タスクの生成
+		//コンストラクタ
+		Task();
+		
+		//デストラクタ
+		~Task();
+		
+		//タスクの生成
+		static std::shared_ptr<Task> Create();
 
 		void Initialize();			//初期化処理
 		void Finalize() override;	//終了処理

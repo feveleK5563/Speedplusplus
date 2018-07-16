@@ -1,18 +1,25 @@
 #pragma once
 #include "TaskSystem.h"
 #include "TimeCounter.h"
-#include "Card.h"
+#include "CardCounter.h"
+
+enum struct TimeState
+{
+	Ready,
+	Game,
+	End,
+};
 
 namespace GameTimer
 {
 	const std::string	defGroupName("ゲームタイマー");	//グループ名
-	const float			defPriority(0.f);			//デフォルトの処理優先度
 
 	//----------------------------------------------
 	class Task : public TaskAbstract
 	{
 	private:
-		std::unique_ptr<Card> card[2];
+		TimeState state;
+		std::unique_ptr<CardCounter> cardCnt[2];
 		TimeCounter timeCnt;
 
 	public:
@@ -24,5 +31,7 @@ namespace GameTimer
 		void Finalize() override;	//終了処理
 		void Update() override;		//更新
 		void Draw() override;		//描画
+
+		TimeState GetTimeState() const;
 	};
 }

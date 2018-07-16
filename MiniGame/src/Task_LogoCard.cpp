@@ -1,25 +1,26 @@
-#include "Task_GameTimer.h"
+#include "Task_LogoCard.h"
 #include "DxLib.h"
-#include "SystemDefine.h"
 #include "GameDefine.h"
+#include "SystemDefine.h"
+#include "InputState.h"
 
-namespace GameTimer
+namespace LogoCard
 {
 	//☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
 	//★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆
 
 	//----------------------------------------------
 	//タスクのコンストラクタ
-	Task::Task():
-		TaskAbstract(defGroupName, Priority::countCard),
-		state(TimeState::Ready),
-		timeCnt(120)
-	{ 
-		cardCnt[0] = std::make_unique<CardCounter>(6,	Math::Vec2(250, SystemDefine::windowSizeY + 200.f),
-														Math::Vec2(120, 150), 0.5f);
-
-		cardCnt[1] = std::make_unique<CardCounter>(0,	Math::Vec2(120, SystemDefine::windowSizeY + 200.f),
-														Math::Vec2(250, 150), 0.5f);
+	Task::Task(const CardID& id, const Math::Vec2& pos):
+		TaskAbstract(defGroupName, Priority::logoCard),
+		card(id,
+			pos,
+			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f),
+			1.f, 1.f,
+			0.f, (float)SystemDefine::GetRand(-5, 5)),
+		progress(0)
+	{
+		card.ChangeFrontBack();
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
@@ -29,9 +30,9 @@ namespace GameTimer
 	}
 	//----------------------------------------------
 	//タスクの生成
-	std::shared_ptr<Task> Task::Create()
+	std::shared_ptr<Task> Task::Create(const CardID& id, const Math::Vec2& pos)
 	{
-		std::shared_ptr<Task> task = std::make_shared<Task>();
+		std::shared_ptr<Task> task = std::make_shared<Task>(id, pos);
 		TS::taskSystem.RegistrationTask(task);
 
 		task->Initialize();
@@ -62,29 +63,32 @@ namespace GameTimer
 	//----------------------------------------------
 	void Task::Update()
 	{
-		timeCnt.Run();
-		switch (state)
-		{
-		case TimeState::Ready:	//ゲーム開始前
-			cardCnt[0]->Update(6);
-			if (timeCnt.GetNowCntTime() > 5)
-				cardCnt[1]->Update(0);
+		bool endUpdate = card.Update(30.f);
 
-			if (timeCnt.IsTimeEnd())
+		//進行度によって処理を変える
+		switch (progress)
+		{
+		case 0:	//ロゴが中心に移動
+				//ボタン押したら画面下に消える
+			if (Input::key[KEY_INPUT_S] == DOWN)
 			{
-				state = TimeState::Game;
-				timeCnt.SetEndTime(3600);
-				timeCnt.ResetCntTime();
+				card.ChangeFrontBack();
+			}
+			if (Input::key[KEY_INPUT_SPACE] == DOWN ||
+				Input::joypad1[PadInput::START] == DOWN)
+			{
+				++progress;
+				card.SetEndMove(Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY + 300.f),
+					1.f,
+					0.f);
 			}
 			break;
 
-		case TimeState::Game:	//ゲーム中
-		case TimeState::End:	//ゲーム終了
-			cardCnt[0]->Update(timeCnt.GetRemainingTime() / 60 / 10);
-			cardCnt[1]->Update(timeCnt.GetRemainingTime() / 60 % 10);
-			if (timeCnt.GetRemainingTime() < 60)
+		case 1:
+			//画面下に消えたら消滅
+			if (endUpdate)
 			{
-				state = TimeState::End;
+				KillMe();
 			}
 			break;
 		}
@@ -95,16 +99,6 @@ namespace GameTimer
 	//----------------------------------------------
 	void Task::Draw()
 	{
-		for (int i = 0; i < 2; ++i)
-		{
-			cardCnt[i]->Draw();
-		}
-	}
-
-	//----------------------------------------------
-	//状態の取得
-	TimeState Task::GetTimeState() const
-	{
-		return state;
+		card.Draw();
 	}
 }

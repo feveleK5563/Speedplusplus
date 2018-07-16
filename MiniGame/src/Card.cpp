@@ -44,7 +44,7 @@ bool Card::Update(float speed)
 
 //-----------------------------------------------------------------------------
 //描画
-void Card::Draw(float size)
+void Card::Draw()
 {
 	int showCard;
 	if (id.side == Side::Back ||
@@ -61,8 +61,8 @@ void Card::Draw(float size)
 	SetDrawMode(DX_DRAWMODE_BILINEAR);
 	imageDrawer.DrawOne(
 		emover.GetPos(),
-		emover.GetScale() * size * scaleX,
-		emover.GetScale() * size,
+		emover.GetScale() * scaleX,
+		emover.GetScale(),
 		emover.GetAngle(),
 		false,
 		showCard,
@@ -93,6 +93,14 @@ void Card::ChangeFrontBack()
 void Card::SetEndMove(const Math::Vec2& endPos, float endScale, float endDegAngle)
 {
 	emover.SetEndMove(endPos, endScale, endDegAngle);
+}
+
+//-----------------------------------------------------------------------------
+//カードのスート、数字を設定する
+void Card::SetSuitAndNumber(Suit suit, int number)
+{
+	id.suit = suit;
+	id.number = number;
 }
 
 //-----------------------------------------------------------------------------

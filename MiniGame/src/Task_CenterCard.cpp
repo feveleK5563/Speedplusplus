@@ -1,17 +1,29 @@
-#include "Task_GameCard.h"
+#include "Task_CenterCard.h"
 #include "DxLib.h"
-#include "Priority.h"
+#include "SystemDefine.h"
+#include "GameDefine.h"
+#include "Task_CardJudge.h"
 
-namespace GameCard
+namespace CenterCard
 {
 	//☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
 	//★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆
 
 	//----------------------------------------------
 	//タスクのコンストラクタ
-	Task::Task():
-		TaskAbstract(defGroupName, Priority::handCard)
+	Task::Task(const CardID& id, const Math::Vec2& pos):
+		TaskAbstract(defGroupName, Priority::countCard),
+		card(id,
+			pos, Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f),
+			1.3f, 1.f,
+			0.f, (float)SystemDefine::GetRand(-5, 5)),
+		progress(0)
 	{
+		if (auto ts = TS::taskSystem.GetTaskOne<CardJudge::Task>("カード判定師"))
+		{
+			centerCardNum = ts->GetCenterCardNum();
+			cardOrder = *centerCardNum;
+		}
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
@@ -21,13 +33,12 @@ namespace GameCard
 	}
 	//----------------------------------------------
 	//タスクの生成
-	std::shared_ptr<Task> Task::Create(CardType cardType, const CardID& id, const Math::Vec2& pos)
+	std::shared_ptr<Task> Task::Create(const CardID& id, const Math::Vec2& pos)
 	{
-		std::shared_ptr<Task> task =
-			std::make_shared<Task>();
+		std::shared_ptr<Task> task = std::make_shared<Task>(id, pos);
 		TS::taskSystem.RegistrationTask(task);
 
-		task->Initialize(cardType, id, pos);
+		task->Initialize();
 		return task;
 	}
 
@@ -37,28 +48,8 @@ namespace GameCard
 	//----------------------------------------------
 	//初期化処理
 	//----------------------------------------------
-	void Task::Initialize(CardType cardType, const CardID& id, const Math::Vec2& pos)
+	void Task::Initialize()
 	{
-		switch (cardType)
-		{
-		case CardType::LogoCard:		//ロゴカード
-			priority = Priority::logoCard;
-			cardBehavior = std::make_unique<CB_LogoCard>(id, pos);
-			break;
-
-		case CardType::HandCardLeft:	//手札用カード左
-			cardBehavior = std::make_unique<CB_HandCard>(id, pos, true);
-			break;
-
-		case CardType::HandCardRight:	//手札用カード右
-			cardBehavior = std::make_unique<CB_HandCard>(id, pos, false);
-			break;
-
-		case CardType::CenterCard:		//中央に移動するカード
-			priority = Priority::centerCard;
-			cardBehavior = std::make_unique<CB_CenterCard>(id, pos);
-			break;
-		}
 
 	}
 
@@ -75,9 +66,20 @@ namespace GameCard
 	//----------------------------------------------
 	void Task::Update()
 	{
-		if (cardBehavior->Update())
+		switch (progress)
 		{
-			KillMe();
+		case 0:
+			if (card.Update(10.f))
+			{
+				++progress;
+			}
+			break;
+
+		case 1:
+			//中心に20枚重なったら削除
+			if (*centerCardNum - cardOrder > 20)
+				KillMe();
+			break;
 		}
 	}
 
@@ -86,6 +88,6 @@ namespace GameCard
 	//----------------------------------------------
 	void Task::Draw()
 	{
-		cardBehavior->Draw();
+		card.Draw();
 	}
 }

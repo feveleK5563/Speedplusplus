@@ -10,3 +10,7 @@ namespace Priority
 	const float			handCard		(1.5f);	//èD
 	const float			logoCard		(1.6f);	//ƒƒSƒJ[ƒh
 }
+
+bool SelectLeftCard();
+bool SelectRightCard();
+bool SelectThrowCard();

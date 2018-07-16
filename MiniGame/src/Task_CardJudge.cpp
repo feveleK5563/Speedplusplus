@@ -5,6 +5,7 @@
 #include "InputState.h"
 #include "Task_SceneTitle.h"
 #include "SystemDefine.h"
+#include "GameDefine.h"
 #include "Task_JudgeEffect.h"
 
 namespace CardJudge
@@ -16,7 +17,7 @@ namespace CardJudge
 	//タスクのコンストラクタ
 	Task::Task():
 		TaskAbstract(defGroupName, defPriority),
-		progress(0),
+		isHaveHandCard(false),
 		centerCardNum(0)
 	{
 	}
@@ -45,7 +46,8 @@ namespace CardJudge
 	//----------------------------------------------
 	void Task::Initialize()
 	{
-		CreateRandomCard(Side::Front);
+		CreateRandomCard(Side::Back);
+		gameTimer = GameTimer::Task::Create();
 	}
 
 	//----------------------------------------------
@@ -61,16 +63,18 @@ namespace CardJudge
 	//----------------------------------------------
 	void Task::Update()
 	{
-		switch (progress)
+		if (gameTimer->GetTimeState() == TimeState::Game)
 		{
-		case 0:
-			CreateHandCard();
-			break;
-
-		case 1:
-			Judge();
-			break;
+			if (isHaveHandCard)
+			{
+				Judge();
+			}
+			else
+			{
+				CreateHandCard();
+			}
 		}
+
 		centerCardNum = (int)centerCardBundle.size();
 	}
 
@@ -90,18 +94,18 @@ namespace CardJudge
 		SetNextHandCard();
 
 		//カード左
-		GameCard::Task::Create(
-			CardType::HandCardLeft,
+		HandCard::Task::Create(
 			*(handCard[0].second),
-			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY + 200.f));
+			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY + 200.f),
+			true);
 
 		//カード右
-		GameCard::Task::Create(
-			CardType::HandCardRight,
+		HandCard::Task::Create(
 			*(handCard[1].second),
-			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY + 200.f));
+			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY + 200.f),
+			false);
 
-		progress = 1;
+		isHaveHandCard = true;
 	}
 
 	//----------------------------------------------
@@ -148,10 +152,8 @@ namespace CardJudge
 			SystemDefine::GetRand(0, 12),
 			side);
 
-		GameCard::Task::Create(
-			CardType::CenterCard,
-			*cardID,
-			Math::Vec2(SystemDefine::windowSizeX / 2.f, -200.f));
+		CenterCard::Task::Create(
+			*cardID, Math::Vec2(SystemDefine::windowSizeX / 2.f, -200.f));
 
 		centerCardBundle.emplace_back(cardID);
 	}
@@ -229,7 +231,7 @@ namespace CardJudge
 			JudgeEffect::Task::Create(
 				JEffect::Wrong, ang, length);
 		}
-		progress = 0;
+		isHaveHandCard = false;
 	}
 
 	//----------------------------------------------
@@ -237,23 +239,5 @@ namespace CardJudge
 	const int* Task::GetCenterCardNum() const
 	{
 		return &centerCardNum;
-	}
-
-
-	bool SelectLeftCard()
-	{
-		return	Input::key[KEY_INPUT_A]			== DOWN ||
-				Input::joypad1[PadInput::LEFT]	== DOWN;
-	}
-	bool SelectRightCard()
-	{
-		return	Input::key[KEY_INPUT_D]			== DOWN ||
-				Input::joypad1[PadInput::B]		== DOWN;
-	}
-	bool SelectThrowCard()
-	{
-		return	Input::key[KEY_INPUT_W]			== DOWN ||
-				Input::joypad1[PadInput::L1]	== DOWN ||
-				Input::joypad1[PadInput::R1]	== DOWN;
 	}
 }
