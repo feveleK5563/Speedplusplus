@@ -1,6 +1,7 @@
 #include "Task_SceneGame.h"
 #include "DxLib.h"
-#include "Task_CardJudge.h"
+#include "Task_SceneTitle.h"
+#include "SystemDefine.h"
 
 namespace SceneGame
 {
@@ -38,7 +39,8 @@ namespace SceneGame
 	//----------------------------------------------
 	void Task::Initialize()
 	{
-		CardJudge::Task::Create();
+		gameTimer = GameTimer::Task::Create();
+		cardJudge = CardJudge::Task::Create();
 	}
 
 	//----------------------------------------------
@@ -46,7 +48,11 @@ namespace SceneGame
 	//----------------------------------------------
 	void Task::Finalize()
 	{
-		//SceneTitle::Task::Create();
+		LogoCard::Task::Create(
+			CardID(Suit::Etc, (int)Suit::Etc_Logo, Side::Front),
+			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f));
+
+		SceneTitle::Task::Create();
 		TS::taskSystem.KillTask("ƒJ[ƒh”»’èŽt");
 	}
 
@@ -55,7 +61,11 @@ namespace SceneGame
 	//----------------------------------------------
 	void Task::Update()
 	{
-		
+		if (gameTimer->state == TaskState::Kill)
+		{
+			cardJudge->KillMe();
+			KillMe();
+		}
 	}
 
 	//----------------------------------------------

@@ -19,7 +19,8 @@ namespace CardJudge
 		std::pair<bool, std::shared_ptr<CardID>> handCard[2];	//手札
 		std::vector<std::shared_ptr<CardID>> centerCardBundle;	//中心のカード束
 
-		std::shared_ptr<GameTimer::Task> gameTimer;	//ゲーム進行を管理するタイマー
+		const GameState* gameState;	//現在のゲーム進行状況
+		
 
 	public:
 		Task();		//コンストラクタ

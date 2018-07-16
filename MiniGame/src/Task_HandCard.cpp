@@ -12,7 +12,7 @@ namespace HandCard
 
 	//----------------------------------------------
 	//タスクのコンストラクタ
-	Task::Task(const CardID& id, const Math::Vec2& pos, bool LorR):
+	Task::Task(const CardID& id, const Math::Vec2& pos, bool LorR, const GameState* gameState):
 		TaskAbstract(defGroupName, Priority::handCard),
 		card(id,
 			pos,
@@ -20,7 +20,8 @@ namespace HandCard
 			1.f, 1.f,
 			0.f, (float)SystemDefine::GetRand(-5, 5)),
 		progress(0),
-		LorR(LorR)
+		LorR(LorR),
+		gameState(gameState)
 	{
 		if (LorR)
 		{
@@ -44,10 +45,10 @@ namespace HandCard
 	}
 	//----------------------------------------------
 	//タスクの生成
-	std::shared_ptr<Task> Task::Create(const CardID& id, const Math::Vec2& pos, bool LorR)
+	std::shared_ptr<Task> Task::Create(const CardID& id, const Math::Vec2& pos, bool LorR, const GameState* gameState)
 	{
 		std::shared_ptr<Task> task =
-			std::make_shared<Task>(id, pos, LorR);
+			std::make_shared<Task>(id, pos, LorR, gameState);
 		TS::taskSystem.RegistrationTask(task);
 
 		task->Initialize();
@@ -87,10 +88,12 @@ namespace HandCard
 			if (SelectLeftCard() && SelectRightCard())
 				break;
 
+			//ゲーム本編終了時か、
 			//上ボタンか逆方向ボタンを押したら画面外に移動
 			if (SelectThrowCard() ||
 				(!LorR && SelectLeftCard()) ||
-				(LorR && SelectRightCard()))
+				(LorR && SelectRightCard()) ||
+				*gameState != GameState::Game)
 			{
 				if (LorR)
 				{
@@ -109,7 +112,7 @@ namespace HandCard
 			if ((LorR && SelectLeftCard()) ||
 				(!LorR && SelectRightCard()))
 			{
-				CenterCard::Task::Create(card.GetID(), card.GetPos());
+				CenterCard::Task::Create(card.GetID(), card.GetPos(), gameState);
 				KillMe();
 			}
 			break;

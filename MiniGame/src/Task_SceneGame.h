@@ -1,5 +1,7 @@
 #pragma once
 #include "TaskSystem.h"
+#include "Task_GameTimer.h"
+#include "Task_CardJudge.h"
 
 namespace SceneGame
 {
@@ -10,6 +12,8 @@ namespace SceneGame
 	class Task : public TaskAbstract
 	{
 	private:
+		std::shared_ptr<GameTimer::Task> gameTimer;
+		std::shared_ptr<CardJudge::Task> cardJudge;
 
 	public:
 		Task();		//コンストラクタ

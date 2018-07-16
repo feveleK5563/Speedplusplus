@@ -46,8 +46,10 @@ namespace CardJudge
 	//----------------------------------------------
 	void Task::Initialize()
 	{
+		auto gt = TS::taskSystem.GetTaskOne<GameTimer::Task>(GameTimer::defGroupName);
+		gameState = &gt->GetTimeState();
+
 		CreateRandomCard(Side::Back);
-		gameTimer = GameTimer::Task::Create();
 	}
 
 	//----------------------------------------------
@@ -63,7 +65,7 @@ namespace CardJudge
 	//----------------------------------------------
 	void Task::Update()
 	{
-		if (gameTimer->GetTimeState() == TimeState::Game)
+		if (*gameState == GameState::Game)
 		{
 			if (isHaveHandCard)
 			{
@@ -97,13 +99,13 @@ namespace CardJudge
 		HandCard::Task::Create(
 			*(handCard[0].second),
 			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY + 200.f),
-			true);
+			true, gameState);
 
 		//カード右
 		HandCard::Task::Create(
 			*(handCard[1].second),
 			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY + 200.f),
-			false);
+			false, gameState);
 
 		isHaveHandCard = true;
 	}
@@ -153,7 +155,7 @@ namespace CardJudge
 			side);
 
 		CenterCard::Task::Create(
-			*cardID, Math::Vec2(SystemDefine::windowSizeX / 2.f, -200.f));
+			*cardID, Math::Vec2(SystemDefine::windowSizeX / 2.f, -200.f), gameState);
 
 		centerCardBundle.emplace_back(cardID);
 	}

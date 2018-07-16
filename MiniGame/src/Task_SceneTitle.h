@@ -11,7 +11,7 @@ namespace SceneTitle
 	class Task : public TaskAbstract
 	{
 	private:
-		std::shared_ptr<const LogoCard::Task> logoCardRef;
+		const TaskState* logoState;
 
 	public:
 		Task();		//コンストラクタ

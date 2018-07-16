@@ -3,10 +3,12 @@
 #include "TimeCounter.h"
 #include "CardCounter.h"
 
-enum struct TimeState
+enum struct GameState
 {
-	Ready,
-	Game,
+	Ready	= 240,
+	Game	= 600,
+	GameEnd,
+	Result,
 	End,
 };
 
@@ -18,7 +20,7 @@ namespace GameTimer
 	class Task : public TaskAbstract
 	{
 	private:
-		TimeState state;
+		GameState gameState;
 		std::unique_ptr<CardCounter> cardCnt[2];
 		TimeCounter timeCnt;
 
@@ -32,6 +34,6 @@ namespace GameTimer
 		void Update() override;		//XV
 		void Draw() override;		//•`‰æ
 
-		TimeState GetTimeState() const;
+		const GameState& GetTimeState() const;
 	};
 }

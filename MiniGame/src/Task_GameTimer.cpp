@@ -12,13 +12,13 @@ namespace GameTimer
 	//タスクのコンストラクタ
 	Task::Task():
 		TaskAbstract(defGroupName, Priority::countCard),
-		state(TimeState::Ready),
-		timeCnt(120)
+		gameState(GameState::Ready),
+		timeCnt((int)GameState::Ready)
 	{ 
-		cardCnt[0] = std::make_unique<CardCounter>(6,	Math::Vec2(250, SystemDefine::windowSizeY + 200.f),
+		cardCnt[0] = std::make_unique<CardCounter>(0,	Math::Vec2(250, SystemDefine::windowSizeY + 200.f),
 														Math::Vec2(120, 150), 0.5f);
 
-		cardCnt[1] = std::make_unique<CardCounter>(0,	Math::Vec2(120, SystemDefine::windowSizeY + 200.f),
+		cardCnt[1] = std::make_unique<CardCounter>(3,	Math::Vec2(120, SystemDefine::windowSizeY + 200.f),
 														Math::Vec2(250, 150), 0.5f);
 	}
 	//----------------------------------------------
@@ -63,29 +63,37 @@ namespace GameTimer
 	void Task::Update()
 	{
 		timeCnt.Run();
-		switch (state)
-		{
-		case TimeState::Ready:	//ゲーム開始前
-			cardCnt[0]->Update(6);
-			if (timeCnt.GetNowCntTime() > 5)
-				cardCnt[1]->Update(0);
+		cardCnt[0]->Update(timeCnt.GetRemainingTime() / 60 / 10);
+		cardCnt[1]->Update(timeCnt.GetRemainingTime() / 60 % 10);
 
-			if (timeCnt.IsTimeEnd())
+		switch (gameState)
+		{
+		case GameState::Ready:	//ゲーム開始前
+			if (timeCnt.GetRemainingTime() <= 60)
 			{
-				state = TimeState::Game;
-				timeCnt.SetEndTime(3600);
+				gameState = GameState::Game;
+				timeCnt.SetEndTime((int)GameState::Game);
 				timeCnt.ResetCntTime();
 			}
 			break;
 
-		case TimeState::Game:	//ゲーム中
-		case TimeState::End:	//ゲーム終了
-			cardCnt[0]->Update(timeCnt.GetRemainingTime() / 60 / 10);
-			cardCnt[1]->Update(timeCnt.GetRemainingTime() / 60 % 10);
+		case GameState::Game:		//ゲーム中
 			if (timeCnt.GetRemainingTime() < 60)
 			{
-				state = TimeState::End;
+				gameState = GameState::GameEnd;
 			}
+			break;
+
+		case GameState::GameEnd:	//ゲーム終了
+			gameState = GameState::Result;
+			break;
+
+		case GameState::Result:		//結果画面
+			gameState = GameState::End;
+			break;
+
+		case GameState::End:	//終了
+			KillMe();
 			break;
 		}
 	}
@@ -103,8 +111,8 @@ namespace GameTimer
 
 	//----------------------------------------------
 	//状態の取得
-	TimeState Task::GetTimeState() const
+	const GameState& Task::GetTimeState() const
 	{
-		return state;
+		return gameState;
 	}
 }
