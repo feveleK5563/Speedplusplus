@@ -15,9 +15,11 @@ namespace CardJudge
 	{
 	private:
 		bool isHaveHandCard;	//手札を持っているかどうか
+		int scoreFluctuation;	//正誤状況を格納(正解したら+1, 間違えたら-1になる)
+
 		int centerCardNum;		//中央のカード枚数
 		std::pair<bool, std::shared_ptr<CardID>> handCard[2];	//手札
-		std::vector<std::shared_ptr<CardID>> centerCardBundle;	//中心のカード束
+		std::shared_ptr<CardID> centerTopCard;	//中心の先頭カード
 
 		const GameState* gameState;	//現在のゲーム進行状況
 		
@@ -40,10 +42,11 @@ namespace CardJudge
 		void CreateRandomCard(Side side);
 		//手札を設定する
 		void SetNextHandCard();
-		//エフェクトを発生させる
+		//正誤に応じてエフェクトを発生させる
 		void CreateEffect(float angle, float length, bool rw);
 
 	public:
-		const int* GetCenterCardNum() const;		//中央カードの枚数を取得
+		const int& GetCenterCardNum() const;		//中央カードの枚数を取得
+		const int& GetScoreFluctuation() const;		//正誤状況を取得
 	};
 }

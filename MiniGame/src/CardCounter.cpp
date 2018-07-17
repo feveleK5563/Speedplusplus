@@ -10,16 +10,19 @@ CardCounter::CardCounter(int number, const Math::Vec2& startPos, const Math::Vec
 	card.ChangeFrontBack();
 }
 
+//0~9の数を指定
 bool CardCounter::Update(int number)
 {
 	bool isMoveEnd = card.Update(30.f);
 	if (isMoveEnd)
 	{
+		//裏返っていたら表に返す
 		if (card.GetID().side == Side::Back)
 		{
 			card.SetSuitAndNumber(Suit::Etc, changeNumber);
 			card.ChangeFrontBack();
 		}
+		//数値が表示されているものと異なっている場合
 		else if (number != card.GetID().number)
 		{
 			changeNumber = number;

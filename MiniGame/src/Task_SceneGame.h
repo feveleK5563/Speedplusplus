@@ -2,6 +2,7 @@
 #include "TaskSystem.h"
 #include "Task_GameTimer.h"
 #include "Task_CardJudge.h"
+#include "Task_GameScore.h"
 
 namespace SceneGame
 {
@@ -14,6 +15,7 @@ namespace SceneGame
 	private:
 		std::shared_ptr<GameTimer::Task> gameTimer;
 		std::shared_ptr<CardJudge::Task> cardJudge;
+		std::shared_ptr<GameScore::Task> gameScore;
 
 	public:
 		Task();		//コンストラクタ

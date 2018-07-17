@@ -9,6 +9,7 @@ private:
 	int changeNumber;
 
 public:
+	//number‚É(int)Suit::RedNum‚ğ‰ÁZ‚·‚é‚ÆÔ”š‚É‚È‚é
 	CardCounter(int number, const Math::Vec2& startPos, const Math::Vec2& endPos, float scale);
 	bool Update(int number);	//0~9‚Ì”š‚ğw’è
 	void Draw();

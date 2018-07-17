@@ -44,6 +44,7 @@
     <ClCompile Include="src\Task_GameTimer.cpp" />
     <ClCompile Include="src\Task_LogoCard.cpp" />
     <ClCompile Include="src\Task_CenterCard.cpp" />
+    <ClCompile Include="src\Task_GameScore.cpp" />
     <ClCompile Include="src\TimeCounter.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -72,6 +73,7 @@
     <ClInclude Include="src\Task_GameTimer.h" />
     <ClInclude Include="src\Task_LogoCard.h" />
     <ClInclude Include="src\Task_CenterCard.h" />
+    <ClInclude Include="src\Task_GameScore.h" />
     <ClInclude Include="src\TimeCounter.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -147,10 +149,14 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>DxLib\DxLib_VC;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>DxLib\DxLib_VC;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

@@ -5,8 +5,8 @@
 
 enum struct GameState
 {
-	Ready	= 240,
-	Game	= 600,
+	Ready	= 180,
+	Game	= 3600,
 	GameEnd,
 	Result,
 	End,
@@ -34,6 +34,10 @@ namespace GameTimer
 		void Update() override;		//XV
 		void Draw() override;		//•`‰æ
 
+	private:
+		void CountUpdate();
+
+	public:
 		const GameState& GetTimeState() const;
 	};
 }

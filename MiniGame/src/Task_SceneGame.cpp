@@ -41,6 +41,7 @@ namespace SceneGame
 	{
 		gameTimer = GameTimer::Task::Create();
 		cardJudge = CardJudge::Task::Create();
+		gameScore = GameScore::Task::Create();
 	}
 
 	//----------------------------------------------
@@ -64,6 +65,7 @@ namespace SceneGame
 		if (gameTimer->state == TaskState::Kill)
 		{
 			cardJudge->KillMe();
+			gameScore->KillMe();
 			KillMe();
 		}
 	}

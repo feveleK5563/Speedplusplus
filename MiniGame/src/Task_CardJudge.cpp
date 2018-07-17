@@ -18,7 +18,8 @@ namespace CardJudge
 	Task::Task():
 		TaskAbstract(defGroupName, defPriority),
 		isHaveHandCard(false),
-		centerCardNum(0)
+		centerCardNum(0),
+		scoreFluctuation(0)
 	{
 	}
 	//----------------------------------------------
@@ -65,6 +66,8 @@ namespace CardJudge
 	//----------------------------------------------
 	void Task::Update()
 	{
+		scoreFluctuation = 0;
+
 		if (*gameState == GameState::Game)
 		{
 			if (isHaveHandCard)
@@ -76,8 +79,6 @@ namespace CardJudge
 				CreateHandCard();
 			}
 		}
-
-		centerCardNum = (int)centerCardBundle.size();
 	}
 
 	//----------------------------------------------
@@ -99,13 +100,13 @@ namespace CardJudge
 		HandCard::Task::Create(
 			*(handCard[0].second),
 			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY + 200.f),
-			true, gameState);
+			true);
 
 		//カード右
 		HandCard::Task::Create(
 			*(handCard[1].second),
 			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY + 200.f),
-			false, gameState);
+			false);
 
 		isHaveHandCard = true;
 	}
@@ -124,22 +125,25 @@ namespace CardJudge
 			CreateRandomCard(Side::Front);
 			CreateEffect(90.f, 200.f,
 				handCard[0].first == false && handCard[1].first == false);
+			++centerCardNum;
 			return;
 		}
 
 		//カード左
 		if (SelectLeftCard())
 		{
-			centerCardBundle.emplace_back(handCard[0].second);
+			centerTopCard = handCard[0].second;
 			CreateEffect(-30.f, 400.f, handCard[0].first == true);
+			++centerCardNum;
 			return;
 		}
 
 		//カード右
 		if (SelectRightCard())
 		{
-			centerCardBundle.emplace_back(handCard[1].second);
+			centerTopCard = handCard[1].second;
 			CreateEffect(210.f, 400.f, handCard[1].first == true);
+			++centerCardNum;
 			return;
 		}
 	}
@@ -155,9 +159,9 @@ namespace CardJudge
 			side);
 
 		CenterCard::Task::Create(
-			*cardID, Math::Vec2(SystemDefine::windowSizeX / 2.f, -200.f), gameState);
+			*cardID, Math::Vec2(SystemDefine::windowSizeX / 2.f, -200.f));
 
-		centerCardBundle.emplace_back(cardID);
+		centerTopCard= cardID;
 	}
 
 	//----------------------------------------------
@@ -165,11 +169,8 @@ namespace CardJudge
 	void Task::SetNextHandCard()
 	{
 		//中心に何のカードもなかった場合は処理なし
-		if (centerCardBundle.empty())
+		if (centerTopCard == false)
 			return;
-
-		//中心カード束の一番上を取得
-		auto centerTop = centerCardBundle.back();
 
 		std::vector<std::shared_ptr<CardID>> right;	//正解を格納
 		right.reserve(8);
@@ -181,11 +182,11 @@ namespace CardJudge
 			for (int n = 0; n < 13; ++n)
 			{
 				//先頭カードと同じカードだった場合はやり直し
-				if (centerTop->suit == Suit(s) && centerTop->number == n)
+				if (centerTopCard->suit == Suit(s) && centerTopCard->number == n)
 					continue;
 
 				//差が1か12のカードは正解
-				if (abs(centerTop->number - n) % 11 == 1)
+				if (abs(centerTopCard->number - n) % 11 == 1)
 				{
 					//正解のカードを格納
 					right.emplace_back(std::make_shared<CardID>(Suit(s), n, Side::Back));
@@ -218,7 +219,7 @@ namespace CardJudge
 		}
 	}
 	//----------------------------------------------
-	//エフェクトを発生させる
+	//正誤に応じてエフェクトを発生させる
 	void Task::CreateEffect(float angle, float length, bool rw)
 	{
 		float ang = angle + SystemDefine::GetRand(-20, 20);
@@ -227,19 +228,28 @@ namespace CardJudge
 		{
 			JudgeEffect::Task::Create(
 				JEffect::Right, ang, length);
+			scoreFluctuation = 1;
 		}
 		else
 		{
 			JudgeEffect::Task::Create(
 				JEffect::Wrong, ang, length);
+			scoreFluctuation = -1;
 		}
 		isHaveHandCard = false;
 	}
 
 	//----------------------------------------------
 	//中央カードの枚数を取得
-	const int* Task::GetCenterCardNum() const
+	const int& Task::GetCenterCardNum() const
 	{
-		return &centerCardNum;
+		return centerCardNum;
+	}
+
+	//----------------------------------------------
+	//正誤状況を取得
+	const int& Task::GetScoreFluctuation() const
+	{
+		return scoreFluctuation;
 	}
 }

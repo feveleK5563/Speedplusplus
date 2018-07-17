@@ -14,17 +14,17 @@ namespace HandCard
 		Card	card;		//カード情報
 		int		progress;	//進行度
 		bool	LorR;		//初期カード位置(右か左か)
-		const GameState* gameState;	//ゲームの進行状況
+		const GameState& gameState;	//ゲームの進行状況
 
 	public:
 		//コンストラクタ
-		Task(const CardID& id, const Math::Vec2& pos, bool LorR, const GameState* gameState);
+		Task(const CardID& id, const Math::Vec2& pos, bool LorR);
 
 		//デストラクタ
 		~Task();
 		
 		//タスクの生成
-		static std::shared_ptr<Task> Create(const CardID& id, const Math::Vec2& pos, bool LorR, const GameState* gameState);
+		static std::shared_ptr<Task> Create(const CardID& id, const Math::Vec2& pos, bool LorR);
 
 		void Initialize();			//初期化処理
 		void Finalize() override;	//終了処理

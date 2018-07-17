@@ -11,21 +11,18 @@ namespace CenterCard
 
 	//----------------------------------------------
 	//タスクのコンストラクタ
-	Task::Task(const CardID& id, const Math::Vec2& pos, const GameState* gameState):
+	Task::Task(const CardID& id, const Math::Vec2& pos):
 		TaskAbstract(defGroupName, Priority::countCard),
 		card(id,
 			pos, Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f),
 			1.3f, 1.f,
 			0.f, (float)SystemDefine::GetRand(-5, 5)),
 		progress(0),
-		gameState(gameState),
-		moveSpeed(15.f)
+		moveSpeed(15.f),
+		centerCardNum(TS::taskSystem.GetTaskOne<CardJudge::Task>(CardJudge::defGroupName)->GetCenterCardNum()),
+		cardOrder(centerCardNum),
+		gameState(TS::taskSystem.GetTaskOne<GameTimer::Task>(GameTimer::defGroupName)->GetTimeState())
 	{
-		if (auto ts = TS::taskSystem.GetTaskOne<CardJudge::Task>("カード判定師"))
-		{
-			centerCardNum = ts->GetCenterCardNum();
-			cardOrder = *centerCardNum;
-		}
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
@@ -35,9 +32,9 @@ namespace CenterCard
 	}
 	//----------------------------------------------
 	//タスクの生成
-	std::shared_ptr<Task> Task::Create(const CardID& id, const Math::Vec2& pos, const GameState* gameState)
+	std::shared_ptr<Task> Task::Create(const CardID& id, const Math::Vec2& pos)
 	{
-		std::shared_ptr<Task> task = std::make_shared<Task>(id, pos, gameState);
+		std::shared_ptr<Task> task = std::make_shared<Task>(id, pos);
 		TS::taskSystem.RegistrationTask(task);
 
 		task->Initialize();
@@ -70,7 +67,7 @@ namespace CenterCard
 	{
 		//ゲーム中にカードが裏返っていたら表にする
 		if (card.GetID().side == Side::Back &&
-			*gameState == GameState::Game)
+			gameState == GameState::Game)
 		{
 			card.ChangeFrontBack();
 		}
@@ -87,12 +84,12 @@ namespace CenterCard
 
 		case 1:
 			//中心に20枚重なったら削除
-			if (*centerCardNum - cardOrder > 30)
+			if (centerCardNum - cardOrder > 30)
 			{
 				KillMe();
 			}
 			//(仮)タイトル画面移行時にカードを画面外へ散らばらせる
-			if (*gameState == GameState::End)
+			if (gameState == GameState::End)
 			{
 				float angle = (float)SystemDefine::GetRand(0, 360);
 				card.SetEndMove(

@@ -11,10 +11,12 @@ enum struct Suit
 	Heart	= 2,	//ハート
 	Diamond	= 3,	//ダイヤ
 	Etc		= 4,	//その他
-
-	Etc_Joker	= 10,	//ジョーカー
-	Etc_Logo	= 11,	//タイトルロゴ
-	Etc_Back	= 12,	//裏
+	
+	Etc_BlackNum	= 0,	//黒数字
+	Etc_Joker		= 10,	//ジョーカー
+	Etc_Logo		= 11,	//タイトルロゴ
+	Etc_Back		= 12,	//裏
+	Etc_RedNum		= 13,	//赤数字
 };
 
 enum struct Side
