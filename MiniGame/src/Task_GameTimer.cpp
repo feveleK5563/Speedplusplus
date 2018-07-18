@@ -50,7 +50,7 @@ namespace GameTimer
 	//----------------------------------------------
 	void Task::Initialize()
 	{
-		gameMessage = GameMessage::Task::Create(MessageType::Ready, 20);
+		gameMessage = GameMessage::Task::Create(MessageType::Ready, 50);
 	}
 
 	//----------------------------------------------
