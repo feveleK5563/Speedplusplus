@@ -78,6 +78,9 @@
     <ClInclude Include="src\Task_GameScore.h" />
     <ClInclude Include="src\TimeCounter.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="data\icon\icon.rc" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{CCB2D0CD-6F9C-4C47-A321-2CC2A30BBE63}</ProjectGuid>

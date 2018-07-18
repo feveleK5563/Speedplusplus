@@ -76,13 +76,13 @@ namespace GameScore
 
 		timeCnt.Run();
 
-		comboCardCnt->Update((int)Suit::Etc_RedNum + combo);
+		comboCardCnt->Update((int)Suit::Etc_RedNum + combo, true);
 		for (int i = 0; i < cardNum; ++i)
 		{
 			if (timeCnt.GetNowCntTime() > 5 * i)
 			{
 				int numPlace = (int)powf(10.f, (float)(cardNum - 1 - i));
-				scoreCardCnt[i]->Update((score / numPlace) % 10);
+				scoreCardCnt[i]->Update((score / numPlace) % 10, true);
 			}
 		}
 	}

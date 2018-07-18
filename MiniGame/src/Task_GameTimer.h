@@ -2,11 +2,12 @@
 #include "TaskSystem.h"
 #include "TimeCounter.h"
 #include "CardCounter.h"
+#include "Task_GameMessage.h"
 
 enum struct GameState
 {
-	Ready	= 300,
-	Game	= 600,
+	Ready	= 180,
+	Game	= 3600,
 	GameEnd,
 	Result,
 	End,
@@ -23,6 +24,8 @@ namespace GameTimer
 		GameState gameState;
 		std::unique_ptr<CardCounter> cardCnt[2];
 		TimeCounter timeCnt;
+		TimeCounter cardAppTimeCnt;
+		std::shared_ptr<GameMessage::Task> gameMessage;
 
 	public:
 		Task();		//コンストラクタ
@@ -35,7 +38,7 @@ namespace GameTimer
 		void Draw() override;		//描画
 
 	private:
-		void CountUpdate();
+		void CountUpdate(bool isCntStart);
 
 	public:
 		const GameState& GetTimeState() const;

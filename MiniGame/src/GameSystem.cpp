@@ -33,7 +33,7 @@ void GameSystem::Initialize()
 	//画面解像度とカラービット数
 	SetGraphMode(SystemDefine::windowSizeX, SystemDefine::windowSizeY, 32);
 	//ウィンドウタイトルを付ける
-	SetWindowText("DxLib");
+	SetWindowText("Speed++");
 
 	//初期化と裏画面化
 	if (DxLib_Init() == -1 || SetDrawScreen(DX_SCREEN_BACK) != 0)

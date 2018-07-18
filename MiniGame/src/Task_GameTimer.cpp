@@ -2,7 +2,6 @@
 #include "DxLib.h"
 #include "SystemDefine.h"
 #include "GameDefine.h"
-#include "Task_GameMessage.h"
 
 namespace GameTimer
 {
@@ -17,12 +16,12 @@ namespace GameTimer
 		timeCnt((int)GameState::Ready)
 	{ 
 		cardCnt[0] = std::make_unique<CardCounter>(
-			timeCnt.GetRemainingTime() / 60 / 10,
+			0,
 			Math::Vec2(250, SystemDefine::windowSizeY + 200.f),
 			Math::Vec2(120, 150), 0.5f);
 
 		cardCnt[1] = std::make_unique<CardCounter>(
-			timeCnt.GetRemainingTime() / 60 % 10,
+			0,
 			Math::Vec2(120, SystemDefine::windowSizeY + 200.f),
 			Math::Vec2(250, 150), 0.5f);
 	}
@@ -51,7 +50,7 @@ namespace GameTimer
 	//----------------------------------------------
 	void Task::Initialize()
 	{
-		GameMessage::Task::Create(MessageType::Ready, 30);
+		gameMessage = GameMessage::Task::Create(MessageType::Ready, 20);
 	}
 
 	//----------------------------------------------
@@ -67,7 +66,7 @@ namespace GameTimer
 	//----------------------------------------------
 	void Task::Update()
 	{
-		CountUpdate();
+		CountUpdate(gameMessage->state != TaskState::Active);
 
 		switch (gameState)
 		{
@@ -84,12 +83,15 @@ namespace GameTimer
 			if (timeCnt.IsTimeEnd())
 			{
 				gameState = GameState::GameEnd;
-				GameMessage::Task::Create(MessageType::Finish, 90);
+				gameMessage = GameMessage::Task::Create(MessageType::Finish, 90);
 			}
 			break;
 
 		case GameState::GameEnd:	//ゲーム終了
-			//gameState = GameState::Result;
+			if (gameMessage->state == TaskState::Kill)
+			{
+				gameState = GameState::Result;
+			}
 			break;
 
 		case GameState::Result:		//結果画面
@@ -115,9 +117,13 @@ namespace GameTimer
 
 	//----------------------------------------------
 	//timeCntの更新と十、一の位の計算
-	void Task::CountUpdate()
+	void Task::CountUpdate(bool isCntStart)
 	{
-		timeCnt.Run();
+		if (isCntStart)
+			timeCnt.Run();
+
+		cardAppTimeCnt.Run();
+
 		int tenPlace = 0, unitPlace = 0;
 
 		if (gameState == GameState::Ready ||
@@ -127,16 +133,16 @@ namespace GameTimer
 			unitPlace = (timeCnt.GetRemainingTime() + 60) / 60 % 10;
 		}
 
-		cardCnt[0]->Update(tenPlace);
+		cardCnt[0]->Update(tenPlace, isCntStart);
 
 		if (gameState != GameState::Ready ||
-			timeCnt.GetNowCntTime() > 5)
+			cardAppTimeCnt.GetNowCntTime() > 5)
 		{
 			//一の位は、残り時間が3以下の場合赤数字になる
 			if (tenPlace == 0 && unitPlace <= 3)
-				cardCnt[1]->Update((int)Suit::Etc_RedNum + unitPlace);
+				cardCnt[1]->Update((int)Suit::Etc_RedNum + unitPlace, isCntStart);
 			else
-				cardCnt[1]->Update(unitPlace);
+				cardCnt[1]->Update(unitPlace, isCntStart);
 		}
 	}
 

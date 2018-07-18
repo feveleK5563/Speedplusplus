@@ -59,6 +59,12 @@
     <Filter Include="ソース ファイル\Task\Task_Scene\Title">
       <UniqueIdentifier>{1644d8d5-b98e-4e7a-be91-545459ba8508}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース">
+      <UniqueIdentifier>{16970da1-279b-4fde-9601-83abdc1cba16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース\Icon">
+      <UniqueIdentifier>{8e3c82fc-1633-4cdb-8632-46b04e8307fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\SystemDefine.cpp">
@@ -231,5 +237,10 @@
     <ClInclude Include="src\Task_GameMessage.h">
       <Filter>ソース ファイル\Task\Task_UI</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="data\icon\icon.rc">
+      <Filter>リソース\Icon</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

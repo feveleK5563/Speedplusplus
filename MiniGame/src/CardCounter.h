@@ -11,6 +11,6 @@ private:
 public:
 	//numberに(int)Suit::RedNumを加算すると赤数字になる
 	CardCounter(int number, const Math::Vec2& startPos, const Math::Vec2& endPos, float scale);
-	bool Update(int number);	//0~9の数字を指定
+	bool Update(int number, bool isCntStart);	//0~9の数字を指定, falseでカウント停止
 	void Draw();
 };
