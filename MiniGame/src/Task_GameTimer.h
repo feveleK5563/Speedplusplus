@@ -5,8 +5,8 @@
 
 enum struct GameState
 {
-	Ready	= 180,
-	Game	= 3600,
+	Ready	= 300,
+	Game	= 600,
 	GameEnd,
 	Result,
 	End,

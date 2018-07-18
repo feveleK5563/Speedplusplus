@@ -1,18 +1,17 @@
-#define NOMINMAX
-#include "Task_JudgeEffect.h"
+#include "Task_GameMessage.h"
 #include "DxLib.h"
 #include "SystemDefine.h"
 #include "GameDefine.h"
 
-namespace JudgeEffect
+namespace GameMessage
 {
 	std::weak_ptr<Resource> Resource::instance;
 	//----------------------------------------------
 	//リソースのコンストラクタ
 	Resource::Resource()
 	{
-		imageName = "JudgeEffect";
-		Image::imageLoader.LoadDivImage(imageName, "data/image/Judge.png", 2, 2, 1, 336, 336);
+		imageName = "MessageImg";
+		Image::imageLoader.LoadDivImage(imageName, "data/image/GameMessage.png", 3, 1, 3, 1280, 56);
 		imageData = Image::imageLoader.GetImageData(imageName);
 	}
 	//----------------------------------------------
@@ -39,21 +38,17 @@ namespace JudgeEffect
 
 	//----------------------------------------------
 	//タスクのコンストラクタ
-	Task::Task(JEffect je, float degAngle, float moveLength):
-		TaskAbstract(defGroupName, Priority::judgeEffect),
+	Task::Task(MessageType type, int waitTime):
+		TaskAbstract(defGroupName, Priority::message),
 		res(Resource::Create()),
+		easeMover(	Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY + 50.f),
+					Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f),
+					1.f, 1.f, 0.f, 0.f),
 		imageDrawer(res->imageData, true),
-		easingMover(Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f),
-					Math::Vec2(	SystemDefine::windowSizeX / 2.f + cos(Math::ToRadian(degAngle)) * moveLength,
-								SystemDefine::windowSizeY / 2.f + sin(Math::ToRadian(degAngle)) * moveLength),
-					1.f, 1.f,
-					0.f, (float)SystemDefine::GetRand(-5, 5)),
-		je(je),
-		shakeWidth(30.f),
-		shakePos(0.f, 0.f),
+		type(type),
 		progress(0),
-		alpha(0.6f)
-	{ 
+		waitTimeCnt(waitTime)
+	{
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
@@ -63,9 +58,10 @@ namespace JudgeEffect
 	}
 	//----------------------------------------------
 	//タスクの生成
-	std::shared_ptr<Task> Task::Create(JEffect je, float degAngle, float moveLength)
+	std::shared_ptr<Task> Task::Create(MessageType type, int waitTime)
 	{
-		std::shared_ptr<Task> task = std::make_shared<Task>(je, degAngle, moveLength);
+		std::shared_ptr<Task> task = 
+			std::make_shared<Task>(type, waitTime);
 		TS::taskSystem.RegistrationTask(task);
 
 		task->Initialize();
@@ -96,29 +92,28 @@ namespace JudgeEffect
 	//----------------------------------------------
 	void Task::Update()
 	{
+		bool isMoveEnd = easeMover.Update(30.f);
 		switch (progress)
 		{
 		case 0:
-			if (je == JEffect::Wrong)
+			if (isMoveEnd)
+				++progress;
+			break;
+
+		case 1:
+			waitTimeCnt.Run();
+			if (waitTimeCnt.IsTimeEnd())
 			{
-				shakePos.x = cos(shakeWidth) * shakeWidth;
-				shakeWidth = std::max(shakeWidth - 1.f, 0.f);
-			}
-			if (easingMover.Update(30.f))
-			{
+				easeMover.SetEndMove(
+					Math::Vec2(SystemDefine::windowSizeX / 2.f, -50.f),
+					1.f, 0.f);
 				++progress;
 			}
 			break;
 
-		case 1:
-			if (alpha <= 0.f)
-			{
+		case 2:
+			if (isMoveEnd)
 				KillMe();
-			}
-			else
-			{
-				alpha -= 0.1f;
-			}
 			break;
 		}
 	}
@@ -129,11 +124,12 @@ namespace JudgeEffect
 	void Task::Draw()
 	{
 		imageDrawer.DrawOne(
-			easingMover.GetPos() + shakePos,
-			easingMover.GetScale(),
-			easingMover.GetAngle(),
+			easeMover.GetPos(),
+			easeMover.GetScale(),
+			easeMover.GetAngle(),
 			false,
-			(int)je,
-			Color(255, 255, 255, int(255 * alpha)));
+			(int)type,
+			Color(255, 255, 255, 255)
+		);
 	}
 }

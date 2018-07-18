@@ -1,28 +1,29 @@
 #pragma once
 #include "TaskSystem.h"
-#include "EasingMover.h"
+#include "ImageLoader.h"
 #include "ImageDrawer.h"
+#include "EasingMover.h"
 
-enum struct JEffect
+enum struct MessageType
 {
-	Right = 0,
-	Wrong = 1,
-	//Fever = 2,
+	Ready	= 0,
+	Finish	= 1,
+	HiScore	= 2,
 };
 
-namespace JudgeEffect
+namespace GameMessage
 {
-	const std::string	defGroupName("結果エフェクト");	//グループ名
+	const std::string	defGroupName("ゲームメッセージ");	//グループ名
 
 	//----------------------------------------------
 	class Resource
 	{
 	private:
 		static std::weak_ptr<Resource> instance;
+		std::string imageName;
 
 	public:
 		ImageData imageData;
-		std::string imageName;
 
 		Resource();		//コンストラクタ
 		~Resource();	//デストラクタ
@@ -34,22 +35,22 @@ namespace JudgeEffect
 	{
 	private:
 		std::shared_ptr<Resource> res;	//確保したリソース
-
-		JEffect je; //表示するエフェクトの種類
+		EasingMover easeMover;
 		ImageDrawer imageDrawer;
-		EasingMover easingMover;
 
-		//間違えた場合の震え
-		float		shakeWidth;
-		Math::Vec2	shakePos;
-
-		int progress;	//進行度
-		float alpha;	//アルファ値
+		MessageType type;
+		TimeCounter waitTimeCnt;
+		int progress;
 
 	public:
-		Task(JEffect je, float degAngle, float moveLength);		//コンストラクタ
-		~Task();				//デストラクタ
-		static std::shared_ptr<Task> Create(JEffect je, float degAngle, float moveLength);	//タスクの生成
+		//コンストラクタ
+		Task(MessageType type, int waitTime);
+		
+		//デストラクタ
+		~Task();
+		
+		//タスクの生成
+		static std::shared_ptr<Task> Create(MessageType type, int waitTime);
 
 		void Initialize();			//初期化処理
 		void Finalize() override;	//終了処理

@@ -2,6 +2,7 @@
 #include "DxLib.h"
 #include "SystemDefine.h"
 #include "GameDefine.h"
+#include "Task_GameMessage.h"
 
 namespace GameTimer
 {
@@ -16,12 +17,14 @@ namespace GameTimer
 		timeCnt((int)GameState::Ready)
 	{ 
 		cardCnt[0] = std::make_unique<CardCounter>(
-			0,	Math::Vec2(250, SystemDefine::windowSizeY + 200.f),
-				Math::Vec2(120, 150), 0.5f);
+			timeCnt.GetRemainingTime() / 60 / 10,
+			Math::Vec2(250, SystemDefine::windowSizeY + 200.f),
+			Math::Vec2(120, 150), 0.5f);
 
 		cardCnt[1] = std::make_unique<CardCounter>(
-			(int)Suit::Etc_RedNum + 3,	Math::Vec2(120, SystemDefine::windowSizeY + 200.f),
-				Math::Vec2(250, 150), 0.5f);
+			timeCnt.GetRemainingTime() / 60 % 10,
+			Math::Vec2(120, SystemDefine::windowSizeY + 200.f),
+			Math::Vec2(250, 150), 0.5f);
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
@@ -48,7 +51,7 @@ namespace GameTimer
 	//----------------------------------------------
 	void Task::Initialize()
 	{
-
+		GameMessage::Task::Create(MessageType::Ready, 30);
 	}
 
 	//----------------------------------------------
@@ -81,6 +84,7 @@ namespace GameTimer
 			if (timeCnt.IsTimeEnd())
 			{
 				gameState = GameState::GameEnd;
+				GameMessage::Task::Create(MessageType::Finish, 90);
 			}
 			break;
 
@@ -114,8 +118,14 @@ namespace GameTimer
 	void Task::CountUpdate()
 	{
 		timeCnt.Run();
-		int tenPlace = (timeCnt.GetRemainingTime() + 59) / 60 / 10;
-		int unitPlace = (timeCnt.GetRemainingTime() + 59) / 60 % 10;
+		int tenPlace = 0, unitPlace = 0;
+
+		if (gameState == GameState::Ready ||
+			gameState == GameState::Game)
+		{
+			tenPlace = (timeCnt.GetRemainingTime() + 60) / 60 / 10;
+			unitPlace = (timeCnt.GetRemainingTime() + 60) / 60 % 10;
+		}
 
 		cardCnt[0]->Update(tenPlace);
 

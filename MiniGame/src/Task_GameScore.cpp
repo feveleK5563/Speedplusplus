@@ -20,14 +20,14 @@ namespace GameScore
 		scoreFluctuation(TS::taskSystem.GetTaskOne<CardJudge::Task>(CardJudge::defGroupName)->GetScoreFluctuation())
 	{
 		comboCardCnt = std::make_unique<CardCounter>(
-			(int)Suit::Etc_RedNum + 0, Math::Vec2(-100.f, SystemDefine::windowSizeX + 100.f),
-			Math::Vec2(900.f, 90.f), 0.25f);
+			(int)Suit::Etc_RedNum + 0, Math::Vec2(900.f, SystemDefine::windowSizeX + 100.f),
+			Math::Vec2(895.f, 140.f), 0.25f);
 
 		for (int i = 0; i < cardNum; ++i)
 		{
 			scoreCardCnt[i] = std::make_unique<CardCounter>(
-				0,	Math::Vec2(990.f + (80 * ((cardNum - 1) - i)), -150.f),
-					Math::Vec2(990.f + (80 * i), 80.f), 0.3f);
+				0,	Math::Vec2(980.f + (80 * ((cardNum - 1) - i)), -150.f),
+					Math::Vec2(980.f + (80 * i), 130.f), 0.3f);
 		}
 	}
 	//----------------------------------------------
@@ -105,7 +105,7 @@ namespace GameScore
 	{
 		if (scoreFluctuation > 0)
 		{
-			score += 10 + combo;
+			score += 10 + (combo * 2);
 			combo = std::min(combo + 1, 9); //スコア最大値 9
 		}
 		else if (scoreFluctuation < 0)

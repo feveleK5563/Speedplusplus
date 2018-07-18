@@ -142,6 +142,9 @@
     <ClCompile Include="src\Task_GameScore.cpp">
       <Filter>ソース ファイル\Task\Task_UI</Filter>
     </ClCompile>
+    <ClCompile Include="src\Task_GameMessage.cpp">
+      <Filter>ソース ファイル\Task\Task_UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\SystemDefine.h">
@@ -223,6 +226,9 @@
       <Filter>ソース ファイル\Task\Etc</Filter>
     </ClInclude>
     <ClInclude Include="src\Task_GameScore.h">
+      <Filter>ソース ファイル\Task\Task_UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Task_GameMessage.h">
       <Filter>ソース ファイル\Task\Task_UI</Filter>
     </ClInclude>
   </ItemGroup>

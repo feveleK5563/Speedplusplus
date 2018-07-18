@@ -37,7 +37,7 @@ namespace Template
 	Task::Task():
 		TaskAbstract(defGroupName, defPriority),
 		res(Resource::Create())
-	{ 
+	{
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
