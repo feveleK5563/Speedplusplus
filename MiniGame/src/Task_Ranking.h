@@ -1,4 +1,5 @@
 #pragma once
+#include <array>
 #include "TaskSystem.h"
 #include "ImageDrawer.h"
 #include "EasingMover.h"
@@ -7,8 +8,6 @@
 namespace Ranking
 {
 	const std::string	defGroupName("ランキング");	//グループ名
-	const float			defPriority(0.f);			//デフォルトの処理優先度
-
 	//----------------------------------------------
 	class Resource
 	{
@@ -33,9 +32,14 @@ namespace Ranking
 		std::shared_ptr<Resource> res;	//確保したリソース
 		ImageDrawer bar, number;
 
-		static const int rankNum = 5;	//1位~5位
-		int								rankScore[rankNum];
-		std::unique_ptr<EasingMover>	easeMove[rankNum];
+		static const int rankNum = 6;	//1位~5位
+		struct RankData
+		{
+			int								rank;
+			std::unique_ptr<EasingMover>	easeMove;
+			int								score;
+		};
+		std::array<RankData, rankNum>	rankData;
 		Math::Vec2						settingPos[rankNum];
 
 		static const int scoreNum = 4;			//スコアの表示桁数
@@ -43,6 +47,7 @@ namespace Ranking
 		Math::Vec2	scoreRelativePos[scoreNum];	//スコアの表示位置(バーとの相対座標)
 
 		TimeCounter moveTimeCnt;	//動作のための時間経過
+		int progress;				//進行度
 
 	public:
 		//コンストラクタ
@@ -58,5 +63,10 @@ namespace Ranking
 		void Finalize() override;	//終了処理
 		void Update() override;		//更新
 		void Draw() override;		//描画
+
+	private:
+		void LoadScoreData();	//スコアランキングの読み込み
+		void WrightScoreData();	//スコアランキングの書き込み
+		void RankIn();	//ランクに登録する
 	};
 }

@@ -18,6 +18,7 @@ private:
 	float		degAngle;		//角度(degree)
 	float		startDegAngle;	//開始時の角度
 	float		diffDegAngle;	//目標の角度 - 開始時の角度
+	float		angle;			//角度
 
 public:
 	EasingMover(const Math::Vec2& pos, float scale, float degAngle);

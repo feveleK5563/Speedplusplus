@@ -105,19 +105,19 @@ namespace GameScore
 	{
 		if (scoreFluctuation > 0)
 		{
-			score += 10 + (combo * 2);
-			combo = std::min(combo + 1, 9); //スコア最大値 9
+			score = std::min(score + (10 + (combo * 2)), 9999);	//スコア最大値 9999
+			combo = std::min(combo + 1, 9);						//コンボ最大値 9
 		}
 		else if (scoreFluctuation < 0)
 		{
-			score = std::max(score - 10, 0); //スコア最小値 0
+			score = std::max(score - 10, 0);	//スコア最小値 0
 			combo = 0;
 		}
 	}
 
 	//----------------------------------------------
 	//スコアの取得
-	const int& Task::GetScore()
+	const int& Task::GetScore() const
 	{
 		return score;
 	}

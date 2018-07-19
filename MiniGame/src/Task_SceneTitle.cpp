@@ -1,9 +1,9 @@
 #include "Task_SceneTitle.h"
 #include "DxLib.h"
-#include "InputState.h"
 #include "SystemDefine.h"
 #include "Task_Back.h"
 #include "Task_SceneGame.h"
+#include "GameDefine.h"
 #include "Task_Ranking.h"
 
 namespace SceneTitle
@@ -59,8 +59,6 @@ namespace SceneTitle
 				Math::Vec2(SystemDefine::windowSizeX / 2.f, -200));
 			logoState = &logoCardRef->state;
 		}
-
-		Ranking::Task::Create();
 	}
 
 	//----------------------------------------------
@@ -76,6 +74,11 @@ namespace SceneTitle
 	//----------------------------------------------
 	void Task::Update()
 	{
+		if (SelectRightCard() &&
+			!TS::taskSystem.FindTask(Ranking::defGroupName))
+		{
+			Ranking::Task::Create();
+		}
 		if (*logoState == TaskState::Kill)
 		{
 			KillMe();

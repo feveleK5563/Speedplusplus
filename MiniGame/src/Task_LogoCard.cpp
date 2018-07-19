@@ -1,8 +1,7 @@
 #include "Task_LogoCard.h"
 #include "DxLib.h"
-#include "GameDefine.h"
 #include "SystemDefine.h"
-#include "InputState.h"
+#include "GameDefine.h"
 
 namespace LogoCard
 {
@@ -72,12 +71,11 @@ namespace LogoCard
 		{
 		case 0:	//ƒƒS‚ª’†S‚ÉˆÚ“®
 				//ƒ{ƒ^ƒ“‰Ÿ‚µ‚½‚ç‰æ–Ê‰º‚ÉÁ‚¦‚é
-			if (Input::key[KEY_INPUT_S] == DOWN)
+			if (SelectThrowCard())
 			{
 				card.ChangeFrontBack();
 			}
-			if (Input::key[KEY_INPUT_SPACE] == DOWN ||
-				Input::joypad1[PadInput::START] == DOWN)
+			if (PushStart())
 			{
 				++progress;
 				card.SetEndMove(Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY + 300.f),

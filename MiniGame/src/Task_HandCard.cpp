@@ -2,7 +2,6 @@
 #include "DxLib.h"
 #include "GameDefine.h"
 #include "SystemDefine.h"
-#include "InputState.h"
 #include "Task_CenterCard.h"
 
 namespace HandCard

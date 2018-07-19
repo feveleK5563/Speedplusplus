@@ -2,7 +2,6 @@
 #include <algorithm>
 #include "DxLib.h"
 #include "SystemDefine.h"
-#include "InputState.h"
 #include "Task_SceneTitle.h"
 #include "SystemDefine.h"
 #include "GameDefine.h"

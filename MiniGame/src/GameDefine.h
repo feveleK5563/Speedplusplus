@@ -13,6 +13,7 @@ namespace Priority
 	const float		message		(1.7f);	//メッセージ	
 }
 
+bool PushStart();
 bool SelectLeftCard();
 bool SelectRightCard();
 bool SelectThrowCard();

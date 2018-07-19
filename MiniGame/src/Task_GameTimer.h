@@ -3,11 +3,13 @@
 #include "TimeCounter.h"
 #include "CardCounter.h"
 #include "Task_GameMessage.h"
+#include "Task_Ranking.h"
 
 enum struct GameState
 {
-	Ready	= 180,
-	Game	= 3600,
+	Ready,
+	CountDown,
+	Game,
 	GameEnd,
 	Result,
 	End,
@@ -21,11 +23,18 @@ namespace GameTimer
 	class Task : public TaskAbstract
 	{
 	private:
+		const int waitCountDown;
+		const int waitGame;
+		const int waitGameEnd;
+		const int waitResult;
+
 		GameState gameState;
 		std::unique_ptr<CardCounter> cardCnt[2];
 		TimeCounter timeCnt;
 		TimeCounter cardAppTimeCnt;
 		std::shared_ptr<GameMessage::Task> gameMessage;
+
+		std::shared_ptr<Ranking::Task> ranking;
 
 	public:
 		Task();		//コンストラクタ

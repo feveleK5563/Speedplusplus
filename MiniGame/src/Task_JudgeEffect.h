@@ -7,7 +7,6 @@ enum struct JEffect
 {
 	Right = 0,
 	Wrong = 1,
-	//Fever = 2,
 };
 
 namespace JudgeEffect

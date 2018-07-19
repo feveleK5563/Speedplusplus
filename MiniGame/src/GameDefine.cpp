@@ -1,6 +1,11 @@
 #include "GameDefine.h"
 #include "InputState.h"
 
+bool PushStart()
+{
+	return	Input::key[KEY_INPUT_SPACE] == DOWN ||
+			Input::joypad1[PadInput::START] == DOWN;
+}
 bool SelectLeftCard()
 {
 	return	Input::key[KEY_INPUT_A] == DOWN ||

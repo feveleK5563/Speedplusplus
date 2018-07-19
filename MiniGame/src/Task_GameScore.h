@@ -39,6 +39,6 @@ namespace GameScore
 		void ScoreUpdate();
 
 	public:
-		const int& GetScore();
+		const int& GetScore() const;
 	};
 }
