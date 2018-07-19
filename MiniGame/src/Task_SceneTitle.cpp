@@ -4,6 +4,7 @@
 #include "SystemDefine.h"
 #include "Task_Back.h"
 #include "Task_SceneGame.h"
+#include "Task_Ranking.h"
 
 namespace SceneTitle
 {
@@ -58,6 +59,8 @@ namespace SceneTitle
 				Math::Vec2(SystemDefine::windowSizeX / 2.f, -200));
 			logoState = &logoCardRef->state;
 		}
+
+		Ranking::Task::Create();
 	}
 
 	//----------------------------------------------

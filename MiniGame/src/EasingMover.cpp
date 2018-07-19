@@ -30,12 +30,12 @@ const Math::Vec2& EasingMover::GetPos() const
 	return pos;
 }
 
-float EasingMover::GetScale() const
+const float& EasingMover::GetScale() const
 {
 	return scale;
 }
 
-float EasingMover::GetAngle() const
+const float& EasingMover::GetAngle() const
 {
 	return Math::ToRadian(degAngle);
 }

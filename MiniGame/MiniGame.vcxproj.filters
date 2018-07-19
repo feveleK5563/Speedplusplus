@@ -65,6 +65,9 @@
     <Filter Include="リソース\Icon">
       <UniqueIdentifier>{8e3c82fc-1633-4cdb-8632-46b04e8307fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Task\Task_Ranking">
+      <UniqueIdentifier>{55f40dfe-2e8f-483a-a6a4-8196ac98ed57}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\SystemDefine.cpp">
@@ -151,6 +154,9 @@
     <ClCompile Include="src\Task_GameMessage.cpp">
       <Filter>ソース ファイル\Task\Task_UI</Filter>
     </ClCompile>
+    <ClCompile Include="src\Task_Ranking.cpp">
+      <Filter>ソース ファイル\Task\Task_Ranking</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\SystemDefine.h">
@@ -236,6 +242,9 @@
     </ClInclude>
     <ClInclude Include="src\Task_GameMessage.h">
       <Filter>ソース ファイル\Task\Task_UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Task_Ranking.h">
+      <Filter>ソース ファイル\Task\Task_Ranking</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

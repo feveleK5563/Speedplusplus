@@ -46,6 +46,7 @@
     <ClCompile Include="src\Task_LogoCard.cpp" />
     <ClCompile Include="src\Task_CenterCard.cpp" />
     <ClCompile Include="src\Task_GameScore.cpp" />
+    <ClCompile Include="src\Task_Ranking.cpp" />
     <ClCompile Include="src\TimeCounter.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +77,7 @@
     <ClInclude Include="src\Task_LogoCard.h" />
     <ClInclude Include="src\Task_CenterCard.h" />
     <ClInclude Include="src\Task_GameScore.h" />
+    <ClInclude Include="src\Task_Ranking.h" />
     <ClInclude Include="src\TimeCounter.h" />
   </ItemGroup>
   <ItemGroup>

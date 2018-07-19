@@ -27,9 +27,10 @@ public:
 				float startDegAngle,		float endDegAngle);
 
 	bool Update(float speed);
-	const Math::Vec2& GetPos() const;
-	float GetScale() const;
-	float GetAngle() const;
+
+	const Math::Vec2&	GetPos() const;
+	const float&		GetScale() const;
+	const float&		GetAngle() const;
 
 	void SetEndMove(const Math::Vec2& endPos, float endScale, float endDegAngle);
 };

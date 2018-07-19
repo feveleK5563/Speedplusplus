@@ -9,7 +9,8 @@ namespace Priority
 	const float		centerCard	(1.3f);	//中心のカード
 	const float		judgeEffect	(1.4f);	//結果エフェクト
 	const float		handCard	(1.5f);	//手札
-	const float		message		(1.6f);	//メッセージ	
+	const float		ranking		(1.6f);	//ランキング	
+	const float		message		(1.7f);	//メッセージ	
 }
 
 bool SelectLeftCard();
