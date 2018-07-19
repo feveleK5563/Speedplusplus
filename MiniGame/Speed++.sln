@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MiniGame", "MiniGame.vcxproj", "{CCB2D0CD-6F9C-4C47-A321-2CC2A30BBE63}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Speed++", "Speed++.vcxproj", "{CCB2D0CD-6F9C-4C47-A321-2CC2A30BBE63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +26,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {8BF6CE07-3F9F-416F-91B2-A015E55ED2AD}
+		SolutionGuid = {2A2F07BF-0B93-48F8-A2D1-9C1E234D36C6}
 	EndGlobalSection
 EndGlobal

@@ -248,7 +248,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="data\icon\icon.rc">
+    <ResourceCompile Include="icon\icon.rc">
       <Filter>リソース\Icon</Filter>
     </ResourceCompile>
   </ItemGroup>

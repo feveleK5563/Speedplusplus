@@ -236,7 +236,7 @@ namespace Ranking
 	void Task::LoadScoreData()
 	{
 		std::ifstream ifs;
-		ifs.open("data/saveData/save.bin", std::ios::in);
+		ifs.open("scoredata/score.bin", std::ios::in);
 
 		if (!ifs)
 		{
@@ -257,7 +257,7 @@ namespace Ranking
 	void Task::WrightScoreData()
 	{
 		std::ofstream ofs;
-		ofs.open("data/saveData/save.bin", std::ios::out);
+		ofs.open("scoredata/score.bin", std::ios::out);
 
 		if (!ofs)
 		{

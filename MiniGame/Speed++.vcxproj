@@ -81,7 +81,7 @@
     <ClInclude Include="src\TimeCounter.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="data\icon\icon.rc" />
+    <ResourceCompile Include="icon\icon.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
