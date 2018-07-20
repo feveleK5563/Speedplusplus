@@ -6,6 +6,7 @@
 #include "SystemDefine.h"
 #include "GameDefine.h"
 #include "Task_JudgeEffect.h"
+#include "Task_Sound.h"
 
 namespace CardJudge
 {
@@ -234,6 +235,9 @@ namespace CardJudge
 			JudgeEffect::Task::Create(
 				JEffect::Wrong, ang, length);
 			scoreFluctuation = -1;
+
+			auto sound = TS::taskSystem.GetTaskOne<Sound::Task>(Sound::defGroupName);
+			sound->PlaySE_PaperTear(200);
 		}
 		isHaveHandCard = false;
 	}

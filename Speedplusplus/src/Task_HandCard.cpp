@@ -3,6 +3,7 @@
 #include "GameDefine.h"
 #include "SystemDefine.h"
 #include "Task_CenterCard.h"
+#include "Task_Sound.h"
 
 namespace HandCard
 {
@@ -34,7 +35,7 @@ namespace HandCard
 				1.3f,
 				1.f);
 		}
-		card.ChangeFrontBack();
+		card.ChangeFrontBack(100);
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
@@ -94,6 +95,8 @@ namespace HandCard
 				(LorR && SelectRightCard()) ||
 				gameState != GameState::Game)
 			{
+				auto sound = TS::taskSystem.GetTaskOne<Sound::Task>(Sound::defGroupName);
+				sound->PlaySE_HandOut(100);
 				if (LorR)
 				{
 					card.SetEndMove(Math::Vec2(-300.f, SystemDefine::windowSizeY - 200.f),

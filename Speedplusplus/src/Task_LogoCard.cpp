@@ -17,7 +17,7 @@ namespace LogoCard
 	{
 		if (card.GetID().side == Side::Back)
 		{
-			card.ChangeFrontBack();
+			card.ChangeFrontBack(150);
 			card.SetEndMove(
 				Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f),
 				1.f, (float)SystemDefine::GetRand(-5, 5));
@@ -73,7 +73,7 @@ namespace LogoCard
 				//É{É^ÉìâüÇµÇΩÇÁâÊñ â∫Ç…è¡Ç¶ÇÈ
 			if (SelectThrowCard())
 			{
-				card.ChangeFrontBack();
+				card.ChangeFrontBack(150);
 			}
 			if (PushStart())
 			{

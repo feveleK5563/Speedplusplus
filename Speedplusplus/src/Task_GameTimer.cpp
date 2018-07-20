@@ -14,7 +14,7 @@ namespace GameTimer
 		TaskAbstract(defGroupName, Priority::countCard),
 		gameState(GameState::Ready),
 		waitCountDown	(180),
-		waitGame		(3600),
+		waitGame		(600),
 		waitGameEnd		(180),
 		waitResult		(20)
 	{ 

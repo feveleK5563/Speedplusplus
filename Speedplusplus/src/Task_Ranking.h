@@ -41,6 +41,7 @@ namespace Ranking
 		};
 		std::array<RankData, rankNum>	rankData;
 		Math::Vec2						settingPos[rankNum];
+		bool playSoundEffect[rankNum - 1];	//SE再生フラグ
 
 		static const int scoreNum = 4;			//スコアの表示桁数
 		Math::Vec2	rankRelativePos;			//順位数字の表示位置(バーとの相対座標)

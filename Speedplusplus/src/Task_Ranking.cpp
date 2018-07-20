@@ -4,6 +4,7 @@
 #include "SystemDefine.h"
 #include "GameDefine.h"
 #include "Task_GameScore.h"
+#include "Task_Sound.h"
 
 namespace Ranking
 {
@@ -110,6 +111,11 @@ namespace Ranking
 		{
 			scoreRelativePos[i] = Math::Vec2((100.f + (i * 35)), -30.f);
 		}
+
+		for (int i = 0; i < rankNum - 1; ++i)
+		{
+			playSoundEffect[i] = true;
+		}
 	}
 
 	//----------------------------------------------
@@ -135,6 +141,12 @@ namespace Ranking
 
 			if (moveTimeCnt.GetNowCntTime() > 5 * i)
 			{
+				if (i < rankNum - 1 && playSoundEffect[i])
+				{
+					auto sound = TS::taskSystem.GetTaskOne<Sound::Task>(Sound::defGroupName);
+					sound->PlaySE_HandOut(200);
+					playSoundEffect[i] = false;
+				}
 				isEndMove = rankData[i].easeMove->Update(15.f) && isEndMove;
 			}
 		}
@@ -173,6 +185,11 @@ namespace Ranking
 						Math::Vec2(SystemDefine::windowSizeX, rankData[i].easeMove->GetPos().y),
 						1.f, 0.f
 					);
+
+					for (int i = 0; i < rankNum - 1; ++i)
+					{
+						playSoundEffect[i] = true;
+					}
 				}
 			}
 			break;

@@ -3,6 +3,7 @@
 #include "SystemDefine.h"
 #include "GameDefine.h"
 #include "Task_CardJudge.h"
+#include "Task_Sound.h"
 
 namespace CenterCard
 {
@@ -69,7 +70,7 @@ namespace CenterCard
 		if (card.GetID().side == Side::Back &&
 			gameState == GameState::Game)
 		{
-			card.ChangeFrontBack();
+			card.ChangeFrontBack(150);
 		}
 
 		bool isMoveEnd = card.Update(moveSpeed);
@@ -91,6 +92,9 @@ namespace CenterCard
 			//(仮)タイトル画面移行時にカードを画面外へ散らばらせる
 			if (gameState == GameState::End)
 			{
+				auto sound = TS::taskSystem.GetTaskOne<Sound::Task>(Sound::defGroupName);
+				sound->PlaySE_Shaffle(200);
+
 				float angle = (float)SystemDefine::GetRand(0, 360);
 				card.SetEndMove(
 					card.GetPos() +
