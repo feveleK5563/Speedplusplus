@@ -5,6 +5,7 @@
 #include "Task_SceneGame.h"
 #include "GameDefine.h"
 #include "Task_Ranking.h"
+#include "Task_Sound.h"
 
 namespace SceneTitle
 {
@@ -47,6 +48,12 @@ namespace SceneTitle
 			Back::Task::Create();
 		}
 		
+		if (!TS::taskSystem.FindTask(Sound::defGroupName))
+		{
+			auto sound = Sound::Task::Create();
+			sound->PlayBGM();
+		}
+
 		auto logo = TS::taskSystem.GetTaskOne<LogoCard::Task>(LogoCard::defGroupName);
 		if (logo)
 		{

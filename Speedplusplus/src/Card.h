@@ -64,7 +64,7 @@ public:
 	void Draw();
 
 	//カードの裏表を変更する
-	void ChangeFrontBack();
+	void ChangeFrontBack(int soundVolume);
 
 	//カードの動作目標を設定する
 	void SetEndMove(const Math::Vec2& endPos, float endScale, float endDegAngle);

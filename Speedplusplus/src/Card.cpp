@@ -1,5 +1,7 @@
 #include "Card.h"
 #include "DxLib.h"
+#include "TaskSystem.h"
+#include "Task_Sound.h"
 
 CardID::CardID():
 	suit(Suit::Spade),
@@ -73,7 +75,7 @@ void Card::Draw()
 
 //-----------------------------------------------------------------------------
 //カードの裏表を変更する
-void Card::ChangeFrontBack()
+void Card::ChangeFrontBack(int soundVolume)
 {
 	if (scaleX != 1.f)
 		return;
@@ -85,6 +87,11 @@ void Card::ChangeFrontBack()
 	else if(id.side == Side::Back)
 	{
 		id.side = Side::NextFront;
+	}
+
+	if (auto sound = TS::taskSystem.GetTaskOne<Sound::Task>(Sound::defGroupName))
+	{
+		sound->PlaySE_TurnOver(soundVolume);
 	}
 }
 

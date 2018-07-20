@@ -59,14 +59,17 @@
     <Filter Include="ソース ファイル\Task\Task_Scene\Title">
       <UniqueIdentifier>{1644d8d5-b98e-4e7a-be91-545459ba8508}</UniqueIdentifier>
     </Filter>
-    <Filter Include="リソース">
-      <UniqueIdentifier>{16970da1-279b-4fde-9601-83abdc1cba16}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="リソース\Icon">
-      <UniqueIdentifier>{8e3c82fc-1633-4cdb-8632-46b04e8307fc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Task\Task_Ranking">
       <UniqueIdentifier>{55f40dfe-2e8f-483a-a6a4-8196ac98ed57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="外部リソース">
+      <UniqueIdentifier>{16970da1-279b-4fde-9601-83abdc1cba16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="外部リソース\Icon">
+      <UniqueIdentifier>{8e3c82fc-1633-4cdb-8632-46b04e8307fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Task\Task_Sound">
+      <UniqueIdentifier>{a51c7919-d621-412a-b811-212ed4f73dcc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -127,9 +130,6 @@
     <ClCompile Include="src\EasingMover.cpp">
       <Filter>ソース ファイル\Class\Move</Filter>
     </ClCompile>
-    <ClCompile Include="src\Resource_Card.cpp">
-      <Filter>ソース ファイル\Task\Task_Card</Filter>
-    </ClCompile>
     <ClCompile Include="src\Task_GameTimer.cpp">
       <Filter>ソース ファイル\Task\Task_UI</Filter>
     </ClCompile>
@@ -156,6 +156,12 @@
     </ClCompile>
     <ClCompile Include="src\Task_Ranking.cpp">
       <Filter>ソース ファイル\Task\Task_Ranking</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Task_Sound.cpp">
+      <Filter>ソース ファイル\Task\Task_Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resource_Card.cpp">
+      <Filter>ソース ファイル\Task\Task_Card</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -216,9 +222,6 @@
     <ClInclude Include="src\EasingMover.h">
       <Filter>ソース ファイル\Class\Move</Filter>
     </ClInclude>
-    <ClInclude Include="src\Resource_Card.h">
-      <Filter>ソース ファイル\Task\Task_Card</Filter>
-    </ClInclude>
     <ClInclude Include="src\Task_GameTimer.h">
       <Filter>ソース ファイル\Task\Task_UI</Filter>
     </ClInclude>
@@ -246,10 +249,16 @@
     <ClInclude Include="src\Task_Ranking.h">
       <Filter>ソース ファイル\Task\Task_Ranking</Filter>
     </ClInclude>
+    <ClInclude Include="src\Task_Sound.h">
+      <Filter>ソース ファイル\Task\Task_Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resource_Card.h">
+      <Filter>ソース ファイル\Task\Task_Card</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon\icon.rc">
-      <Filter>リソース\Icon</Filter>
+      <Filter>外部リソース\Icon</Filter>
     </ResourceCompile>
   </ItemGroup>
 </Project>
