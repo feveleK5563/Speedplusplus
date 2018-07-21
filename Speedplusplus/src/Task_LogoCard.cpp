@@ -2,6 +2,7 @@
 #include "DxLib.h"
 #include "SystemDefine.h"
 #include "GameDefine.h"
+#include "Task_Sound.h"
 
 namespace LogoCard
 {
@@ -77,6 +78,9 @@ namespace LogoCard
 			}
 			if (PushStart())
 			{
+				auto sound = TS::taskSystem.GetTaskOne<Sound::Task>(Sound::defGroupName);
+				sound->PlaySE_HandOut(200);
+
 				++progress;
 				card.SetEndMove(Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY + 300.f),
 					1.f,

@@ -101,6 +101,10 @@ namespace GameTimer
 				timeCnt.SetEndTime(waitGameEnd);
 				timeCnt.ResetCntTime();
 			}
+			if (PushStart())
+			{
+				gameState = GameState::End;
+			}
 			break;
 
 		case GameState::GameEnd:	//ƒQ[ƒ€I—¹

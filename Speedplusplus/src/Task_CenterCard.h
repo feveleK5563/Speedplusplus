@@ -32,5 +32,8 @@ namespace CenterCard
 		void Finalize() override;	//I—¹ˆ—
 		void Update() override;		//XV
 		void Draw() override;		//•`‰æ
+
+	private:
+		void WindowOutCard();
 	};
 }

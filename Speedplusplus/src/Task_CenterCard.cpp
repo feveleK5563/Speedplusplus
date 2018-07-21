@@ -73,6 +73,9 @@ namespace CenterCard
 			card.ChangeFrontBack(150);
 		}
 
+		//タイトル画面移行時にカードを画面外へ散らばらせる
+		WindowOutCard();
+
 		bool isMoveEnd = card.Update(moveSpeed);
 		switch (progress)
 		{
@@ -88,23 +91,6 @@ namespace CenterCard
 			if (centerCardNum - cardOrder > 30)
 			{
 				KillMe();
-			}
-			//(仮)タイトル画面移行時にカードを画面外へ散らばらせる
-			if (gameState == GameState::End)
-			{
-				auto sound = TS::taskSystem.GetTaskOne<Sound::Task>(Sound::defGroupName);
-				sound->PlaySE_Shaffle(200);
-
-				float angle = (float)SystemDefine::GetRand(0, 360);
-				card.SetEndMove(
-					card.GetPos() +
-					Math::Vec2(	1000.f * cos(Math::ToRadian(angle)),
-								1000.f * sin(Math::ToRadian(angle))),
-					1.f,
-					90.f
-				);
-				moveSpeed = 30.f;
-				++progress;
 			}
 			break;
 
@@ -123,5 +109,27 @@ namespace CenterCard
 	void Task::Draw()
 	{
 		card.Draw();
+	}
+
+	//----------------------------------------------
+	//タイトル画面移行時にカードを画面外へ散らばらせる
+	void Task::WindowOutCard()
+	{
+		if (gameState == GameState::End)
+		{
+			auto sound = TS::taskSystem.GetTaskOne<Sound::Task>(Sound::defGroupName);
+			sound->PlaySE_Shaffle(200);
+
+			float angle = (float)SystemDefine::GetRand(0, 359);
+			card.SetEndMove(
+				card.GetPos() +
+				Math::Vec2(1200.f * cos(Math::ToRadian(angle)),
+					1200.f * sin(Math::ToRadian(angle))),
+				1.f,
+				(float)SystemDefine::GetRand(0, 359)
+			);
+			moveSpeed = 30.f;
+			progress = 2;
+		}
 	}
 }
