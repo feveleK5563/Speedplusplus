@@ -8,7 +8,7 @@ namespace Sound
 	//リソースのコンストラクタ
 	Resource::Resource()
 	{
-		bgm = LoadSoundMem("data/bgm/放課後はお菓子でもつまみながら的なBGM.ogg");
+		bgm = LoadSoundMem("data/bgm/AfterSchool_BGM.ogg");
 
 		se_turnOver		= LoadSoundMem("data/se/card-turn-over1.ogg", 8);
 		se_handOut		= LoadSoundMem("data/se/card-hand-out1.ogg", 8);

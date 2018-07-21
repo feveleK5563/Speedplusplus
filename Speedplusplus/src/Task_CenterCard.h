@@ -13,6 +13,7 @@ namespace CenterCard
 	private:
 		Card	card;				//カード情報
 		int		progress;			//進行度
+		bool	isOut;				//画面外に消えるか否か
 		float	moveSpeed;			//カードの移動速度
 
 		const int&	centerCardNum;	//中央のカード枚数

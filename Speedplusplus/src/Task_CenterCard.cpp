@@ -19,6 +19,7 @@ namespace CenterCard
 			1.3f, 1.f,
 			0.f, (float)SystemDefine::GetRand(-5, 5)),
 		progress(0),
+		isOut(false),
 		moveSpeed(15.f),
 		centerCardNum(TS::taskSystem.GetTaskOne<CardJudge::Task>(CardJudge::defGroupName)->GetCenterCardNum()),
 		cardOrder(centerCardNum),
@@ -115,8 +116,11 @@ namespace CenterCard
 	//タイトル画面移行時にカードを画面外へ散らばらせる
 	void Task::WindowOutCard()
 	{
-		if (gameState == GameState::End)
+		if (!isOut &&
+			gameState == GameState::End)
 		{
+			isOut = true;
+
 			auto sound = TS::taskSystem.GetTaskOne<Sound::Task>(Sound::defGroupName);
 			sound->PlaySE_Shaffle(200);
 

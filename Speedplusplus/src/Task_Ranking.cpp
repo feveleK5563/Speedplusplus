@@ -312,6 +312,9 @@ namespace Ranking
 			if (rankData[rankNum - 1].score >= rankData[i].score)
 			{
 				rankPosition = i;
+
+				auto sound = TS::taskSystem.GetTaskOne<Sound::Task>(Sound::defGroupName);
+				sound->PlaySE_PaperTake(200);
 				break;
 			}
 		}
@@ -340,7 +343,5 @@ namespace Ranking
 		});
 
 		WrightScoreData();
-		auto sound = TS::taskSystem.GetTaskOne<Sound::Task>(Sound::defGroupName);
-		sound->PlaySE_PaperTake(200);
 	}
 }
