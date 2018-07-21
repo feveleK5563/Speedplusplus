@@ -1,11 +1,13 @@
+//------------------------------------------
 【BGM】
 「放課後はお菓子でもつまみながら的なBGM」
-作曲者：鷹尾まさき(タカオマサキ)
-https://dova-s.jp/_contents/author/profile067.html
+作曲者：鷹尾まさき(タカオマサキ) 様
+http://takao-masaki.com/
 
-DOVA-SYNDROME
+配布サイト：DOVA-SYNDROME 様
 https://dova-s.jp/
 
+//------------------------------------------
 【SE】
-効果音ラボ
+効果音ラボ 様
 https://soundeffect-lab.info/

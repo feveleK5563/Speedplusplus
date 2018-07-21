@@ -18,6 +18,7 @@ namespace Sound
 		int se_handOut;
 		int se_shaffle;
 		int se_paperTear;
+		int se_paperTake;
 
 		Resource();		//コンストラクタ
 		~Resource();	//デストラクタ
@@ -31,11 +32,6 @@ namespace Sound
 		std::shared_ptr<Resource> res;	//確保したリソース
 
 	public:
-		int bgm;
-		int se_turnOver;
-		int se_handOut;
-		int se_shaffle;
-		int se_paperTear;
 
 		//コンストラクタ
 		Task();
@@ -56,5 +52,6 @@ namespace Sound
 		void PlaySE_HandOut(int volume) const;		//SE(カード投げる)の再生
 		void PlaySE_Shaffle(int volume) const;		//SE(シャッフル)の再生
 		void PlaySE_PaperTear(int volume) const;	//SE(紙破る)の再生
+		void PlaySE_PaperTake(int volume) const;	//SE(紙めくる)の再生
 	};
 }

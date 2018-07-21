@@ -83,7 +83,7 @@ namespace Ranking
 	{
 		for (int i = 0; i < rankNum - 1; ++i)
 		{
-			rankData[i].score = 10 * (rankNum - 1 - i);	//初期スコア
+			rankData[i].score = 100 * (rankNum - 1 - i);	//初期スコア
 			settingPos[i] = Math::Vec2(SystemDefine::windowSizeX - 350.f, 300.f + (80 * i));
 
 			rankData[i].rank = i + 1 + 10;
@@ -100,7 +100,7 @@ namespace Ranking
 		else
 		{
 			rankData[rankNum - 1].score = -1;
-			progress += 2;
+			progress = 2;
 		}
 		rankData[rankNum - 1].rank = 5 + 1 + 10;
 		settingPos[rankNum - 1] = Math::Vec2(SystemDefine::windowSizeX - 350.f, SystemDefine::windowSizeY + 120.f);
@@ -132,24 +132,7 @@ namespace Ranking
 	void Task::Update()
 	{
 		moveTimeCnt.Run();
-		bool isEndMove = true;
-
-		for (int i = 0; i < rankNum; ++i)
-		{
-			if (rankData[i].easeMove == false)
-				continue;
-
-			if (moveTimeCnt.GetNowCntTime() > 5 * i)
-			{
-				if (i < rankNum - 1 && playSoundEffect[i])
-				{
-					auto sound = TS::taskSystem.GetTaskOne<Sound::Task>(Sound::defGroupName);
-					sound->PlaySE_HandOut(200);
-					playSoundEffect[i] = false;
-				}
-				isEndMove = rankData[i].easeMove->Update(15.f) && isEndMove;
-			}
-		}
+		bool isEndMove = AppRankMove();
 
 		switch (progress)
 		{
@@ -249,6 +232,33 @@ namespace Ranking
 	}
 
 	//----------------------------------------------
+	//ランキングデータの出現動作
+	bool Task::AppRankMove()
+	{
+		//全ての出現動作が終了したか否かを格納
+		bool isEndMove = true;
+
+		for (int i = 0; i < rankNum; ++i)
+		{
+			if (rankData[i].easeMove == false)
+				continue;
+
+			if (moveTimeCnt.GetNowCntTime() > 5 * i)
+			{
+				if (i < rankNum - 1 && playSoundEffect[i])
+				{
+					auto sound = TS::taskSystem.GetTaskOne<Sound::Task>(Sound::defGroupName);
+					sound->PlaySE_HandOut(200);
+					playSoundEffect[i] = false;
+				}
+				isEndMove = rankData[i].easeMove->Update(15.f) && isEndMove;
+			}
+		}
+
+		return isEndMove;
+	}
+
+	//----------------------------------------------
 	//スコアランキングの読み込み
 	void Task::LoadScoreData()
 	{
@@ -264,7 +274,9 @@ namespace Ranking
 
 		for (int i = 0; i < rankNum - 1; ++i)
 		{
-			ifs >> rankData[i].score;
+			int scr;
+			ifs >> std::hex >> scr;
+			rankData[i].score = scr >> 1;
 		}
 		ifs.close();
 	}
@@ -284,13 +296,14 @@ namespace Ranking
 
 		for (int i = 0; i < rankNum - 1; ++i)
 		{
-			ofs << rankData[i].score << " ";
+			int scr = rankData[i].score << 1;
+			ofs << std::hex << scr << " ";
 		}
 		ofs.close();
 	}
 
 	//----------------------------------------------
-	//ランクイン
+	//ランクイン時の処理
 	void Task::RankIn()
 	{
 		int rankPosition = 5;
@@ -327,5 +340,7 @@ namespace Ranking
 		});
 
 		WrightScoreData();
+		auto sound = TS::taskSystem.GetTaskOne<Sound::Task>(Sound::defGroupName);
+		sound->PlaySE_PaperTake(200);
 	}
 }

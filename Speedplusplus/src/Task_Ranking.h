@@ -32,7 +32,7 @@ namespace Ranking
 		std::shared_ptr<Resource> res;	//確保したリソース
 		ImageDrawer bar, number;
 
-		static const int rankNum = 6;	//1位~5位
+		static const int rankNum = 6;	//1位~5位 + プレイヤースコア
 		struct RankData
 		{
 			int								rank;
@@ -66,8 +66,9 @@ namespace Ranking
 		void Draw() override;		//描画
 
 	private:
+		bool AppRankMove();		//ランキングデータの出現動作
 		void LoadScoreData();	//スコアランキングの読み込み
 		void WrightScoreData();	//スコアランキングの書き込み
-		void RankIn();	//ランクに登録する
+		void RankIn();			//ランクに登録する
 	};
 }

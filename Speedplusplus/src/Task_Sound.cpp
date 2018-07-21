@@ -14,6 +14,7 @@ namespace Sound
 		se_handOut		= LoadSoundMem("data/se/card-hand-out1.ogg", 8);
 		se_shaffle		= LoadSoundMem("data/se/card-shuffle2.ogg", 1);
 		se_paperTear	= LoadSoundMem("data/se/paper-tear3.ogg", 8);
+		se_paperTake	= LoadSoundMem("data/se/paper-take2.ogg", 8);
 	}
 	//----------------------------------------------
 	//リソースのデストラクタ
@@ -24,6 +25,7 @@ namespace Sound
 		DeleteSoundMem(se_handOut);
 		DeleteSoundMem(se_shaffle);
 		DeleteSoundMem(se_paperTear);
+		DeleteSoundMem(se_paperTake);
 	}
 	//----------------------------------------------
 	//リソースの生成
@@ -45,12 +47,7 @@ namespace Sound
 	//タスクのコンストラクタ
 	Task::Task():
 		TaskAbstract(defGroupName, defPriority),
-		res(Resource::Create()),
-		bgm(res->bgm),
-		se_turnOver(res->se_turnOver),
-		se_handOut(res->se_handOut),
-		se_shaffle(res->se_shaffle),
-		se_paperTear(res->se_paperTear)
+		res(Resource::Create())
 	{
 	}
 	//----------------------------------------------
@@ -110,9 +107,9 @@ namespace Sound
 	//BGMの再生
 	void Task::PlayBGM() const
 	{
-		if (!CheckSoundMem(bgm))
+		if (!CheckSoundMem(res->bgm))
 		{
-			PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
+			PlaySoundMem(res->bgm, DX_PLAYTYPE_LOOP);
 		}
 	}
 
@@ -120,28 +117,35 @@ namespace Sound
 	//SE(カードめくる)の再生
 	void Task::PlaySE_TurnOver(int volume) const
 	{
-		ChangeNextPlayVolumeSoundMem(volume, se_turnOver);
-		PlaySoundMem(se_turnOver, DX_PLAYTYPE_BACK);
+		ChangeNextPlayVolumeSoundMem(volume, res->se_turnOver);
+		PlaySoundMem(res->se_turnOver, DX_PLAYTYPE_BACK);
 	}
 	//----------------------------------------------
 	//SE(カード投げる)の再生
 	void Task::PlaySE_HandOut(int volume) const
 	{
-		ChangeNextPlayVolumeSoundMem(volume, se_handOut);
-		PlaySoundMem(se_handOut, DX_PLAYTYPE_BACK);
+		ChangeNextPlayVolumeSoundMem(volume, res->se_handOut);
+		PlaySoundMem(res->se_handOut, DX_PLAYTYPE_BACK);
 	}
 	//----------------------------------------------
 	//SE(シャッフル)の再生
 	void Task::PlaySE_Shaffle(int volume) const
 	{
-		ChangeNextPlayVolumeSoundMem(volume, se_shaffle);
-		PlaySoundMem(se_shaffle, DX_PLAYTYPE_BACK);
+		ChangeNextPlayVolumeSoundMem(volume, res->se_shaffle);
+		PlaySoundMem(res->se_shaffle, DX_PLAYTYPE_BACK);
 	}
 	//----------------------------------------------
 	//SE(紙破る)の再生
 	void Task::PlaySE_PaperTear(int volume) const
 	{
-		ChangeNextPlayVolumeSoundMem(volume, se_paperTear);
-		PlaySoundMem(se_paperTear, DX_PLAYTYPE_BACK);
+		ChangeNextPlayVolumeSoundMem(volume, res->se_paperTear);
+		PlaySoundMem(res->se_paperTear, DX_PLAYTYPE_BACK);
+	}
+	//----------------------------------------------
+	//SE(紙めくる)の再生
+	void Task::PlaySE_PaperTake(int volume) const
+	{
+		ChangeNextPlayVolumeSoundMem(volume, res->se_paperTake);
+		PlaySoundMem(res->se_paperTake, DX_PLAYTYPE_BACK);
 	}
 }

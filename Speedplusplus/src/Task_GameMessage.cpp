@@ -11,7 +11,7 @@ namespace GameMessage
 	Resource::Resource()
 	{
 		imageName = "MessageImg";
-		Image::imageLoader.LoadDivImage(imageName, "data/image/GameMessage.png", 3, 1, 3, 1280, 56);
+		Image::imageLoader.LoadDivImage(imageName, "data/image/GameMessage.png", 2, 1, 2, 1280, 56);
 		imageData = Image::imageLoader.GetImageData(imageName);
 	}
 	//----------------------------------------------
