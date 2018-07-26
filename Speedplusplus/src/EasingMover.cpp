@@ -17,7 +17,7 @@ EasingMover::EasingMover(	const Math::Vec2& startPos, const Math::Vec2& endPos,
 
 bool EasingMover::Update(float speed)
 {
-	float nEase = easing.cubic.Out(easing.Time(speed), 0.f, 1.f);
+	float nEase = easing.Run(Ease_Cubic::Out, speed);
 
 	pos.x		= startPos.x + (diffPos.x * nEase);
 	pos.y		= startPos.y + (diffPos.y * nEase);

@@ -163,6 +163,9 @@
     <ClCompile Include="src\Resource_Card.cpp">
       <Filter>ソース ファイル\Task\Task_Card</Filter>
     </ClCompile>
+    <ClCompile Include="src\Easing.cpp">
+      <Filter>システム\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\SystemDefine.h">

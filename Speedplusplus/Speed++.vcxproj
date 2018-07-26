@@ -22,6 +22,7 @@
     <ClCompile Include="src\ButtonInfo.cpp" />
     <ClCompile Include="src\Card.cpp" />
     <ClCompile Include="src\CardCounter.cpp" />
+    <ClCompile Include="src\Easing.cpp" />
     <ClCompile Include="src\EasingMover.cpp" />
     <ClCompile Include="src\Fps.cpp" />
     <ClCompile Include="src\GameDefine.cpp" />
