@@ -3,15 +3,22 @@
 #include <math.h>
 
 //コンストラクタ
-Easing::Easing() : time(0.f, 1.f) {}
+Easing::Easing() : time(0.f, 1.f), volume(0.f) {}
 
 //イージングの実行
 //引数：イージング動作の関数ポインタ(Ease_…), 継続時間(float)
-float Easing::Run(Ease em, float durationTime)
+void Easing::Run(Ease em, float durationTime)
 {
 	time.SetEndTime(durationTime);
 	time.Run();
-	return em(time.GetNowCntTime(), durationTime);
+	volume = em(time.GetNowCntTime(), durationTime);
+}
+
+//値を取得
+//引数：始点(float), 終点(float)
+float Easing::GetVolume(float startPoint, float endPoint)
+{
+	return startPoint + (volume * endPoint);
 }
 
 //イージングが終了したらtrueが返る
@@ -66,7 +73,7 @@ namespace Ease_Back
 		float postFix = time -= 2;
 		return 1.f / 2.f * ((postFix)*time*(((s *= (1.525f)) + 1)*time + s) + 2);
 	}
-};
+}
 
 namespace Ease_Bounce
 {
@@ -101,7 +108,7 @@ namespace Ease_Bounce
 		if (time < duration / 2) return In(time * 2, duration) * 0.5f;
 		else return Out(time * 2 - duration, duration) * 0.5f + 0.5f;
 	}
-};
+}
 
 namespace Ease_Circ
 {
@@ -118,7 +125,7 @@ namespace Ease_Circ
 		if ((time /= duration / 2) < 1) return -1.f / 2.f * static_cast<float>((sqrt(1 - time * time) - 1));
 		return 1.f / 2.f * static_cast<float>((sqrt(1 - time * (time -= 2)) + 1));
 	}
-};
+}
 
 namespace Ease_Cubic
 {
@@ -135,7 +142,7 @@ namespace Ease_Cubic
 		if ((time /= duration / 2) < 1) return 1.f / 2.f * time*time*time;
 		return 1.f / 2.f * ((time -= 2)*time*time + 2);
 	}
-};
+}
 
 namespace Ease_Elastic
 {
@@ -170,7 +177,7 @@ namespace Ease_Elastic
 		float postFix = static_cast<float>(a*pow(2, -10 * (time -= 1)));
 		return static_cast<float>(postFix * sin((time*(duration)-s)*(2 * static_cast<float>(M_PI)) / p)*.5f + 1.f);
 	}
-};
+}
 
 namespace Ease_Expo
 {
@@ -189,7 +196,7 @@ namespace Ease_Expo
 		if ((time /= duration / 2) < 1) return 1.f / 2.f * static_cast<float>(pow(2, 10 * (time - 1)));
 		return 1.f / 2.f * (static_cast<float>(-pow(2, -10 * --time) + 2));
 	}
-};
+}
 
 namespace Ease_Quad
 {
@@ -206,7 +213,7 @@ namespace Ease_Quad
 		if ((time /= duration / 2) < 1) return ((1.f / 2.f)*(time*time));
 		return -1.f / 2.f * (((time - 2)*(--time)) - 1);
 	}
-};
+}
 
 namespace Ease_Quart
 {
@@ -223,7 +230,7 @@ namespace Ease_Quart
 		if ((time /= duration / 2) < 1) return 1.f / 2.f * time*time*time*time;
 		return -1.f / 2.f * ((time -= 2)*time*time*time - 2);
 	}
-};
+}
 
 namespace Ease_Quint
 {
@@ -240,7 +247,7 @@ namespace Ease_Quint
 		if ((time /= duration / 2) < 1) return 1.f / 2.f * time*time*time*time*time;
 		return 1.f / 2.f * ((time -= 2)*time*time*time*time + 2);
 	}
-};
+}
 
 namespace Ease_Sine
 {
@@ -256,4 +263,4 @@ namespace Ease_Sine
 	{
 		return -1.f / 2.f * static_cast<float>((cos(M_PI*time / duration) - 1));
 	}
-};
+}

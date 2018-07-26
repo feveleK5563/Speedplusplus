@@ -17,12 +17,12 @@ EasingMover::EasingMover(	const Math::Vec2& startPos, const Math::Vec2& endPos,
 
 bool EasingMover::Update(float speed)
 {
-	float nEase = easing.Run(Ease_Cubic::Out, speed);
+	easing.Run(Ease_Cubic::Out, speed);
 
-	pos.x		= startPos.x + (diffPos.x * nEase);
-	pos.y		= startPos.y + (diffPos.y * nEase);
-	scale		= startScale + (diffScale * nEase);
-	degAngle	= startDegAngle + (diffDegAngle * nEase);
+	pos.x		= easing.GetVolume(startPos.x, diffPos.x);
+	pos.y		= easing.GetVolume(startPos.y, diffPos.y);
+	scale		= easing.GetVolume(startScale, diffScale);
+	degAngle	= easing.GetVolume(startDegAngle, diffDegAngle);
 	angle		= Math::ToRadian(degAngle);
 
 	return easing.IsEaseEnd();
