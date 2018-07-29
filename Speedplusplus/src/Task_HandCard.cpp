@@ -4,6 +4,7 @@
 #include "SystemDefine.h"
 #include "Task_CenterCard.h"
 #include "Task_Sound.h"
+#include "Task_SceneGame.h"
 
 namespace HandCard
 {
@@ -114,7 +115,14 @@ namespace HandCard
 			if ((LorR && SelectLeftCard()) ||
 				(!LorR && SelectRightCard()))
 			{
-				CenterCard::Task::Create(card.GetID(), card.GetPos());
+				if (TS::taskSystem.GetTaskOne<SceneGame::Task>(SceneGame::defGroupName)->GetIsBackMode())
+				{
+					CenterCard::Task::Create(card.GetID(), card.GetPos(), Side::Back);
+				}
+				else
+				{
+					CenterCard::Task::Create(card.GetID(), card.GetPos(), Side::Front);
+				}
 				KillMe();
 			}
 			break;

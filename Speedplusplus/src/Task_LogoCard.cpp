@@ -14,7 +14,8 @@ namespace LogoCard
 	Task::Task(const CardID& id, const Math::Vec2& pos):
 		TaskAbstract(defGroupName, Priority::logoCard),
 		card(id, pos, 1.f, (float)SystemDefine::GetRand(-5, 5)),
-		progress(0)
+		progress(0),
+		isBack(false)
 	{
 		if (card.GetID().side == Side::Back)
 		{
@@ -70,11 +71,12 @@ namespace LogoCard
 		//進行度によって処理を変える
 		switch (progress)
 		{
-		case 0:	//ロゴが中心に移動
-				//ボタン押したら画面下に消える
+		case 0:	//ロゴが中心に移動、ボタン押したら画面下に消える
 			if (SelectThrowCard())
 			{
+				//【隠し要素】Wキー(LR)押したら向きを反転
 				card.ChangeFrontBack(150);
+				isBack = !isBack;
 			}
 			if (PushStart())
 			{
@@ -104,5 +106,11 @@ namespace LogoCard
 	void Task::Draw()
 	{
 		card.Draw();
+	}
+
+	//カードが裏だったらtrueを返す
+	bool Task::GetIsBack() const
+	{
+		return isBack;
 	}
 }

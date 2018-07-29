@@ -3,6 +3,7 @@
 #include "DxLib.h"
 #include "SystemDefine.h"
 #include "Task_SceneTitle.h"
+#include "Task_SceneGame.h"
 #include "SystemDefine.h"
 #include "GameDefine.h"
 #include "Task_JudgeEffect.h"
@@ -50,7 +51,14 @@ namespace CardJudge
 		auto gt = TS::taskSystem.GetTaskOne<GameTimer::Task>(GameTimer::defGroupName);
 		gameState = &gt->GetTimeState();
 
-		CreateRandomCard(Side::Back);
+		if (TS::taskSystem.GetTaskOne<SceneGame::Task>(SceneGame::defGroupName)->GetIsBackMode())
+		{
+			CreateRandomCard(Side::Front, Side::Back);
+		}
+		else
+		{
+			CreateRandomCard(Side::Back, Side::Front);
+		}
 	}
 
 	//----------------------------------------------
@@ -122,7 +130,7 @@ namespace CardJudge
 		//パス
 		if (SelectThrowCard())
 		{
-			CreateRandomCard(Side::Front);
+			CreateRandomCard(Side::Front, Side::Front);
 			CreateEffect(90.f, 200.f,
 				handCard[0].first == false && handCard[1].first == false);
 			++centerCardNum;
@@ -150,7 +158,7 @@ namespace CardJudge
 
 	//----------------------------------------------
 	//ランダムにカードを作成、追加する
-	void Task::CreateRandomCard(Side side)
+	void Task::CreateRandomCard(Side side, Side modeSide)
 	{
 		std::shared_ptr<CardID> cardID = 
 			std::make_shared<CardID>(
@@ -159,7 +167,7 @@ namespace CardJudge
 			side);
 
 		CenterCard::Task::Create(
-			*cardID, Math::Vec2(SystemDefine::windowSizeX / 2.f, -200.f));
+			*cardID, Math::Vec2(SystemDefine::windowSizeX / 2.f, -200.f), modeSide);
 
 		centerTopCard= cardID;
 	}

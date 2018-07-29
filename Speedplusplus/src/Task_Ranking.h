@@ -32,9 +32,17 @@ namespace Ranking
 		std::shared_ptr<Resource> res;	//確保したリソース
 		ImageDrawer bar, number;
 
+		//数字の種類
+		enum struct NumberType
+		{
+			Score		= 0,
+			RankNumber	= 10,
+			HiScore		= 20,
+		};
 		static const int rankNum = 6;	//1位~5位 + プレイヤースコア
 		struct RankData
 		{
+			NumberType						numType;
 			int								rank;
 			std::unique_ptr<EasingMover>	easeMove;
 			int								score;

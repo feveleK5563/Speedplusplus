@@ -13,18 +13,22 @@ namespace SceneGame
 	class Task : public TaskAbstract
 	{
 	private:
+		bool isBackMode;	//【隠し要素】裏モードか否か
 		std::shared_ptr<GameTimer::Task> gameTimer;
 		std::shared_ptr<CardJudge::Task> cardJudge;
 		std::shared_ptr<GameScore::Task> gameScore;
 
 	public:
-		Task();		//コンストラクタ
-		~Task();	//デストラクタ
-		static std::shared_ptr<Task> Create();	//タスクの生成
+		Task(bool isBackMode);		//コンストラクタ
+		~Task();					//デストラクタ
+		static std::shared_ptr<Task> Create(bool isBackMode);	//タスクの生成
 
 		void Initialize();			//初期化処理
 		void Finalize() override;	//終了処理
 		void Update() override;		//更新
 		void Draw() override;		//描画
+
+		//裏モードか否かを取得
+		bool GetIsBackMode() const;
 	};
 }

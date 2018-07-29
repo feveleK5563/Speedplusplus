@@ -54,17 +54,13 @@ namespace SceneTitle
 			sound->PlayBGM();
 		}
 
-		auto logo = TS::taskSystem.GetTaskOne<LogoCard::Task>(LogoCard::defGroupName);
-		if (logo)
+		//ロゴカードを作成(既に存在している場合は作成しない)
+		logoCard = TS::taskSystem.GetTaskOne<LogoCard::Task>(LogoCard::defGroupName);
+		if (!logoCard)
 		{
-			logoState = &logo->state;
-		}
-		else
-		{
-			auto logoCardRef = LogoCard::Task::Create(
+			logoCard = LogoCard::Task::Create(
 				CardID(Suit::Etc, (int)Suit::Etc_Logo, Side::Back),
 				Math::Vec2(SystemDefine::windowSizeX / 2.f, -200));
-			logoState = &logoCardRef->state;
 		}
 	}
 
@@ -73,7 +69,8 @@ namespace SceneTitle
 	//----------------------------------------------
 	void Task::Finalize()
 	{
-		SceneGame::Task::Create();
+		//次にゲームタスクを生成
+		SceneGame::Task::Create(logoCard->GetIsBack());
 	}
 
 	//----------------------------------------------
@@ -86,7 +83,7 @@ namespace SceneTitle
 		{
 			Ranking::Task::Create();
 		}
-		if (*logoState == TaskState::Kill)
+		if (logoCard->state == TaskState::Kill)
 		{
 			KillMe();
 		}

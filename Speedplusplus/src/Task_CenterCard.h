@@ -15,6 +15,7 @@ namespace CenterCard
 		int		progress;			//進行度
 		bool	isOut;				//画面外に消えるか否か
 		float	moveSpeed;			//カードの移動速度
+		Side	modeSide;			//カードの向き
 
 		const int&	centerCardNum;	//中央のカード枚数
 		int			cardOrder;		//このカードの順番
@@ -23,11 +24,11 @@ namespace CenterCard
 
 	public:
 		//コンストラクタ
-		Task(const CardID& id, const Math::Vec2& pos);
+		Task(const CardID& id, const Math::Vec2& pos, Side modeSide);
 		//デストラクタ
 		~Task();
 		//タスクの生成
-		static std::shared_ptr<Task> Create(const CardID& id, const Math::Vec2& pos);
+		static std::shared_ptr<Task> Create(const CardID& id, const Math::Vec2& pos, Side modeSide);
 
 		void Initialize();			//初期化処理
 		void Finalize() override;	//終了処理

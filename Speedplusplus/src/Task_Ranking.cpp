@@ -81,27 +81,37 @@ namespace Ranking
 	//----------------------------------------------
 	void Task::Initialize()
 	{
+		//スコアの設定
 		for (int i = 0; i < rankNum - 1; ++i)
 		{
-			rankData[i].score = 100 * (rankNum - 1 - i);	//初期スコア
+			//初期スコアの設定
+			rankData[i].score = 100 * (rankNum - 1 - i);
 			settingPos[i] = Math::Vec2(SystemDefine::windowSizeX - 350.f, 300.f + (80 * i));
 
-			rankData[i].rank = i + 1 + 10;
+			rankData[i].numType = NumberType::RankNumber;
+			rankData[i].rank = i + 1;
 			rankData[i].easeMove = std::make_unique<EasingMover>
 				(Math::Vec2(SystemDefine::windowSizeX, settingPos[i].y), settingPos[i],
 					1.f, 1.f, 0.f, 0.f);
 		}
+		//スコアの読み込み
 		LoadScoreData();
-
+		
+		//プレイヤー用スコアデータを設定
 		if (auto score = TS::taskSystem.GetTaskOne<GameScore::Task>(GameScore::defGroupName))
 		{
+			//ゲーム終了画面でランキング処理が呼ばれた場合、
+			//プレイヤー用スコアデータにプレイしたスコアを代入
 			rankData[rankNum - 1].score = score->GetScore();
 		}
 		else
 		{
+			//それ以外(タイトル画面)で呼ばれた場合、
+			//プレイヤー用スコアデータは無効、ランクイン処理をスキップする
 			rankData[rankNum - 1].score = -1;
 			progress = 2;
 		}
+		rankData[rankNum - 1].numType = NumberType::HiScore;
 		rankData[rankNum - 1].rank = 5 + 1 + 10;
 		settingPos[rankNum - 1] = Math::Vec2(SystemDefine::windowSizeX - 350.f, SystemDefine::windowSizeY + 120.f);
 
@@ -171,6 +181,7 @@ namespace Ranking
 
 					for (int i = 0; i < rankNum - 1; ++i)
 					{
+						//戻るときにもSEを鳴らすためにSEの再生状態をリセットする
 						playSoundEffect[i] = true;
 					}
 				}
@@ -212,7 +223,7 @@ namespace Ranking
 					rankData[i].easeMove->GetScale(),
 					rankData[i].easeMove->GetAngle(),
 					false,
-					rankData[i].rank,
+					rankData[i].rank + (int)rankData[i].numType,
 					Color(255, 255, 255, 255));
 			}
 
@@ -243,10 +254,12 @@ namespace Ranking
 			if (rankData[i].easeMove == false)
 				continue;
 
+			//出現するスコアデータの動きを5フレームずつ遅らせる
 			if (moveTimeCnt.GetNowCntTime() > 5 * i)
 			{
 				if (i < rankNum - 1 && playSoundEffect[i])
 				{
+					//SEの再生
 					auto sound = TS::taskSystem.GetTaskOne<Sound::Task>(Sound::defGroupName);
 					sound->PlaySE_HandOut(200);
 					playSoundEffect[i] = false;
@@ -267,7 +280,7 @@ namespace Ranking
 
 		if (!ifs)
 		{
-			//読み込みに失敗したらファイルを作成する
+			//読み込みに失敗したら新しくファイルを作成する
 			WrightScoreData();
 			return;
 		}
@@ -306,6 +319,7 @@ namespace Ranking
 	//ランクイン時の処理
 	void Task::RankIn()
 	{
+		//ランクインできる位置を検索する
 		int rankPosition = 5;
 		for (int i = 0; i < rankNum - 1; ++i)
 		{
@@ -319,11 +333,13 @@ namespace Ranking
 			}
 		}
 
-		rankData[rankNum - 1].rank = rankData[rankPosition].rank + 10;
+		//プレイヤー用スコアデータを生成する
+		rankData[rankNum - 1].rank = rankData[rankPosition].rank;
 		rankData[rankNum - 1].easeMove = std::make_unique<EasingMover>(
 			Math::Vec2(SystemDefine::windowSizeX, settingPos[rankPosition].y), settingPos[rankPosition],
 			1.f, 1.f, 0.f, 0.f);
 
+		//プレイヤースコア以下のデータの移動先とランクを更新
 		for (int i = rankPosition; i < rankNum - 1; ++i)
 		{
 			++rankData[i].rank;
@@ -335,13 +351,14 @@ namespace Ranking
 			);
 		}
 
-		//昇順にソート
+		//ランクの昇順にソート
 		std::sort(rankData.begin(), rankData.end(),
 			[](	const RankData& left, const RankData& right)
 		{
 			return left.rank % 10 < right.rank % 10;
 		});
 
+		//スコアをファイルに書き込む
 		WrightScoreData();
 	}
 }

@@ -12,7 +12,7 @@ namespace CenterCard
 
 	//----------------------------------------------
 	//タスクのコンストラクタ
-	Task::Task(const CardID& id, const Math::Vec2& pos):
+	Task::Task(const CardID& id, const Math::Vec2& pos, Side modeSide):
 		TaskAbstract(defGroupName, Priority::countCard),
 		card(id,
 			pos, Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f),
@@ -21,6 +21,7 @@ namespace CenterCard
 		progress(0),
 		isOut(false),
 		moveSpeed(15.f),
+		modeSide(modeSide),
 		centerCardNum(TS::taskSystem.GetTaskOne<CardJudge::Task>(CardJudge::defGroupName)->GetCenterCardNum()),
 		cardOrder(centerCardNum),
 		gameState(TS::taskSystem.GetTaskOne<GameTimer::Task>(GameTimer::defGroupName)->GetTimeState())
@@ -34,9 +35,9 @@ namespace CenterCard
 	}
 	//----------------------------------------------
 	//タスクの生成
-	std::shared_ptr<Task> Task::Create(const CardID& id, const Math::Vec2& pos)
+	std::shared_ptr<Task> Task::Create(const CardID& id, const Math::Vec2& pos, Side modeSide)
 	{
-		std::shared_ptr<Task> task = std::make_shared<Task>(id, pos);
+		std::shared_ptr<Task> task = std::make_shared<Task>(id, pos, modeSide);
 		TS::taskSystem.RegistrationTask(task);
 
 		task->Initialize();
@@ -67,8 +68,8 @@ namespace CenterCard
 	//----------------------------------------------
 	void Task::Update()
 	{
-		//ゲーム中にカードが裏返っていたら表にする
-		if (card.GetID().side == Side::Back &&
+		//ゲーム中にカードが目標の向きと異なっていたら変更する
+		if (card.GetID().side != modeSide &&
 			gameState == GameState::Game)
 		{
 			card.ChangeFrontBack(150);

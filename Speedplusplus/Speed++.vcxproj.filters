@@ -160,11 +160,11 @@
     <ClCompile Include="src\Task_Sound.cpp">
       <Filter>ソース ファイル\Task\Task_Sound</Filter>
     </ClCompile>
-    <ClCompile Include="src\Resource_Card.cpp">
-      <Filter>ソース ファイル\Task\Task_Card</Filter>
-    </ClCompile>
     <ClCompile Include="src\Easing.cpp">
       <Filter>システム\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resource_Card.cpp">
+      <Filter>ソース ファイル\Class\Card</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -256,7 +256,7 @@
       <Filter>ソース ファイル\Task\Task_Sound</Filter>
     </ClInclude>
     <ClInclude Include="src\Resource_Card.h">
-      <Filter>ソース ファイル\Task\Task_Card</Filter>
+      <Filter>ソース ファイル\Class\Card</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

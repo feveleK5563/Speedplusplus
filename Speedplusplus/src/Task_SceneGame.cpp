@@ -10,8 +10,9 @@ namespace SceneGame
 
 	//----------------------------------------------
 	//タスクのコンストラクタ
-	Task::Task():
-		TaskAbstract(defGroupName, defPriority)
+	Task::Task(bool isBackMode):
+		TaskAbstract(defGroupName, defPriority),
+		isBackMode(isBackMode)
 	{ 
 	}
 	//----------------------------------------------
@@ -22,9 +23,9 @@ namespace SceneGame
 	}
 	//----------------------------------------------
 	//タスクの生成
-	std::shared_ptr<Task> Task::Create()
+	std::shared_ptr<Task> Task::Create(bool isBackMode)
 	{
-		std::shared_ptr<Task> task = std::make_shared<Task>();
+		std::shared_ptr<Task> task = std::make_shared<Task>(isBackMode);
 		TS::taskSystem.RegistrationTask(task);
 
 		task->Initialize();
@@ -76,5 +77,11 @@ namespace SceneGame
 	void Task::Draw()
 	{
 		
+	}
+
+	//裏モードか否かを取得
+	bool Task::GetIsBackMode() const
+	{
+		return isBackMode;
 	}
 }

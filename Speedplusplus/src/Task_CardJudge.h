@@ -39,7 +39,7 @@ namespace CardJudge
 		void Judge();				//選択した手札によって、スコアの変化とエフェクトの生成を行う
 
 		//ランダムにカードを作成、追加する
-		void CreateRandomCard(Side side);
+		void CreateRandomCard(Side side, Side modeSide);
 		//手札を設定する
 		void SetNextHandCard();
 		//正誤に応じてエフェクトを発生させる
