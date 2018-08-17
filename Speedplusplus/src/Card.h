@@ -6,19 +6,24 @@
 
 enum struct Suit
 {
-	Spade	= 0,	//スペード
-	Club	= 1,	//クラブ
-	Heart	= 2,	//ハート
-	Diamond	= 3,	//ダイヤ
-	Etc		= 4,	//その他
+	Spade	= 0 * 13,	//スペード
+	Club	= 1 * 13,	//クラブ
+	Heart	= 2 * 13,	//ハート
+	Diamond	= 3 * 13,	//ダイヤ
+	Etc		= 4 * 13,	//その他
 	
 	Etc_BlackNum	= 0,	//黒数字
 	Etc_Joker		= 10,	//ジョーカー
 	Etc_Logo		= 11,	//タイトルロゴ
 	Etc_Back		= 12,	//裏
 	Etc_RedNum		= 13,	//赤数字
+<<<<<<< HEAD
 	Etc_SingleMode	= 23,	//一人モード
 	Etc_VSMode		= 24,	//対戦モード
+=======
+	Etc_POne		= 23,	//一人プレイモード
+	Etc_PTwo		= 24,	//二人プレイモード
+>>>>>>> 31e0fcc1bfbf598ea1ae114dd74c884ec73856a9
 };
 
 enum struct Side
