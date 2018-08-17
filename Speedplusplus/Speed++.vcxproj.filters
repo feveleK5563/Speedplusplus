@@ -71,6 +71,9 @@
     <Filter Include="ソース ファイル\Task\Task_Sound">
       <UniqueIdentifier>{a51c7919-d621-412a-b811-212ed4f73dcc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Task\Task_Scene\Menu">
+      <UniqueIdentifier>{9a983bff-edeb-4cf0-a8cc-e4d9fb39c775}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\SystemDefine.cpp">
@@ -166,6 +169,12 @@
     <ClCompile Include="src\Resource_Card.cpp">
       <Filter>ソース ファイル\Class\Card</Filter>
     </ClCompile>
+    <ClCompile Include="src\Task_SceneMenu.cpp">
+      <Filter>ソース ファイル\Task\Task_Scene\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Task_MenuCard.cpp">
+      <Filter>ソース ファイル\Task\Task_Card</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\SystemDefine.h">
@@ -257,6 +266,12 @@
     </ClInclude>
     <ClInclude Include="src\Resource_Card.h">
       <Filter>ソース ファイル\Class\Card</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Task_SceneMenu.h">
+      <Filter>ソース ファイル\Task\Task_Scene\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Task_MenuCard.h">
+      <Filter>ソース ファイル\Task\Task_Card</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

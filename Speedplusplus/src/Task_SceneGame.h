@@ -3,6 +3,7 @@
 #include "Task_GameTimer.h"
 #include "Task_CardJudge.h"
 #include "Task_GameScore.h"
+#include "Task_SceneMenu.h"
 
 namespace SceneGame
 {
@@ -13,22 +14,20 @@ namespace SceneGame
 	class Task : public TaskAbstract
 	{
 	private:
+		Mode mode;			//モード
 		bool isBackMode;	//【隠し要素】裏モードか否か
 		std::shared_ptr<GameTimer::Task> gameTimer;
 		std::shared_ptr<CardJudge::Task> cardJudge;
 		std::shared_ptr<GameScore::Task> gameScore;
 
 	public:
-		Task(bool isBackMode);		//コンストラクタ
+		Task(Mode mode);			//コンストラクタ
 		~Task();					//デストラクタ
-		static std::shared_ptr<Task> Create(bool isBackMode);	//タスクの生成
+		static std::shared_ptr<Task> Create(Mode mode);	//タスクの生成
 
 		void Initialize();			//初期化処理
 		void Finalize() override;	//終了処理
 		void Update() override;		//更新
 		void Draw() override;		//描画
-
-		//裏モードか否かを取得
-		bool GetIsBackMode() const;
 	};
 }

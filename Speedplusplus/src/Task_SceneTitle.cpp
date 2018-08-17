@@ -2,7 +2,7 @@
 #include "DxLib.h"
 #include "SystemDefine.h"
 #include "Task_Back.h"
-#include "Task_SceneGame.h"
+#include "Task_SceneMenu.h"
 #include "GameDefine.h"
 #include "Task_Ranking.h"
 #include "Task_Sound.h"
@@ -43,11 +43,13 @@ namespace SceneTitle
 	//----------------------------------------------
 	void Task::Initialize()
 	{
+		//背景を作成
 		if (!TS::taskSystem.FindTask(Back::defGroupName))
 		{
 			Back::Task::Create();
 		}
 		
+		//サウンド再生タスクを作成
 		if (!TS::taskSystem.FindTask(Sound::defGroupName))
 		{
 			auto sound = Sound::Task::Create();
@@ -70,7 +72,7 @@ namespace SceneTitle
 	void Task::Finalize()
 	{
 		//次にゲームタスクを生成
-		SceneGame::Task::Create(logoCard->GetIsBack());
+		SceneMenu::Task::Create();
 	}
 
 	//----------------------------------------------

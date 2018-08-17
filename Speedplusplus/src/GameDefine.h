@@ -4,7 +4,7 @@
 namespace Priority
 {
 	const float		backGround	(1.0f);	//背景
-	const float		logoCard	(1.1f);	//ロゴカード
+	const float		messageCard	(1.1f);	//メッセージカード(ロゴ、メニュー画面)
 	const float		countCard	(1.2f);	//計測用カード
 	const float		centerCard	(1.3f);	//中心のカード
 	const float		judgeEffect	(1.4f);	//結果エフェクト

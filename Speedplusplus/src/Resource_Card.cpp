@@ -8,7 +8,7 @@ namespace CardR
 	Resource::Resource()
 	{
 		imageName = "Card";
-		Image::imageLoader.LoadDivImage(imageName, "data/image/PlayingCards.png", 75, 13, 6, 256, 384);
+		Image::imageLoader.LoadDivImage(imageName, "data/image/PlayingCards.png", 77, 13, 6, 256, 384);
 		imageData = Image::imageLoader.GetImageData(imageName);
 	}
 	//----------------------------------------------

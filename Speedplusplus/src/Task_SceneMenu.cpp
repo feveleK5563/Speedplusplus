@@ -1,20 +1,17 @@
-#include "Task_SceneGame.h"
+#include "Task_SceneMenu.h"
 #include "DxLib.h"
-#include "Task_SceneTitle.h"
-#include "SystemDefine.h"
+#include "Task_SceneGame.h"
 
-namespace SceneGame
+namespace SceneMenu
 {
 	//☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
 	//★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆
 
 	//----------------------------------------------
 	//タスクのコンストラクタ
-	Task::Task(Mode mode):
-		TaskAbstract(defGroupName, defPriority),
-		isBackMode(isBackMode),
-		mode(mode)
-	{ 
+	Task::Task():
+		TaskAbstract(defGroupName, defPriority)
+	{
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
@@ -24,9 +21,10 @@ namespace SceneGame
 	}
 	//----------------------------------------------
 	//タスクの生成
-	std::shared_ptr<Task> Task::Create(Mode mode)
+	std::shared_ptr<Task> Task::Create()
 	{
-		std::shared_ptr<Task> task = std::make_shared<Task>(mode);
+		std::shared_ptr<Task> task = 
+			std::make_shared<Task>();
 		TS::taskSystem.RegistrationTask(task);
 
 		task->Initialize();
@@ -41,15 +39,7 @@ namespace SceneGame
 	//----------------------------------------------
 	void Task::Initialize()
 	{
-		if (mode == Mode::VS)
-		{
-			KillMe();
-			return;
-		}
-
-		gameTimer = GameTimer::Task::Create();
-		cardJudge = CardJudge::Task::Create();
-		gameScore = GameScore::Task::Create();
+		menuCard = MenuCard::Task::Create();
 	}
 
 	//----------------------------------------------
@@ -57,12 +47,7 @@ namespace SceneGame
 	//----------------------------------------------
 	void Task::Finalize()
 	{
-		LogoCard::Task::Create(
-			CardID(Suit::Etc, (int)Suit::Etc_Logo, Side::Front),
-			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f));
-
-		SceneTitle::Task::Create();
-		TS::taskSystem.KillTask("カード判定師");
+		SceneGame::Task::Create(menuCard->GetMode());
 	}
 
 	//----------------------------------------------
@@ -70,10 +55,8 @@ namespace SceneGame
 	//----------------------------------------------
 	void Task::Update()
 	{
-		if (gameTimer->state == TaskState::Kill)
+		if (menuCard->state == TaskState::Kill)
 		{
-			cardJudge->KillMe();
-			gameScore->KillMe();
 			KillMe();
 		}
 	}

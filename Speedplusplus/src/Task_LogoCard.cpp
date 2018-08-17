@@ -12,7 +12,7 @@ namespace LogoCard
 	//----------------------------------------------
 	//タスクのコンストラクタ
 	Task::Task(const CardID& id, const Math::Vec2& pos):
-		TaskAbstract(defGroupName, Priority::logoCard),
+		TaskAbstract(defGroupName, Priority::messageCard),
 		card(id, pos, 1.f, (float)SystemDefine::GetRand(-5, 5)),
 		progress(0),
 		isBack(false)
@@ -106,11 +106,5 @@ namespace LogoCard
 	void Task::Draw()
 	{
 		card.Draw();
-	}
-
-	//カードが裏だったらtrueを返す
-	bool Task::GetIsBack() const
-	{
-		return isBack;
 	}
 }

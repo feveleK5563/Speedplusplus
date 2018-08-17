@@ -3,7 +3,6 @@
 #include "DxLib.h"
 #include "SystemDefine.h"
 #include "Task_SceneTitle.h"
-#include "Task_SceneGame.h"
 #include "SystemDefine.h"
 #include "GameDefine.h"
 #include "Task_JudgeEffect.h"
@@ -51,14 +50,7 @@ namespace CardJudge
 		auto gt = TS::taskSystem.GetTaskOne<GameTimer::Task>(GameTimer::defGroupName);
 		gameState = &gt->GetTimeState();
 
-		if (TS::taskSystem.GetTaskOne<SceneGame::Task>(SceneGame::defGroupName)->GetIsBackMode())
-		{
-			CreateRandomCard(Side::Front, Side::Back);
-		}
-		else
-		{
-			CreateRandomCard(Side::Back, Side::Front);
-		}
+		CreateRandomCard(Side::Back, Side::Front);
 	}
 
 	//----------------------------------------------
@@ -189,7 +181,7 @@ namespace CardJudge
 		{
 			for (int n = 0; n < 13; ++n)
 			{
-				//先頭カードと同じカードだった場合はやり直し
+				//先頭カードと同じカードは駄目
 				if (centerTopCard->suit == Suit(s) && centerTopCard->number == n)
 					continue;
 

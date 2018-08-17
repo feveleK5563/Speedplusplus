@@ -17,6 +17,8 @@ enum struct Suit
 	Etc_Logo		= 11,	//タイトルロゴ
 	Etc_Back		= 12,	//裏
 	Etc_RedNum		= 13,	//赤数字
+	Etc_SingleMode	= 23,	//一人モード
+	Etc_VSMode		= 24,	//対戦モード
 };
 
 enum struct Side

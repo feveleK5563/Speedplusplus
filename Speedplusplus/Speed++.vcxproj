@@ -32,6 +32,8 @@
     <ClCompile Include="src\InputState.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Math.cpp" />
+    <ClCompile Include="src\Task_MenuCard.cpp" />
+    <ClCompile Include="src\Task_SceneMenu.cpp" />
     <ClCompile Include="src\Task_Sound.cpp" />
     <ClCompile Include="src\Resource_Card.cpp" />
     <ClCompile Include="src\SystemDefine.cpp" />
@@ -64,6 +66,8 @@
     <ClInclude Include="src\InputState.h" />
     <ClInclude Include="src\Math.h" />
     <ClInclude Include="src\GameDefine.h" />
+    <ClInclude Include="src\Task_MenuCard.h" />
+    <ClInclude Include="src\Task_SceneMenu.h" />
     <ClInclude Include="src\Task_Sound.h" />
     <ClInclude Include="src\Resource_Card.h" />
     <ClInclude Include="src\TaskAbstract.h" />
