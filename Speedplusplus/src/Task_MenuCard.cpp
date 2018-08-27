@@ -52,22 +52,22 @@ namespace MenuCard
 		endPos[0] = Math::Vec2(300.f, SystemDefine::windowSizeY / 2.f);
 		endPos[1] = Math::Vec2(SystemDefine::windowSizeX - 300.f, SystemDefine::windowSizeY / 2.f);
 
-		menuCard[(int)Mode::Single] =
+		menuMessageCard[(int)Mode::Single] =
 			std::make_unique<Card>(CardID(Suit::Etc, (int)Suit::Etc_SingleMode, Side::Back),
 				startPos[0],
 				1.f,
 				0.f);
 
-		menuCard[(int)Mode::VS] =
+		menuMessageCard[(int)Mode::VS] =
 			std::make_unique<Card>(CardID(Suit::Etc, (int)Suit::Etc_VSMode, Side::Back),
 				startPos[1],
 				1.f,
 				0.f);
 
-		for (int i = 0; i < (int)menuCard.size(); ++i)
+		for (int i = 0; i < (int)menuMessageCard.size(); ++i)
 		{
-			menuCard[i]->ChangeFrontBack(seVolume);
-			menuCard[i]->SetEndMove(
+			menuMessageCard[i]->ChangeFrontBack(seVolume);
+			menuMessageCard[i]->SetEndMove(
 				endPos[i],
 				1.f,
 				(float)SystemDefine::GetRand(-5, 5));
@@ -88,9 +88,9 @@ namespace MenuCard
 	void Task::Update()
 	{
 		bool endMove = true;
-		for (int i = 0; i < (int)menuCard.size(); ++i)
+		for (int i = 0; i < (int)menuMessageCard.size(); ++i)
 		{
-			endMove = menuCard[i]->Update(30.f) && endMove;
+			endMove = menuMessageCard[i]->Update(30.f) && endMove;
 		}
 
 		switch (progress)
@@ -106,10 +106,10 @@ namespace MenuCard
 			timeCnt.Run();
 			if (timeCnt.IsTimeEnd())
 			{
-				for (int i = 0; i < (int)menuCard.size(); ++i)
+				for (int i = 0; i < (int)menuMessageCard.size(); ++i)
 				{
-					menuCard[i]->ChangeFrontBack(seVolume);
-					menuCard[i]->SetEndMove(
+					menuMessageCard[i]->ChangeFrontBack(seVolume);
+					menuMessageCard[i]->SetEndMove(
 						startPos[i],
 						1.f,
 						(float)SystemDefine::GetRand(-5, 5));
@@ -132,9 +132,9 @@ namespace MenuCard
 	//----------------------------------------------
 	void Task::Draw()
 	{
-		for (int i = 0; i < (int)menuCard.size(); ++i)
+		for (int i = 0; i < (int)menuMessageCard.size(); ++i)
 		{
-			menuCard[i]->Draw();
+			menuMessageCard[i]->Draw();
 		}
 	}
 
@@ -150,52 +150,54 @@ namespace MenuCard
 	void Task::SelectMode()
 	{
 		//左(一人プレイ)選択
-		if (SelectLeftCard())
+		if (Button::SelectLeftCardP1() ||
+			Button::SelectLeftCardP2())
 		{
 			if (mode != Mode::Single)
 			{
 				mode = Mode::Single;
-				if (menuCard[(int)Mode::Single]->GetID().side != Side::Front)
-					menuCard[(int)Mode::Single]->ChangeFrontBack(seVolume);
-				if (menuCard[(int)Mode::VS]->GetID().side != Side::Back)
-					menuCard[(int)Mode::VS]->ChangeFrontBack(seVolume);
+				if (menuMessageCard[(int)Mode::Single]->GetID().side != Side::Front)
+					menuMessageCard[(int)Mode::Single]->ChangeFrontBack(seVolume);
+				if (menuMessageCard[(int)Mode::VS]->GetID().side != Side::Back)
+					menuMessageCard[(int)Mode::VS]->ChangeFrontBack(seVolume);
 			}
 		}
 		//右(二人プレイ)選択
-		else if (SelectRightCard())
+		else if (Button::SelectRightCardP1() ||
+				 Button::SelectRightCardP2())
 		{
 			if (mode != Mode::VS)
 			{
 				mode = Mode::VS;
-				if (menuCard[(int)Mode::VS]->GetID().side != Side::Front)
-					menuCard[(int)Mode::VS]->ChangeFrontBack(seVolume);
-				if (menuCard[(int)Mode::Single]->GetID().side != Side::Back)
-					menuCard[(int)Mode::Single]->ChangeFrontBack(seVolume);
+				if (menuMessageCard[(int)Mode::VS]->GetID().side != Side::Front)
+					menuMessageCard[(int)Mode::VS]->ChangeFrontBack(seVolume);
+				if (menuMessageCard[(int)Mode::Single]->GetID().side != Side::Back)
+					menuMessageCard[(int)Mode::Single]->ChangeFrontBack(seVolume);
 			}
 		}
 
 		//決定
-		if (PushStart())
+		if (Button::PushStartReset())
 		{
 			switch (mode)
 			{
 			case Mode::Single:
-				menuCard[(int)Mode::Single]->SetEndMove(
+				menuMessageCard[(int)Mode::Single]->SetEndMove(
 					centerPos,
 					1.f,
 					(float)SystemDefine::GetRand(-5, 5));
-				menuCard[(int)Mode::VS]->SetEndMove(
+				menuMessageCard[(int)Mode::VS]->SetEndMove(
 					startPos[(int)Mode::VS],
 					1.f,
 					0.f);
 				break;
 
 			case Mode::VS:
-				menuCard[(int)Mode::VS]->SetEndMove(
+				menuMessageCard[(int)Mode::VS]->SetEndMove(
 					centerPos,
 					1.f,
 					(float)SystemDefine::GetRand(-5, 5));
-				menuCard[(int)Mode::Single]->SetEndMove(
+				menuMessageCard[(int)Mode::Single]->SetEndMove(
 					startPos[(int)Mode::Single],
 					1.f,
 					0.f);

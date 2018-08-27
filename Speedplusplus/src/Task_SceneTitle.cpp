@@ -80,7 +80,7 @@ namespace SceneTitle
 	//----------------------------------------------
 	void Task::Update()
 	{
-		if (SelectRightCard() &&
+		if (Button::SelectRightCardP1() &&
 			!TS::taskSystem.FindTask(Ranking::defGroupName))
 		{
 			Ranking::Task::Create();

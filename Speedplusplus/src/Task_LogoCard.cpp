@@ -72,13 +72,13 @@ namespace LogoCard
 		switch (progress)
 		{
 		case 0:	//ロゴが中心に移動、ボタン押したら画面下に消える
-			if (SelectThrowCard())
+			if (Button::SelectPassP1())
 			{
 				//【隠し要素】Wキー(LR)押したら向きを反転
 				card.ChangeFrontBack(150);
 				isBack = !isBack;
 			}
-			if (PushStart())
+			if (Button::PushStartReset())
 			{
 				auto sound = TS::taskSystem.GetTaskOne<Sound::Task>(Sound::defGroupName);
 				sound->PlaySE_HandOut(200);

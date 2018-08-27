@@ -13,8 +13,13 @@ namespace GameScore
 	private:
 		static const int cardNum = 4;	//カード枚数
 		TimeCounter timeCnt;			//時間計測
-		int combo;						//コンボ数
-		int score;						//スコア数
+		bool		isUseCombo;			//コンボを使用するか否か
+		bool		isRedScore;			//スコアカードを赤数字にするか否か
+		int			combo;				//コンボ数
+		int			score;				//スコア数
+		Math::Vec2	startPos;			//初期座標
+		Math::Vec2	endPos;				//移動先座標
+		float		size;				//カードのサイズ
 
 		std::unique_ptr<CardCounter> comboCardCnt;			//コンボの表示用カード
 		std::unique_ptr<CardCounter> scoreCardCnt[cardNum];	//スコアの表示用カード
@@ -22,13 +27,15 @@ namespace GameScore
 
 	public:
 		//コンストラクタ
-		Task();
+		Task(const int& setScore, bool isUseCombo, bool isRedScore,
+			const Math::Vec2& startPos, const Math::Vec2& endPos, float size);
 		
 		//デストラクタ
 		~Task();
 		
 		//タスクの生成
-		static std::shared_ptr<Task> Create();
+		static std::shared_ptr<Task> Create(const int& setScore, bool isUseCombo, bool isRedScore,
+			const Math::Vec2& startPos, const Math::Vec2& endPos, float size);
 
 		void Initialize();			//初期化処理
 		void Finalize() override;	//終了処理

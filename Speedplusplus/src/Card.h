@@ -19,6 +19,11 @@ enum struct Suit
 	Etc_RedNum		= 13,	//赤数字
 	Etc_SingleMode	= 23,	//一人モード
 	Etc_VSMode		= 24,	//対戦モード
+	Etc_1P			= 25,	//1P
+	Etc_2P			= 26,	//2P
+	Etc_Win			= 27,	//Win(勝ち)
+	Etc_Lose		= 28,	//Lose(負け)
+	Etc_Draw		= 29,	//Draw(引き分け)
 };
 
 enum struct Side

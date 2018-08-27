@@ -12,23 +12,19 @@ namespace GameScore
 
 	//----------------------------------------------
 	//タスクのコンストラクタ
-	Task::Task():
+	Task::Task(const int& setScore, bool isUseCombo, bool isRedScore,
+		const Math::Vec2& startPos, const Math::Vec2& endPos, float size):
 		TaskAbstract(defGroupName, Priority::countCard),
-		score(0),
+		isUseCombo(isUseCombo),
+		isRedScore(isRedScore),
 		combo(0),
+		score(0),
+		startPos(startPos),
+		endPos(endPos),
+		size(size),
 		timeCnt(-1),
-		scoreFluctuation(TS::taskSystem.GetTaskOne<CardJudge::Task>(CardJudge::defGroupName)->GetScoreFluctuation())
+		scoreFluctuation(setScore)
 	{
-		comboCardCnt = std::make_unique<CardCounter>(
-			(int)Suit::Etc_RedNum + 0, Math::Vec2(900.f, SystemDefine::windowSizeX + 100.f),
-			Math::Vec2(895.f, 140.f), 0.25f);
-
-		for (int i = 0; i < cardNum; ++i)
-		{
-			scoreCardCnt[i] = std::make_unique<CardCounter>(
-				0,	Math::Vec2(980.f + (80 * ((cardNum - 1) - i)), -150.f),
-					Math::Vec2(980.f + (80 * i), 130.f), 0.3f);
-		}
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
@@ -38,10 +34,11 @@ namespace GameScore
 	}
 	//----------------------------------------------
 	//タスクの生成
-	std::shared_ptr<Task> Task::Create()
+	std::shared_ptr<Task> Task::Create(const int& setScore, bool isUseCombo, bool isRedScore,
+		const Math::Vec2& startPos, const Math::Vec2& endPos, float size)
 	{
 		std::shared_ptr<Task> task = 
-			std::make_shared<Task>();
+			std::make_shared<Task>(setScore, isUseCombo, isRedScore, startPos, endPos, size);
 		TS::taskSystem.RegistrationTask(task);
 
 		task->Initialize();
@@ -56,7 +53,31 @@ namespace GameScore
 	//----------------------------------------------
 	void Task::Initialize()
 	{
+		//各カードとの距離を求める
+		float cdist = float(int((256 / 10) * size + 1) * 10);
 
+		if (isUseCombo)
+		{
+			comboCardCnt = std::make_unique<CardCounter>(
+				(int)Suit::Etc_RedNum + 0, startPos, endPos, size - 0.05f);
+		}
+
+		for (int i = 0; i < cardNum; ++i)
+		{
+			if (isRedScore)
+			{
+				scoreCardCnt[i] = std::make_unique<CardCounter>(
+					(int)Suit::Etc_RedNum + 0,
+					Math::Vec2((startPos.x + cdist) + (cdist * ((cardNum - 1) - i)), startPos.y),
+					Math::Vec2((endPos.x + cdist) + (cdist * i), endPos.y), size);
+			}
+			else
+			{
+				scoreCardCnt[i] = std::make_unique<CardCounter>(
+					0, Math::Vec2((startPos.x + cdist) + (cdist * ((cardNum - 1) - i)), startPos.y),
+					Math::Vec2((endPos.x + cdist) + (cdist * i), endPos.y), size);
+			}
+		}
 	}
 
 	//----------------------------------------------
@@ -76,13 +97,21 @@ namespace GameScore
 
 		timeCnt.Run();
 
-		comboCardCnt->Update((int)Suit::Etc_RedNum + combo, true);
+		if (isUseCombo)	comboCardCnt->Update((int)Suit::Etc_RedNum + combo, true);
+		
 		for (int i = 0; i < cardNum; ++i)
 		{
 			if (timeCnt.GetNowCntTime() > 5 * i)
 			{
 				int numPlace = (int)powf(10.f, (float)(cardNum - 1 - i));
-				scoreCardCnt[i]->Update((score / numPlace) % 10, true);
+				if (isRedScore)
+				{
+					scoreCardCnt[i]->Update((int)Suit::Etc_RedNum + ((score / numPlace) % 10), true);
+				}
+				else
+				{
+					scoreCardCnt[i]->Update((score / numPlace) % 10, true);
+				}
 			}
 		}
 	}
@@ -92,7 +121,11 @@ namespace GameScore
 	//----------------------------------------------
 	void Task::Draw()
 	{
-		comboCardCnt->Draw();
+		if (isUseCombo)
+		{
+			comboCardCnt->Draw();
+		}
+
 		for (int i = 0; i < cardNum; ++i)
 		{
 			scoreCardCnt[i]->Draw();
@@ -106,7 +139,7 @@ namespace GameScore
 		if (scoreFluctuation > 0)
 		{
 			score = std::min(score + (10 + (combo * 2)), 9999);	//スコア最大値 9999
-			combo = std::min(combo + 1, 9);						//コンボ最大値 9
+			if (isUseCombo) combo = std::min(combo + 1, 9);		//コンボ最大値 9
 		}
 		else if (scoreFluctuation < 0)
 		{

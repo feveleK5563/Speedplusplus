@@ -121,9 +121,6 @@
     <ClCompile Include="src\main.cpp">
       <Filter>システム</Filter>
     </ClCompile>
-    <ClCompile Include="src\Task_CardJudge.cpp">
-      <Filter>ソース ファイル\Task\Task_Card</Filter>
-    </ClCompile>
     <ClCompile Include="src\Task_JudgeEffect.cpp">
       <Filter>ソース ファイル\Task\Task_Effect</Filter>
     </ClCompile>
@@ -175,6 +172,9 @@
     <ClCompile Include="src\Task_MenuCard.cpp">
       <Filter>ソース ファイル\Task\Task_Card</Filter>
     </ClCompile>
+    <ClCompile Include="src\Task_CardJudge.cpp">
+      <Filter>ソース ファイル\Task\Task_Card</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\SystemDefine.h">
@@ -222,9 +222,6 @@
     <ClInclude Include="src\Easing.h">
       <Filter>システム\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="src\Task_CardJudge.h">
-      <Filter>ソース ファイル\Task\Task_Card</Filter>
-    </ClInclude>
     <ClInclude Include="src\Task_JudgeEffect.h">
       <Filter>ソース ファイル\Task\Task_Effect</Filter>
     </ClInclude>
@@ -271,6 +268,9 @@
       <Filter>ソース ファイル\Task\Task_Scene\Menu</Filter>
     </ClInclude>
     <ClInclude Include="src\Task_MenuCard.h">
+      <Filter>ソース ファイル\Task\Task_Card</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Task_CardJudge.h">
       <Filter>ソース ファイル\Task\Task_Card</Filter>
     </ClInclude>
   </ItemGroup>

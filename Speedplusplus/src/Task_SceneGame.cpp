@@ -12,7 +12,6 @@ namespace SceneGame
 	//タスクのコンストラクタ
 	Task::Task(Mode mode):
 		TaskAbstract(defGroupName, defPriority),
-		isBackMode(isBackMode),
 		mode(mode)
 	{ 
 	}
@@ -41,15 +40,41 @@ namespace SceneGame
 	//----------------------------------------------
 	void Task::Initialize()
 	{
-		if (mode == Mode::VS)
+		switch (mode)
 		{
+		case Mode::Single:
+			gameTimer = GameTimer::Task::Create(mode);
+			cardJudge = CardJudge::Task::Create(mode);
+			gameScore[0] = GameScore::Task::Create(
+				cardJudge->GetScoreFluctuation(Player::Player1),
+				true, false,
+				Math::Vec2(900.f, SystemDefine::windowSizeY + 100.f),
+				Math::Vec2(900.f, 140.f),
+				0.3f);
+			break;
+
+		case Mode::VS:
+			gameTimer = GameTimer::Task::Create(mode);
+			cardJudge = CardJudge::Task::Create(mode);
+			gameScore[0] = GameScore::Task::Create(
+				cardJudge->GetScoreFluctuation(Player::Player1),
+				false, false,
+				Math::Vec2(10, SystemDefine::windowSizeY + 100.f),
+				Math::Vec2(10, 130),
+				0.35f);
+			gameScore[1] = GameScore::Task::Create(
+				cardJudge->GetScoreFluctuation(Player::Player2),
+				false, true,
+				Math::Vec2(820, SystemDefine::windowSizeY + 100.f),
+				Math::Vec2(820, 130),
+				0.35f);
+			break;
+
+		default:
 			KillMe();
 			return;
 		}
 
-		gameTimer = GameTimer::Task::Create();
-		cardJudge = CardJudge::Task::Create();
-		gameScore = GameScore::Task::Create();
 	}
 
 	//----------------------------------------------
@@ -57,6 +82,13 @@ namespace SceneGame
 	//----------------------------------------------
 	void Task::Finalize()
 	{
+		if (cardJudge)	cardJudge->KillMe();
+		for (auto& it : gameScore)
+		{
+			if (it)	it->KillMe();
+		}
+
+		//ロゴカードを作成
 		LogoCard::Task::Create(
 			CardID(Suit::Etc, (int)Suit::Etc_Logo, Side::Front),
 			Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f));
@@ -72,8 +104,6 @@ namespace SceneGame
 	{
 		if (gameTimer->state == TaskState::Kill)
 		{
-			cardJudge->KillMe();
-			gameScore->KillMe();
 			KillMe();
 		}
 	}

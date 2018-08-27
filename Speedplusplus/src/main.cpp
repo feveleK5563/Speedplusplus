@@ -2,8 +2,8 @@
 #include "DxLib.h"
 #include "GameSystem.h"
 
-
-int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
+//int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
+int main()
 {
 	//アイコン変更
 	SetWindowIconID(4210);

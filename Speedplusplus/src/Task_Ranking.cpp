@@ -165,7 +165,7 @@ namespace Ranking
 			break;
 
 		case 2:	//“ü—Í‘Ò‚¿‚©‚çI—¹
-			if (PushStart())
+			if (Button::PushStartReset())
 			{
 				++progress;
 				moveTimeCnt.ResetCntTime();

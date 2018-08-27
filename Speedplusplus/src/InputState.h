@@ -71,6 +71,7 @@ namespace Input
 {
 	static KeyInput& key = KeyInput::GetInstance();
 	static JoypadInput& joypad1 = JoypadInput::GetInstance(DX_INPUT_PAD1);
+	static JoypadInput& joypad2 = JoypadInput::GetInstance(DX_INPUT_PAD2);
 
 	//“ü—Íî•ñ‚ğæ“¾
 	bool GetInputStateAll();

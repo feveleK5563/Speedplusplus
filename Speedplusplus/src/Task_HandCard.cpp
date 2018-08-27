@@ -1,6 +1,5 @@
 #include "Task_HandCard.h"
 #include "DxLib.h"
-#include "GameDefine.h"
 #include "SystemDefine.h"
 #include "Task_CenterCard.h"
 #include "Task_Sound.h"
@@ -12,7 +11,7 @@ namespace HandCard
 
 	//----------------------------------------------
 	//タスクのコンストラクタ
-	Task::Task(const CardID& id, const Math::Vec2& pos, bool LorR):
+	Task::Task(const CardID& id, const Math::Vec2& pos, const CardDestination& destination, Hand hand):
 		TaskAbstract(defGroupName, Priority::handCard),
 		card(id,
 			pos,
@@ -20,22 +19,11 @@ namespace HandCard
 			1.f, 1.f,
 			0.f, (float)SystemDefine::GetRand(-5, 5)),
 		progress(0),
-		LorR(LorR),
-		gameState(TS::taskSystem.GetTaskOne<GameTimer::Task>(GameTimer::defGroupName)->GetTimeState())
+		destination(destination),
+		hand(hand),
+		gameState(TS::taskSystem.GetTaskOne<GameTimer::Task>(GameTimer::defGroupName)->GetGameState())
 	{
-		if (LorR)
-		{
-			card.SetEndMove(Math::Vec2(250.f, SystemDefine::windowSizeY - 200.f),
-				1.3f,
-				-1.f);
-		}
-		else
-		{
-			card.SetEndMove(Math::Vec2(SystemDefine::windowSizeX - 250.f, SystemDefine::windowSizeY - 200.f),
-				1.3f,
-				1.f);
-		}
-		card.ChangeFrontBack(100);
+		
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
@@ -45,10 +33,10 @@ namespace HandCard
 	}
 	//----------------------------------------------
 	//タスクの生成
-	std::shared_ptr<Task> Task::Create(const CardID& id, const Math::Vec2& pos, bool LorR)
+	std::shared_ptr<Task> Task::Create(const CardID& id, const Math::Vec2& pos, const CardDestination& destination, Hand hand)
 	{
 		std::shared_ptr<Task> task =
-			std::make_shared<Task>(id, pos, LorR);
+			std::make_shared<Task>(id, pos, destination, hand);
 		TS::taskSystem.RegistrationTask(task);
 
 		task->Initialize();
@@ -63,7 +51,22 @@ namespace HandCard
 	//----------------------------------------------
 	void Task::Initialize()
 	{
+		switch (hand)
+		{
+		case Hand::Left:
+			card.SetEndMove(Math::Vec2(250.f, SystemDefine::windowSizeY - 200.f),
+				1.3f,
+				-1.f);
+			break;
 
+		case Hand::Right:
+			card.SetEndMove(Math::Vec2(SystemDefine::windowSizeX - 250.f, SystemDefine::windowSizeY - 200.f),
+				1.3f,
+				1.f);
+			break;
+		}
+
+		card.ChangeFrontBack(100);
 	}
 
 	//----------------------------------------------
@@ -85,37 +88,28 @@ namespace HandCard
 		{
 		case 0:
 			//同時押しは無効
-			if (SelectLeftCard() && SelectRightCard())
+			if (Button::SelectLeftCardP1() && Button::SelectRightCardP1())
 				break;
 
-			//ゲーム本編終了時か、
-			//上ボタンか逆方向ボタンを押したら画面外に移動
-			if (SelectThrowCard() ||
-				(!LorR && SelectLeftCard()) ||
-				(LorR && SelectRightCard()) ||
-				gameState != GameState::Game)
+			if (gameState == GameState::End)
 			{
-				auto sound = TS::taskSystem.GetTaskOne<Sound::Task>(Sound::defGroupName);
-				sound->PlaySE_HandOut(100);
-				if (LorR)
-				{
-					card.SetEndMove(Math::Vec2(-300.f, SystemDefine::windowSizeY - 200.f),
-						1.3f, -90.f);
-				}
-				else
-				{
-					card.SetEndMove(Math::Vec2(SystemDefine::windowSizeX + 300.f, SystemDefine::windowSizeY - 200.f),
-						1.3f, 90.f);
-				}
-				++progress;
-				return;
+				MoveOut();
+				break;
 			}
-			//対応した左右ボタンを押したら中心に移動するカードを作成する
-			if ((LorR && SelectLeftCard()) ||
-				(!LorR && SelectRightCard()))
+
+			switch (destination)
 			{
-				CenterCard::Task::Create(card.GetID(), card.GetPos(), Side::Front);
-				KillMe();
+			case CardDestination::Out:
+				MoveOut();
+				break;
+
+			case CardDestination::Center:
+				MoveCenter();
+				break;
+
+			case CardDestination::Bump:
+				MoveBump();
+				break;
 			}
 			break;
 
@@ -134,5 +128,46 @@ namespace HandCard
 	void Task::Draw()
 	{
 		card.Draw();
+	}
+
+
+	//----------------------------------------------
+	//画面外に移動する
+	void Task::MoveOut()
+	{
+		//ゲーム本編終了時か、
+		//パスボタンか逆方向ボタンを押したら画面外に移動
+		auto sound = TS::taskSystem.GetTaskOne<Sound::Task>(Sound::defGroupName);
+		sound->PlaySE_HandOut(100);
+		switch (hand)
+		{
+		case Hand::Left:
+			card.SetEndMove(Math::Vec2(-300.f, SystemDefine::windowSizeY - 200.f),
+				1.3f, -90.f);
+			break;
+
+		case Hand::Right:
+			card.SetEndMove(Math::Vec2(SystemDefine::windowSizeX + 300.f, SystemDefine::windowSizeY - 200.f),
+				1.3f, 90.f);
+			break;
+		}
+		++progress;
+	}
+
+	//----------------------------------------------
+	//中心に移動するカードを生成
+	void Task::MoveCenter()
+	{
+		//カード移動情報が中心になったら中心に移動するカードを生成して消去
+		CenterCard::Task::Create(card.GetID(), card.GetPos(), false);
+		KillMe();
+	}
+
+	//----------------------------------------------
+	//数フレーム中心に移動後画面外へ移動するカードを生成
+	void Task::MoveBump()
+	{
+		CenterCard::Task::Create(card.GetID(), card.GetPos(), true);
+		KillMe();
 	}
 }
