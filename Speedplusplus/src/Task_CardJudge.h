@@ -4,6 +4,7 @@
 #include "Task_LogoCard.h"
 #include "Task_HandCard.h"
 #include "Task_CenterCard.h"
+#include "GameDefine.h"
 
 namespace CardJudge
 {
@@ -14,20 +15,27 @@ namespace CardJudge
 	class Task : public TaskAbstract
 	{
 	private:
-		bool isHaveHandCard;	//手札を持っているかどうか
-		int scoreFluctuation;	//正誤状況を格納(正解したら+1, 間違えたら-1になる)
+		Mode mode;		//現在のゲームモード
 
 		int centerCardNum;		//中央のカード枚数
-		std::pair<bool, std::shared_ptr<CardID>> handCard[2];	//手札
+
+		struct HandCardData
+		{
+			CardDestination destination;	//カードの移動先
+			std::shared_ptr<CardID> ID;		//手札のカードID
+		};
+		std::array<HandCardData, 2> handCardData;	//手札情報
+		std::array<int, 2> scoreFluctuation;		//各プレイヤーの正誤状況を格納(当たってたら+1, 間違っていたら-1)
+
 		std::shared_ptr<CardID> centerTopCard;	//中心の先頭カード
 
 		const GameState* gameState;	//現在のゲーム進行状況
 		
 
 	public:
-		Task();		//コンストラクタ
-		~Task();	//デストラクタ
-		static std::shared_ptr<Task> Create();	//タスクの生成
+		Task(Mode mode);	//コンストラクタ
+		~Task();			//デストラクタ
+		static std::shared_ptr<Task> Create(Mode mode);	//タスクの生成
 
 		void Initialize();			//初期化処理
 		void Finalize() override;	//終了処理
@@ -35,18 +43,25 @@ namespace CardJudge
 		void Draw() override;		//描画
 
 	private:
-		void CreateHandCard();		//手札を作成する
-		void Judge();				//選択した手札によって、スコアの変化とエフェクトの生成を行う
+		//手札を作成する(numに-1超過の数字を入れるとそのEtcカードが生成される)
+		void CreateHandCard(Hand hand, bool isRight, int num);
 
-		//ランダムにカードを作成、追加する
-		void CreateRandomCard(Side side, Side modeSide);
+		void Judge_SingleMode();	//選択した手札によって、スコアの変化とエフェクトの生成を行う(SingleMode)
+		void Judge_VSMode();		//ボタン入力によって、スコアの変化とエフェクトの生成を行う(VSMode)
+
+		//中央にランダムにカードを作成、追加する
+		void CreateRandomCard(Side side);
 		//手札を設定する
-		void SetNextHandCard();
-		//正誤に応じてエフェクトを発生させる
-		void CreateEffect(float angle, float length, bool rw);
+		void SetNextHandCard(Hand hand, bool isRight);
+		//正誤状況をリセットする
+		void ResetScoreFluctuation();
+		//正誤を判断し、結果に応じてエフェクトを発生させる
+		void CheckAndCreateEffect(CardDestination destination, Hand hand, Player player, const float& angle, const float& length);
+		//中心のカードと指定数字を比較して正誤を判定する
+		bool CheckRightOrWrong(int num);
 
 	public:
-		const int& GetCenterCardNum() const;		//中央カードの枚数を取得
-		const int& GetScoreFluctuation() const;		//正誤状況を取得
+		const int& GetCenterCardNum() const;					//中央カードの枚数を取得
+		const int& GetScoreFluctuation(Player player) const;	//指定した手の正誤状況を取得
 	};
 }

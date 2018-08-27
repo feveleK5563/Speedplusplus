@@ -2,13 +2,7 @@
 #include <array>
 #include "TaskSystem.h"
 #include "Card.h"
-
-enum struct Mode
-{
-	Single,
-	VS,
-	Non,
-};
+#include "GameDefine.h"
 
 namespace MenuCard
 {
@@ -19,7 +13,7 @@ namespace MenuCard
 	{
 	private:
 		Mode mode;	//選択中のモード
-		std::array<std::unique_ptr<Card>, 2> menuCard;	//メニュー用カード
+		std::array<std::unique_ptr<Card>, 2> menuMessageCard;	//メニュー用カード
 
 		const int	seVolume;		//効果音の音量
 		Math::Vec2	centerPos;		//中心の座標

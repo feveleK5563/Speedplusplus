@@ -1,7 +1,6 @@
 #include "Task_GameTimer.h"
 #include "DxLib.h"
 #include "SystemDefine.h"
-#include "GameDefine.h"
 
 namespace GameTimer
 {
@@ -10,23 +9,16 @@ namespace GameTimer
 
 	//----------------------------------------------
 	//タスクのコンストラクタ
-	Task::Task():
+	Task::Task(Mode mode):
 		TaskAbstract(defGroupName, Priority::countCard),
 		gameState(GameState::Ready),
 		waitCountDown	(180),
-		waitGame		(3600),
+		waitGame		(5940),
 		waitGameEnd		(180),
-		waitResult		(20)
+		waitResult		(20),
+		mode(mode)
 	{ 
-		cardCnt[0] = std::make_unique<CardCounter>(
-			0,
-			Math::Vec2(250, SystemDefine::windowSizeY + 200.f),
-			Math::Vec2(120, 150), 0.5f);
-
-		cardCnt[1] = std::make_unique<CardCounter>(
-			(int)Suit::Etc_RedNum,
-			Math::Vec2(120, SystemDefine::windowSizeY + 200.f),
-			Math::Vec2(250, 150), 0.5f);
+		
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
@@ -36,9 +28,9 @@ namespace GameTimer
 	}
 	//----------------------------------------------
 	//タスクの生成
-	std::shared_ptr<Task> Task::Create()
+	std::shared_ptr<Task> Task::Create(Mode mode)
 	{
-		std::shared_ptr<Task> task = std::make_shared<Task>();
+		std::shared_ptr<Task> task = std::make_shared<Task>(mode);
 		TS::taskSystem.RegistrationTask(task);
 
 		task->Initialize();
@@ -54,6 +46,37 @@ namespace GameTimer
 	void Task::Initialize()
 	{
 		gameMessage = GameMessage::Task::Create(MessageType::Ready, 50);
+
+		switch (mode)
+		{
+		case Mode::Single:
+			cardCnt[0] = std::make_unique<CardCounter>(
+				0,
+				Math::Vec2(250, SystemDefine::windowSizeY + 200.f),
+				Math::Vec2(120, 150), 0.5f);
+
+			cardCnt[1] = std::make_unique<CardCounter>(
+				(int)Suit::Etc_RedNum,
+				Math::Vec2(120, SystemDefine::windowSizeY + 200.f),
+				Math::Vec2(250, 150), 0.5f);
+			break;
+
+		case Mode::VS:
+			cardCnt[0] = std::make_unique<CardCounter>(
+				0,
+				Math::Vec2(SystemDefine::windowSizeX / 2.f + 50.f, -200.f),
+				Math::Vec2(SystemDefine::windowSizeX / 2.f - 40.f, 80.f), 0.3f);
+
+			cardCnt[1] = std::make_unique<CardCounter>(
+				(int)Suit::Etc_RedNum,
+				Math::Vec2(SystemDefine::windowSizeX / 2.f - 50.f, -200.f),
+				Math::Vec2(SystemDefine::windowSizeX / 2.f + 40.f, 80.f), 0.3f);
+			break;
+
+		default:
+			KillMe();
+			return;
+		}
 	}
 
 	//----------------------------------------------
@@ -101,7 +124,7 @@ namespace GameTimer
 				timeCnt.SetEndTime(waitGameEnd);
 				timeCnt.ResetCntTime();
 			}
-			if (PushStart())
+			if (Button::PushStartReset())
 			{
 				gameState = GameState::End;
 			}
@@ -178,7 +201,7 @@ namespace GameTimer
 
 	//----------------------------------------------
 	//状態の取得
-	const GameState& Task::GetTimeState() const
+	const GameState& Task::GetGameState() const
 	{
 		return gameState;
 	}

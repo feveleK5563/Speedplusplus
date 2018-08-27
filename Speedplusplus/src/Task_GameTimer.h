@@ -4,6 +4,7 @@
 #include "CardCounter.h"
 #include "Task_GameMessage.h"
 #include "Task_Ranking.h"
+#include "GameDefine.h"
 
 enum struct GameState
 {
@@ -36,10 +37,12 @@ namespace GameTimer
 
 		std::shared_ptr<Ranking::Task> ranking;
 
+		Mode mode;
+
 	public:
-		Task();		//コンストラクタ
+		Task(Mode mode);		//コンストラクタ
 		~Task();	//デストラクタ
-		static std::shared_ptr<Task> Create();	//タスクの生成
+		static std::shared_ptr<Task> Create(Mode mode);	//タスクの生成
 
 		void Initialize();			//初期化処理
 		void Finalize() override;	//終了処理
@@ -50,6 +53,6 @@ namespace GameTimer
 		void CountUpdate(bool isCntStart);
 
 	public:
-		const GameState& GetTimeState() const;
+		const GameState& GetGameState() const;
 	};
 }
