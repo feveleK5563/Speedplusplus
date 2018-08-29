@@ -213,15 +213,19 @@ namespace CardJudge
 	//ボタン入力によって、スコアの変化とエフェクトの生成を行う(VSMode)
 	void Task::Judge_VSMode()
 	{
+		//そのフレームにカードを生成した場合はボタン入力をスキップする
+		bool isCreateHandCard[2] = { false, false };
 		if (handCardData[(int)Hand::Left].destination != CardDestination::Non)
 		{
 			//左カード生成
 			CreateHandCard(Hand::Left, SystemDefine::GetRand(0, 2) > 0, -1);
+			isCreateHandCard[0] = true;
 		}
 		if (handCardData[(int)Hand::Right].destination != CardDestination::Non)
 		{
 			//右カード生成
 			CreateHandCard(Hand::Right, SystemDefine::GetRand(0, 2) > 0, -1);
+			isCreateHandCard[1] = true;
 		}
 
 		//手札が数字以外だった場合は強制的に次の手札に変更する
@@ -245,35 +249,41 @@ namespace CardJudge
 		}
 
 		//プレイヤー1
-		if (selectP1)
+		if (!isCreateHandCard[0])
 		{
-			//中心にカードを送る
-			CheckAndCreateEffect(CardDestination::Center, Hand::Left, Player::Player1,
-				SystemDefine::CenterPos, 210.f, 400.f);
-			handCardData[(int)Hand::Left].destination = CardDestination::Center;
-		}
-		else if (Button::SelectPassP1())
-		{
-			//パス
-			CheckAndCreateEffect(CardDestination::Out, Hand::Left, Player::Player1,
-				HandCard::LeftSidePos, -90.f, 400.f);
-			handCardData[(int)Hand::Left].destination = CardDestination::Out;
+			if (selectP1)
+			{
+				//中心にカードを送る
+				CheckAndCreateEffect(CardDestination::Center, Hand::Left, Player::Player1,
+					SystemDefine::CenterPos, 210.f, 400.f);
+				handCardData[(int)Hand::Left].destination = CardDestination::Center;
+			}
+			else if (Button::SelectPassP1())
+			{
+				//パス
+				CheckAndCreateEffect(CardDestination::Out, Hand::Left, Player::Player1,
+					HandCard::LeftSidePos, -90.f, 400.f);
+				handCardData[(int)Hand::Left].destination = CardDestination::Out;
+			}
 		}
 
 		//プレイヤー2
-		if (selectP2)
+		if (!isCreateHandCard[1])
 		{
-			//中心にカードを送る
-			CheckAndCreateEffect(CardDestination::Center, Hand::Right, Player::Player2,
-				SystemDefine::CenterPos, -30.f, 400.f);
-			handCardData[(int)Hand::Right].destination = CardDestination::Center;
-		}
-		else if (Button::SelectPassP2())
-		{
-			//パス
-			CheckAndCreateEffect(CardDestination::Out, Hand::Right, Player::Player2,
-			HandCard::RightSidePos, -90.f, 400.f);
-			handCardData[(int)Hand::Right].destination = CardDestination::Out;
+			if (selectP2)
+			{
+				//中心にカードを送る
+				CheckAndCreateEffect(CardDestination::Center, Hand::Right, Player::Player2,
+					SystemDefine::CenterPos, -30.f, 400.f);
+				handCardData[(int)Hand::Right].destination = CardDestination::Center;
+			}
+			else if (Button::SelectPassP2())
+			{
+				//パス
+				CheckAndCreateEffect(CardDestination::Out, Hand::Right, Player::Player2,
+					HandCard::RightSidePos, -90.f, 400.f);
+				handCardData[(int)Hand::Right].destination = CardDestination::Out;
+			}
 		}
 	}
 

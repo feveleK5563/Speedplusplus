@@ -89,9 +89,6 @@ namespace HandCard
 		switch (progress)
 		{
 		case 0:
-			//“¯Žž‰Ÿ‚µ‚Í–³Œø
-			if (Button::SelectLeftCardP1() && Button::SelectRightCardP1())
-				break;
 
 			if (gameState == GameState::GameEnd ||
 				gameState == GameState::End)
