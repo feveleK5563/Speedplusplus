@@ -53,11 +53,11 @@ void Card::Draw()
 		id.side == Side::NextFront)
 	{
 		//ÉJÅ[Éhó†
-		showCard = (int)Suit::Etc + (int)Suit::Etc_Back;
+		showCard = (int)Suit::Etc * 13 + (int)Suit::Etc_Back;
 	}
 	else
 	{
-		showCard = (int)id.suit + id.number;
+		showCard = (int)id.suit * 13 + id.number;
 	}
 
 	SetDrawMode(DX_DRAWMODE_BILINEAR);
