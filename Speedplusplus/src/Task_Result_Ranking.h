@@ -5,9 +5,9 @@
 #include "EasingMover.h"
 #include "TimeCounter.h"
 
-namespace Ranking
+namespace Result_Ranking
 {
-	const std::string	defGroupName("ランキング");	//グループ名
+	const std::string	defGroupName("リザルト(ランキング)");	//グループ名
 	//----------------------------------------------
 	class Resource
 	{

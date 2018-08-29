@@ -107,4 +107,12 @@ namespace LogoCard
 	{
 		card.Draw();
 	}
+
+
+	//----------------------------------------------
+	//is“x‚ğæ“¾
+	bool Task::GetIsNoOut() const
+	{
+		return progress <= 0;
+	}
 }

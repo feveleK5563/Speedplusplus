@@ -8,6 +8,7 @@ namespace SystemDefine
 {
 	const int windowSizeX(1280);	//ウィンドウサイズX
 	const int windowSizeY(720);		//ウィンドウサイズY
+	const Math::Vec2 CenterPos(windowSizeX / 2.f, windowSizeY / 2.f);	//中心の座標
 
 	//画面外判定(引数に矩形を指定、画面外に出ていたらtrue)
 	bool WindowOutBox(const Math::Box2D& hitBase);

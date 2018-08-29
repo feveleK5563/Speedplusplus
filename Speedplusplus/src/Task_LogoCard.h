@@ -24,5 +24,7 @@ namespace LogoCard
 		void Finalize() override;	//終了処理
 		void Update() override;		//更新
 		void Draw() override;		//描画
+
+		bool GetIsNoOut() const;	//画面外に消えようとしている場合trueを返す
 	};
 }

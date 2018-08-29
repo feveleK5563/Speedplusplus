@@ -39,13 +39,13 @@ namespace JudgeEffect
 
 	//----------------------------------------------
 	//タスクのコンストラクタ
-	Task::Task(JEffect je, float degAngle, float moveLength):
+	Task::Task(JEffect je, const Math::Vec2& pos, float degAngle, float moveLength):
 		TaskAbstract(defGroupName, Priority::judgeEffect),
 		res(Resource::Create()),
 		imageDrawer(res->imageData, true),
-		easingMover(Math::Vec2(SystemDefine::windowSizeX / 2.f, SystemDefine::windowSizeY / 2.f),
-					Math::Vec2(	SystemDefine::windowSizeX / 2.f + cos(Math::ToRadian(degAngle)) * moveLength,
-								SystemDefine::windowSizeY / 2.f + sin(Math::ToRadian(degAngle)) * moveLength),
+		easingMover(pos,
+					Math::Vec2(	pos.x + cos(Math::ToRadian(degAngle)) * moveLength,
+								pos.y + sin(Math::ToRadian(degAngle)) * moveLength),
 					1.f, 1.f,
 					0.f, (float)SystemDefine::GetRand(-5, 5)),
 		je(je),
@@ -63,9 +63,9 @@ namespace JudgeEffect
 	}
 	//----------------------------------------------
 	//タスクの生成
-	std::shared_ptr<Task> Task::Create(JEffect je, float degAngle, float moveLength)
+	std::shared_ptr<Task> Task::Create(JEffect je, const Math::Vec2& pos, float degAngle, float moveLength)
 	{
-		std::shared_ptr<Task> task = std::make_shared<Task>(je, degAngle, moveLength);
+		std::shared_ptr<Task> task = std::make_shared<Task>(je, pos, degAngle, moveLength);
 		TS::taskSystem.RegistrationTask(task);
 
 		task->Initialize();

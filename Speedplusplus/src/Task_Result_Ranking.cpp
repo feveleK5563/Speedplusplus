@@ -1,4 +1,4 @@
-#include "Task_Ranking.h"
+#include "Task_Result_Ranking.h"
 #include "DxLib.h"
 #include <fstream>
 #include "SystemDefine.h"
@@ -6,7 +6,7 @@
 #include "Task_GameScore.h"
 #include "Task_Sound.h"
 
-namespace Ranking
+namespace Result_Ranking
 {
 	std::weak_ptr<Resource> Resource::instance;
 	//----------------------------------------------
@@ -47,7 +47,7 @@ namespace Ranking
 	//----------------------------------------------
 	//タスクのコンストラクタ
 	Task::Task():
-		TaskAbstract(defGroupName, Priority::ranking),
+		TaskAbstract(defGroupName, Priority::result),
 		res(Resource::Create()),
 		bar(res->barImg, false),
 		number(res->numImg, true),
