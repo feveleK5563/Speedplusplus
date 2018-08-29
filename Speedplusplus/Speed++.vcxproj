@@ -33,6 +33,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Math.cpp" />
     <ClCompile Include="src\Task_MenuCard.cpp" />
+    <ClCompile Include="src\Task_Result_VSMode.cpp" />
     <ClCompile Include="src\Task_SceneMenu.cpp" />
     <ClCompile Include="src\Task_Sound.cpp" />
     <ClCompile Include="src\Resource_Card.cpp" />
@@ -50,7 +51,7 @@
     <ClCompile Include="src\Task_LogoCard.cpp" />
     <ClCompile Include="src\Task_CenterCard.cpp" />
     <ClCompile Include="src\Task_GameScore.cpp" />
-    <ClCompile Include="src\Task_Ranking.cpp" />
+    <ClCompile Include="src\Task_Result_Ranking.cpp" />
     <ClCompile Include="src\TimeCounter.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +68,7 @@
     <ClInclude Include="src\Math.h" />
     <ClInclude Include="src\GameDefine.h" />
     <ClInclude Include="src\Task_MenuCard.h" />
+    <ClInclude Include="src\Task_Result_VSMode.h" />
     <ClInclude Include="src\Task_SceneMenu.h" />
     <ClInclude Include="src\Task_Sound.h" />
     <ClInclude Include="src\Resource_Card.h" />
@@ -84,7 +86,7 @@
     <ClInclude Include="src\Task_LogoCard.h" />
     <ClInclude Include="src\Task_CenterCard.h" />
     <ClInclude Include="src\Task_GameScore.h" />
-    <ClInclude Include="src\Task_Ranking.h" />
+    <ClInclude Include="src\Task_Result_Ranking.h" />
     <ClInclude Include="src\TimeCounter.h" />
   </ItemGroup>
   <ItemGroup>

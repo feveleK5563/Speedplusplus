@@ -5,6 +5,7 @@
 #include "Task_HandCard.h"
 #include "Task_CenterCard.h"
 #include "GameDefine.h"
+#include <array>
 
 namespace CardJudge
 {
@@ -56,7 +57,7 @@ namespace CardJudge
 		//正誤状況をリセットする
 		void ResetScoreFluctuation();
 		//正誤を判断し、結果に応じてエフェクトを発生させる
-		void CheckAndCreateEffect(CardDestination destination, Hand hand, Player player, const float& angle, const float& length);
+		void CheckAndCreateEffect(CardDestination destination, Hand hand, Player player, const Math::Vec2& pos, const float& angle, const float& length);
 		//中心のカードと指定数字を比較して正誤を判定する
 		bool CheckRightOrWrong(int num);
 

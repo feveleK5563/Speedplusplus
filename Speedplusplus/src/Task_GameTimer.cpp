@@ -1,6 +1,8 @@
 #include "Task_GameTimer.h"
 #include "DxLib.h"
 #include "SystemDefine.h"
+#include "Task_Result_Ranking.h"
+#include "Task_Result_VSMode.h"
 
 namespace GameTimer
 {
@@ -13,7 +15,7 @@ namespace GameTimer
 		TaskAbstract(defGroupName, Priority::countCard),
 		gameState(GameState::Ready),
 		waitCountDown	(180),
-		waitGame		(5940),
+		waitGame		(60 * 60),
 		waitGameEnd		(180),
 		waitResult		(20),
 		mode(mode)
@@ -134,7 +136,20 @@ namespace GameTimer
 			if (timeCnt.IsTimeEnd())
 			{
 				gameState = GameState::Result;
-				ranking = Ranking::Task::Create();
+				switch (mode)
+				{
+				case Mode::Single:
+					resultTaskState = &Result_Ranking::Task::Create()->state;
+					break;
+
+				case Mode::VS:
+					resultTaskState = &Result_VSMode::Task::Create()->state;
+					break;
+
+				default:
+					KillMe();
+					break;
+				}
 
 				timeCnt.SetEndTime(-1);
 				timeCnt.ResetCntTime();
@@ -142,18 +157,13 @@ namespace GameTimer
 			break;
 
 		case GameState::Result:		//åãâ âÊñ 
-			if (ranking->state == TaskState::Kill)
-			{
-				timeCnt.SetEndTime(waitResult);
-				timeCnt.ResetCntTime();
-			}
-			if (timeCnt.IsTimeEnd())
+			if (*resultTaskState == TaskState::Kill)
 			{
 				gameState = GameState::End;
 			}
 			break;
 
-		case GameState::End:	//èIóπ
+		case GameState::End:
 			KillMe();
 			break;
 		}

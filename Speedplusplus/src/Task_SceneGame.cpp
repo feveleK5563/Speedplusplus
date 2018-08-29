@@ -59,13 +59,13 @@ namespace SceneGame
 			gameScore[0] = GameScore::Task::Create(
 				cardJudge->GetScoreFluctuation(Player::Player1),
 				false, false,
-				Math::Vec2(10, SystemDefine::windowSizeY + 100.f),
+				Math::Vec2(SystemDefine::windowSizeX + 150.f, 130.f),
 				Math::Vec2(10, 130),
 				0.35f);
 			gameScore[1] = GameScore::Task::Create(
 				cardJudge->GetScoreFluctuation(Player::Player2),
 				false, true,
-				Math::Vec2(820, SystemDefine::windowSizeY + 100.f),
+				Math::Vec2(-150.f, 130.f),
 				Math::Vec2(820, 130),
 				0.35f);
 			break;

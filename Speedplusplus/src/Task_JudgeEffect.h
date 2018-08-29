@@ -46,9 +46,10 @@ namespace JudgeEffect
 		float alpha;	//アルファ値
 
 	public:
-		Task(JEffect je, float degAngle, float moveLength);		//コンストラクタ
+		Task(JEffect je, const Math::Vec2& pos, float degAngle, float moveLength);		//コンストラクタ
 		~Task();				//デストラクタ
-		static std::shared_ptr<Task> Create(JEffect je, float degAngle, float moveLength);	//タスクの生成
+		static std::shared_ptr<Task> Create(
+			JEffect je, const Math::Vec2& pos, float degAngle, float moveLength);	//タスクの生成
 
 		void Initialize();			//初期化処理
 		void Finalize() override;	//終了処理

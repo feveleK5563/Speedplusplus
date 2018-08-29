@@ -3,10 +3,14 @@
 #include "Card.h"
 #include "Task_GameTimer.h"
 #include "GameDefine.h"
+#include "SystemDefine.h"
 
 namespace HandCard
 {
 	const std::string	defGroupName("éËéD");	//ÉOÉãÅ[Évñº
+
+	static const Math::Vec2 LeftSidePos(250.f, SystemDefine::windowSizeY - 200.f);
+	static const Math::Vec2 RightSidePos(SystemDefine::windowSizeX - 250.f, SystemDefine::windowSizeY - 200.f);
 
 	//----------------------------------------------
 	class Task : public TaskAbstract

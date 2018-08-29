@@ -90,10 +90,6 @@ namespace CardJudge
 	//----------------------------------------------
 	void Task::Update()
 	{
-		std::cout << centerTopCard->number << " " <<
-			handCardData[(int)Hand::Left].ID->number << " " <<
-			handCardData[(int)Hand::Right].ID->number << " " << std::endl;
-
 		ResetScoreFluctuation();
 
 		if (*gameState == GameState::Game)
@@ -181,9 +177,11 @@ namespace CardJudge
 		//パス
 		if (Button::SelectPassP1())
 		{
-			CheckAndCreateEffect(CardDestination::Out, Hand::Center, Player::Player1, 90.f, 200.f);
+			CheckAndCreateEffect(CardDestination::Out, Hand::Center, Player::Player1,
+				SystemDefine::CenterPos, 90.f, 200.f);
+
 			CreateRandomCard(Side::Front);
-			++centerCardNum;
+
 			for (auto& it : handCardData)
 			{
 				it.destination = CardDestination::Out;
@@ -194,9 +192,8 @@ namespace CardJudge
 		//カード左
 		if (Button::SelectLeftCardP1())
 		{
-			CheckAndCreateEffect(CardDestination::Center, Hand::Left, Player::Player1, -30.f, 400.f);
-			centerTopCard = handCardData[(int)Hand::Left].ID;
-			++centerCardNum;
+			CheckAndCreateEffect(CardDestination::Center, Hand::Left, Player::Player1,
+				SystemDefine::CenterPos, -30.f, 400.f);
 			handCardData[(int)Hand::Left].destination = CardDestination::Center;
 			handCardData[(int)Hand::Right].destination = CardDestination::Out;
 			return;
@@ -205,9 +202,8 @@ namespace CardJudge
 		//カード右
 		if (Button::SelectRightCardP1())
 		{
-			CheckAndCreateEffect(CardDestination::Center, Hand::Right, Player::Player1, 210.f, 400.f);
-			centerTopCard = handCardData[(int)Hand::Right].ID;
-			++centerCardNum;
+			CheckAndCreateEffect(CardDestination::Center, Hand::Right, Player::Player1,
+				SystemDefine::CenterPos, 210.f, 400.f);
 			handCardData[(int)Hand::Left].destination = CardDestination::Out;
 			handCardData[(int)Hand::Right].destination = CardDestination::Center;
 			return;
@@ -220,15 +216,15 @@ namespace CardJudge
 		if (handCardData[(int)Hand::Left].destination != CardDestination::Non)
 		{
 			//左カード生成
-			CreateHandCard(Hand::Left, SystemDefine::GetRand(0, 1), -1);
+			CreateHandCard(Hand::Left, SystemDefine::GetRand(0, 2) > 0, -1);
 		}
 		if (handCardData[(int)Hand::Right].destination != CardDestination::Non)
 		{
 			//右カード生成
-			CreateHandCard(Hand::Right, SystemDefine::GetRand(0, 1), -1);
+			CreateHandCard(Hand::Right, SystemDefine::GetRand(0, 2) > 0, -1);
 		}
 
-		//カードが数字以外だった場合
+		//手札が数字以外だった場合は強制的に次の手札に変更する
 		if ((handCardData[(int)Hand::Left].ID->suit >= Suit::Etc) ||
 			(handCardData[(int)Hand::Right].ID->suit >= Suit::Etc))
 		{
@@ -252,15 +248,15 @@ namespace CardJudge
 		if (selectP1)
 		{
 			//中心にカードを送る
-			CheckAndCreateEffect(CardDestination::Center, Hand::Left, Player::Player1, 210.f, 400.f);
-			centerTopCard = handCardData[(int)Hand::Left].ID;
-			++centerCardNum;
+			CheckAndCreateEffect(CardDestination::Center, Hand::Left, Player::Player1,
+				SystemDefine::CenterPos, 210.f, 400.f);
 			handCardData[(int)Hand::Left].destination = CardDestination::Center;
 		}
 		else if (Button::SelectPassP1())
 		{
 			//パス
-			CheckAndCreateEffect(CardDestination::Out, Hand::Left, Player::Player1, 210.f, 400.f);
+			CheckAndCreateEffect(CardDestination::Out, Hand::Left, Player::Player1,
+				HandCard::LeftSidePos, -90.f, 400.f);
 			handCardData[(int)Hand::Left].destination = CardDestination::Out;
 		}
 
@@ -268,15 +264,15 @@ namespace CardJudge
 		if (selectP2)
 		{
 			//中心にカードを送る
-			CheckAndCreateEffect(CardDestination::Center, Hand::Right, Player::Player2, -30.f, 400.f);
-			centerTopCard = handCardData[(int)Hand::Right].ID;
-			++centerCardNum;
+			CheckAndCreateEffect(CardDestination::Center, Hand::Right, Player::Player2,
+				SystemDefine::CenterPos, -30.f, 400.f);
 			handCardData[(int)Hand::Right].destination = CardDestination::Center;
 		}
 		else if (Button::SelectPassP2())
 		{
 			//パス
-			CheckAndCreateEffect(CardDestination::Out, Hand::Right, Player::Player2, -30.f, 400.f);
+			CheckAndCreateEffect(CardDestination::Out, Hand::Right, Player::Player2,
+			HandCard::RightSidePos, -90.f, 400.f);
 			handCardData[(int)Hand::Right].destination = CardDestination::Out;
 		}
 	}
@@ -295,6 +291,7 @@ namespace CardJudge
 			*cardID, Math::Vec2(SystemDefine::windowSizeX / 2.f, -200.f), false);
 
 		centerTopCard= cardID;
+		++centerCardNum;
 	}
 
 	//----------------------------------------------
@@ -355,12 +352,13 @@ namespace CardJudge
 	}
 	//----------------------------------------------
 	//正誤に応じてエフェクトを発生させる
-	void Task::CheckAndCreateEffect(CardDestination destination, Hand hand, Player player, const float& angle, const float& length)
+	void Task::CheckAndCreateEffect(CardDestination destination, Hand hand, Player player, const Math::Vec2& pos, const float& angle, const float& length)
 	{
 		bool rightORwrong;
 
 		switch (destination)
 		{
+			//パス(画面外にカードが移動)
 		case CardDestination::Out:
 			switch (mode)
 			{
@@ -375,8 +373,11 @@ namespace CardJudge
 			}
 			break;
 
+			//中心のカード束にカードが移動
 		case CardDestination::Center:
 			rightORwrong = CheckRightOrWrong(handCardData[(int)hand].ID->number);
+			centerTopCard = handCardData[(int)hand].ID;
+			++centerCardNum;
 			break;
 		}
 
@@ -386,14 +387,14 @@ namespace CardJudge
 		{
 			//正解
 			JudgeEffect::Task::Create(
-				JEffect::Right, ang, length);
+				JEffect::Right, pos, ang, length);
 			scoreFluctuation[(int)player] = 1;
 		}
 		else
 		{
 			//間違い
 			JudgeEffect::Task::Create(
-				JEffect::Wrong, ang, length);
+				JEffect::Wrong, pos, ang, length);
 			scoreFluctuation[(int)player] = -1;
 
 			auto sound = TS::taskSystem.GetTaskOne<Sound::Task>(Sound::defGroupName);

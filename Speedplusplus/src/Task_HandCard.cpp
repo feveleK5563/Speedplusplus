@@ -54,13 +54,15 @@ namespace HandCard
 		switch (hand)
 		{
 		case Hand::Left:
-			card.SetEndMove(Math::Vec2(250.f, SystemDefine::windowSizeY - 200.f),
+			card.SetEndMove(
+				LeftSidePos,
 				1.3f,
 				-1.f);
 			break;
 
 		case Hand::Right:
-			card.SetEndMove(Math::Vec2(SystemDefine::windowSizeX - 250.f, SystemDefine::windowSizeY - 200.f),
+			card.SetEndMove(
+				RightSidePos,
 				1.3f,
 				1.f);
 			break;
@@ -91,7 +93,8 @@ namespace HandCard
 			if (Button::SelectLeftCardP1() && Button::SelectRightCardP1())
 				break;
 
-			if (gameState == GameState::End)
+			if (gameState == GameState::GameEnd ||
+				gameState == GameState::End)
 			{
 				MoveOut();
 				break;

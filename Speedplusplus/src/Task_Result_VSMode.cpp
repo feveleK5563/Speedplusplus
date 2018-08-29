@@ -1,13 +1,10 @@
-#include "Task_SceneTitle.h"
-#include "DxLib.h"
+#include "Task_Result_VSMode.h"
 #include "SystemDefine.h"
-#include "Task_Back.h"
-#include "Task_SceneMenu.h"
+#include "DxLib.h"
+#include "Task_GameScore.h"
 #include "GameDefine.h"
-#include "Task_Result_Ranking.h"
-#include "Task_Sound.h"
 
-namespace SceneTitle
+namespace Result_VSMode
 {
 	//☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
 	//★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆
@@ -16,7 +13,7 @@ namespace SceneTitle
 	//タスクのコンストラクタ
 	Task::Task():
 		TaskAbstract(defGroupName, defPriority)
-	{ 
+	{
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
@@ -28,7 +25,8 @@ namespace SceneTitle
 	//タスクの生成
 	std::shared_ptr<Task> Task::Create()
 	{
-		std::shared_ptr<Task> task = std::make_shared<Task>();
+		std::shared_ptr<Task> task = 
+			std::make_shared<Task>();
 		TS::taskSystem.RegistrationTask(task);
 
 		task->Initialize();
@@ -43,26 +41,38 @@ namespace SceneTitle
 	//----------------------------------------------
 	void Task::Initialize()
 	{
-		//背景を作成
-		if (!TS::taskSystem.FindTask(Back::defGroupName))
+		int score[2];
+		Suit winOrLose[2];
+		if (auto sc = TS::taskSystem.GetTaskGroup<GameScore::Task>(GameScore::defGroupName))
 		{
-			Back::Task::Create();
-		}
-		
-		//サウンド再生タスクを作成
-		if (!TS::taskSystem.FindTask(Sound::defGroupName))
-		{
-			auto sound = Sound::Task::Create();
-			sound->PlayBGM();
+			for (int i = 0; i < int(sc->size()); ++i)
+			{
+				score[i] = (*sc)[i]->GetScore();
+			}
+
+			if (score[0] > score[1])		{ winOrLose[0] = Suit::Etc_Win;		winOrLose[1] = Suit::Etc_Lose; }
+			else if (score[0] < score[1])	{ winOrLose[0] = Suit::Etc_Lose;	winOrLose[1] = Suit::Etc_Win; }
+			else							{ winOrLose[0] = Suit::Etc_Draw;	winOrLose[1] = Suit::Etc_Draw; }
 		}
 
-		//ロゴカードを作成(既に存在している場合は作成しない)
-		logoCard = TS::taskSystem.GetTaskOne<LogoCard::Task>(LogoCard::defGroupName);
-		if (!logoCard)
+		resultCard[0] = std::make_unique<Card>(
+			CardID(Suit::Etc, (int)winOrLose[0], Side::Back),
+			Math::Vec2(SystemDefine::windowSizeX - 250.f, -150.f), 1.2f, 0.f);
+
+		resultCard[0]->SetEndMove(Math::Vec2(250.f, SystemDefine::windowSizeY / 2.f + 100.f),
+			1.f, (float)SystemDefine::GetRand(-5, 5));
+
+
+		resultCard[1] = std::make_unique<Card>(
+			CardID(Suit::Etc, (int)winOrLose[1], Side::Back),
+			Math::Vec2(250.f, -150.f), 1.2f, 0.f);
+
+		resultCard[1]->SetEndMove(Math::Vec2(SystemDefine::windowSizeX - 250.f, SystemDefine::windowSizeY / 2.f + 100.f),
+			1.f, (float)SystemDefine::GetRand(-5, 5));
+
+		for (auto& it : resultCard)
 		{
-			logoCard = LogoCard::Task::Create(
-				CardID(Suit::Etc, (int)Suit::Etc_Logo, Side::Back),
-				Math::Vec2(SystemDefine::windowSizeX / 2.f, -200));
+			it->ChangeFrontBack(100);
 		}
 	}
 
@@ -71,8 +81,7 @@ namespace SceneTitle
 	//----------------------------------------------
 	void Task::Finalize()
 	{
-		//次にゲームタスクを生成
-		SceneMenu::Task::Create();
+
 	}
 
 	//----------------------------------------------
@@ -80,13 +89,12 @@ namespace SceneTitle
 	//----------------------------------------------
 	void Task::Update()
 	{
-		if (logoCard->GetIsNoOut() &&
-			Button::SelectRightCardP1() &&
-			!TS::taskSystem.FindTask(Result_Ranking::defGroupName))
+		for (auto& it : resultCard)
 		{
-			Result_Ranking::Task::Create();
+			it->Update(30.f);
 		}
-		if (logoCard->state == TaskState::Kill)
+
+		if (Button::PushStartReset())
 		{
 			KillMe();
 		}
@@ -97,6 +105,9 @@ namespace SceneTitle
 	//----------------------------------------------
 	void Task::Draw()
 	{
-
+		for (auto& it : resultCard)
+		{
+			it->Draw();
+		}
 	}
 }

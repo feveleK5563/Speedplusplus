@@ -59,9 +59,6 @@
     <Filter Include="ソース ファイル\Task\Task_Scene\Title">
       <UniqueIdentifier>{1644d8d5-b98e-4e7a-be91-545459ba8508}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Task\Task_Ranking">
-      <UniqueIdentifier>{55f40dfe-2e8f-483a-a6a4-8196ac98ed57}</UniqueIdentifier>
-    </Filter>
     <Filter Include="外部リソース">
       <UniqueIdentifier>{16970da1-279b-4fde-9601-83abdc1cba16}</UniqueIdentifier>
     </Filter>
@@ -73,6 +70,9 @@
     </Filter>
     <Filter Include="ソース ファイル\Task\Task_Scene\Menu">
       <UniqueIdentifier>{9a983bff-edeb-4cf0-a8cc-e4d9fb39c775}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Task\Task_Result">
+      <UniqueIdentifier>{55f40dfe-2e8f-483a-a6a4-8196ac98ed57}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -154,9 +154,6 @@
     <ClCompile Include="src\Task_GameMessage.cpp">
       <Filter>ソース ファイル\Task\Task_UI</Filter>
     </ClCompile>
-    <ClCompile Include="src\Task_Ranking.cpp">
-      <Filter>ソース ファイル\Task\Task_Ranking</Filter>
-    </ClCompile>
     <ClCompile Include="src\Task_Sound.cpp">
       <Filter>ソース ファイル\Task\Task_Sound</Filter>
     </ClCompile>
@@ -174,6 +171,12 @@
     </ClCompile>
     <ClCompile Include="src\Task_CardJudge.cpp">
       <Filter>ソース ファイル\Task\Task_Card</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Task_Result_VSMode.cpp">
+      <Filter>ソース ファイル\Task\Task_Result</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Task_Result_Ranking.cpp">
+      <Filter>ソース ファイル\Task\Task_Result</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -255,9 +258,6 @@
     <ClInclude Include="src\Task_GameMessage.h">
       <Filter>ソース ファイル\Task\Task_UI</Filter>
     </ClInclude>
-    <ClInclude Include="src\Task_Ranking.h">
-      <Filter>ソース ファイル\Task\Task_Ranking</Filter>
-    </ClInclude>
     <ClInclude Include="src\Task_Sound.h">
       <Filter>ソース ファイル\Task\Task_Sound</Filter>
     </ClInclude>
@@ -272,6 +272,12 @@
     </ClInclude>
     <ClInclude Include="src\Task_CardJudge.h">
       <Filter>ソース ファイル\Task\Task_Card</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Task_Result_VSMode.h">
+      <Filter>ソース ファイル\Task\Task_Result</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Task_Result_Ranking.h">
+      <Filter>ソース ファイル\Task\Task_Result</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

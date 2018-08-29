@@ -3,7 +3,6 @@
 #include "TimeCounter.h"
 #include "CardCounter.h"
 #include "Task_GameMessage.h"
-#include "Task_Ranking.h"
 #include "GameDefine.h"
 
 enum struct GameState
@@ -35,7 +34,7 @@ namespace GameTimer
 		TimeCounter cardAppTimeCnt;
 		std::shared_ptr<GameMessage::Task> gameMessage;
 
-		std::shared_ptr<Ranking::Task> ranking;
+		const TaskState* resultTaskState;
 
 		Mode mode;
 
