@@ -18,6 +18,13 @@ Speed++(ƒXƒs[ƒhƒvƒ‰ƒXƒvƒ‰ƒX)‚ÍAƒgƒ‰ƒ“ƒvƒQ[ƒ€‚ÌuƒXƒs[ƒhv‚ðˆêl—p‚ÉƒAƒŒƒ“ƒW‚
 //------------------------------------------
 // ¡—V‚Ñ•û
 //------------------------------------------
+ƒ^ƒCƒgƒ‹‰æ–Ê‚ÅSTARTƒ{ƒ^ƒ“‚ð‰Ÿ‚·‚Æƒƒjƒ…[‰æ–Ê‚ÉˆÚs‚µ‚Ü‚·B
+‚Ü‚½Aƒ^ƒCƒgƒ‹‰æ–Ê‚ÅDƒL[(Bƒ{ƒ^ƒ“)‚ð‰Ÿ‚·‚ÆSingleMode‚Ìƒ‰ƒ“ƒLƒ“ƒO‚ªŠm”F‚Å‚«‚Ü‚·B
+
+ƒƒjƒ…[‰æ–Ê‚Å‚ÍA¶‚ÌƒJ[ƒh‚ð‘I‘ð‚·‚é‚ÆSingleModeA
+‰E‚ÌƒJ[ƒh‚ð‘I‘ð‚·‚é‚ÆVSMode‚ªŠJŽn‚³‚ê‚Ü‚·B
+
+ySingleModez
 E‰æ–Ê’†‰›‚ÌƒJ[ƒh‚Ì”Žš‚Æ”ä‚×‚ÄAu‚P‘å‚«‚¢v‚©u‚P¬‚³‚¢vƒJ[ƒh‚ð
 ¶‰E‚ÌƒJ[ƒh‚©‚ç‘I‚Ñ‚Ü‚µ‚å‚¤B
 —á‚¦‚ÎA’†‰›‚ÉK(ƒLƒ“ƒO)‚ª‚ ‚éê‡AQ(ƒNƒC[ƒ“)‚©A(ƒG[ƒX)‚ª³‰ð‚Æ‚È‚è‚Ü‚·B
@@ -32,9 +39,24 @@ Speed++(ƒXƒs[ƒhƒvƒ‰ƒXƒvƒ‰ƒX)‚ÍAƒgƒ‰ƒ“ƒvƒQ[ƒ€‚ÌuƒXƒs[ƒhv‚ðˆêl—p‚ÉƒAƒŒƒ“ƒW‚
 E‚P•ªŒo‚Á‚½‚çƒQ[ƒ€I—¹‚Å‚·B
 
 
+yVSModez
+EVSMode‚Í“ñlƒvƒŒƒC—p‚Ìƒ‚[ƒh‚Å‚·B
+‰æ–Ê¶‚ÌƒvƒŒƒCƒ„[‚Æ‰E‚ÌƒvƒŒƒCƒ„[‚É•Ê‚ê‚ÄƒQ[ƒ€‚ðs‚¢‚Ü‚·B
+
+EŠî–{“I‚Èƒ‹[ƒ‹‚ÍSingleMode‚Æ“¯‚¶‚Å‚·B
+ŠeƒvƒŒƒCƒ„[‚ÍAŽ©•ª‚ÌƒJ[ƒh‚ª’†‰›‚É’u‚¯‚é‚©‚Ç‚¤‚©‚ð”»’f‚µA
+’u‚¯‚½‚ç‘I‘ðA’u‚¯‚È‚©‚Á‚½‚çƒpƒX‚ð‚µ‚Ü‚µ‚å‚¤B
+
+E³‰ð‚µ‚½‚çƒ|ƒCƒ“ƒg‚ª‘‚¦AŠÔˆá‚¦‚½‚çŒ¸‚è‚Ü‚·B
+
+E‚P•ªŒo‚Á‚½‚çƒQ[ƒ€I—¹‚Å‚·B
+ÅI“I‚ÉŽæ“¾‚µ‚½ƒ|ƒCƒ“ƒg‚ª‚‚¢ƒvƒŒƒCƒ„[‚ªŸ‚¿‚Æ‚È‚è‚Ü‚·B
+
+
 //------------------------------------------
 // ¡‘€ì•û–@
 //------------------------------------------
+ySingleModez
 ›ƒL[ƒ{[ƒh
 SPACEƒL[@c ƒQ[ƒ€ƒXƒ^[ƒg
 AƒL[@@@c ¶‚ÌƒJ[ƒh‚ð‘I‘ð
@@ -47,6 +69,23 @@ STARTƒ{ƒ^ƒ“@ c ƒQ[ƒ€ƒXƒ^[ƒg
 Bƒ{ƒ^ƒ“@@@ c ‰E‚ÌƒJ[ƒh‚ð‘I‘ð
 L,Rƒ{ƒ^ƒ“@@ c ƒpƒX
 
+yVSModez
+[ƒvƒŒƒCƒ„[1]
+ZƒL[ƒ{[ƒh
+SPACEƒL[@@c ƒQ[ƒ€ƒXƒ^[ƒg
+AƒL[EDƒL[ c ƒJ[ƒh‚ð’†‰›‚É’u‚­
+WƒL[@@@@c ƒpƒX
+
+[ƒvƒŒƒCƒ„[2]
+ZƒL[ƒ{[ƒh
+ƒJ[ƒ\ƒ‹ƒL[¶E‰E@c ƒJ[ƒh‚ð’†‰›‚É’u‚­
+ƒJ[ƒ\ƒ‹ƒL[ã@@@c ƒpƒX
+
+[ŠeƒvƒŒƒCƒ„[‹¤’Ê]
+ZƒQ[ƒ€ƒpƒbƒh
+STARTƒ{ƒ^ƒ“@@@@@@c ƒQ[ƒ€ƒXƒ^[ƒg
+\Žšƒ{ƒ^ƒ“¶EBƒ{ƒ^ƒ“@c ƒJ[ƒh‚ð’†‰›‚É’u‚­
+L,Rƒ{ƒ^ƒ“@@@@@@@c ƒpƒX
 
 //------------------------------------------
 // ¡‚»‚Ì‘¼
