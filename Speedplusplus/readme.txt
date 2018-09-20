@@ -1,4 +1,5 @@
 # Speed++
+# 制作：木下施工集団
 
 //------------------------------------------
 // ■ゲーム概要
@@ -93,7 +94,7 @@ L,Rボタン　　　　　　　… パス
 //------------------------------------------
 ・タイトル画面でDキー(Bボタン)を押すとランキングが確認できます。
 ・ゲーム中にSPACEキー(STARTボタン)を押すとタイトルに戻ります。
-・タイトル画面であることをすると「裏モード」になります。
+・ESCキーでゲームが終了できます。
 
 
 ▼素材提供
@@ -156,4 +157,3 @@ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
 THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
