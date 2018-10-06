@@ -51,6 +51,7 @@ private:
 			analogInputRX, analogInputRY;
 
 	JoypadInput(int type);
+	static JoypadInput* joypad[2];
 
 public:
 	int GetInputStateAll();
@@ -62,6 +63,7 @@ public:
 	const ButtonInfo& operator [](const PadInput PAD_INPUT);
 
 	static JoypadInput& GetInstance(int type);
+	static void DeleteInstance();
 };
 
 //-----------------------------------------------------------------------------

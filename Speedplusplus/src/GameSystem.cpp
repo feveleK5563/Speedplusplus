@@ -87,6 +87,7 @@ void GameSystem::MainLoop()
 		TS::taskSystem.Draw();
 	}
 	TS::taskSystem.AllDeleteTask();
+	JoypadInput::DeleteInstance();
 }
 
 //I—¹ˆ—

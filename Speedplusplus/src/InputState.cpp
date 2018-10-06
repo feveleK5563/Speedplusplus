@@ -32,8 +32,8 @@ KeyInput& KeyInput::GetInstance()
 
 //-----------------------------------------------------------------------------
 //コンストラクタ(ジョイパッドの番号を設定する)
-JoypadInput::JoypadInput(int type):
-	inputType(type){}
+JoypadInput::JoypadInput(int type) :
+	inputType(type) {}
 
 //-----------------------------------------------------------------------------
 //ジョイパッドの入力情報を受け取る
@@ -86,12 +86,26 @@ const ButtonInfo& JoypadInput::operator [](const PadInput PAD_INPUT)
 	int padInput = int(log2f((float)PAD_INPUT));
 	return padInfo[padInput];
 }
+
+JoypadInput* JoypadInput::joypad[2]{nullptr, nullptr};
 //-----------------------------------------------------------------------------
 //ゲームパッド入力情報のインスタンスを得る
 JoypadInput& JoypadInput::GetInstance(int type)
 {
-	static JoypadInput joypad(type);
-	return joypad;
+	if (!joypad[type - 1])
+	{
+		joypad[type - 1] = new JoypadInput(type);
+	}
+	return *joypad[type - 1];
+}
+//-----------------------------------------------------------------------------
+//インスタンスを削除
+void JoypadInput::DeleteInstance()
+{
+	for (int i = 0; i < 2; ++i)
+	{
+		delete joypad[i];
+	}
 }
 
 
@@ -104,5 +118,6 @@ JoypadInput& JoypadInput::GetInstance(int type)
 bool Input::GetInputStateAll()
 {
 	return	key.GetInputStateAll()		== 0 &&
-			joypad1.GetInputStateAll()	== 0;
+			joypad1.GetInputStateAll()	== 0 &&
+			joypad2.GetInputStateAll()	== 0;
 }
